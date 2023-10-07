@@ -1,7 +1,8 @@
 import random
+#print("story_functions is being imported.")
 from colorama import init, Fore, Style
 init(autoreset=True)
-from adventure_pkg.battle_functions import Dice_Rolls
+#from adventure_pkg.battle_functions import Dice_Rolls
 
 def greeting():
     greeting_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -50,42 +51,72 @@ def non_faerun_story():
     input("Press Enter")   
     return non_faerun_origin
 
-def generate_strings(character, my_hp, my_damage, home_town):
-    
-    fate = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your fate is intertwined with the {character}!",
-    Fore.YELLOW + Style.NORMAL +"                            \n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Health: {my_hp}",Fore.YELLOW + Style.NORMAL +"                                                            |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Damage: {my_damage}",
-    Fore.YELLOW + Style.NORMAL +"                                                             |\n", 
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+def generate_strings(hero_class, ability_scores):
+    # Display the ability scores
+    ability_scores_description = [f"{attribute}: {value}" for attribute, value in ability_scores.items()]
+    ability_scores_string = '\n'.join(ability_scores_description)
+
+    # Set the hero name
+    hero_name = f"{Fore.WHITE + Style.BRIGHT}{hero_class}"
+
+    # Calculate the remaining space for the side border
+    total_width = 46
+    side_border_width = total_width - len(hero_name) - 1  # Subtract 1 for the space after hero name
+
+    # Calculate the indentation for ability scores
+    top_ability_indentation = ' ' * 5  # Initial indentation for the top ability
+    other_ability_indentation = ' ' * 5  # Initial indentation for other abilities
+
+    # Add piping symbols to the left and right of each ability score line
+    indented_ability_scores_piped = [
+        Fore.YELLOW + Style.NORMAL + f"{' ' * (9 + i)}|{Fore.WHITE + Style.BRIGHT}{top_ability_indentation}{line.strip()}{' ' * (72 - len(line.strip()))}"+ Fore.YELLOW + Style.NORMAL + "|"
+        if i == 0
+        else Fore.YELLOW + Style.NORMAL + f"{' ' * 10}|{Fore.WHITE + Style.BRIGHT}{other_ability_indentation}{line.strip()}{' ' * (72 - len(line.strip()))}"+ Fore.YELLOW + Style.NORMAL + "|"
+        for i, line in enumerate(ability_scores_string.split('\n'))
+    ]
+
+    # Print the Fate section
+    fate = print(
+        Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {hero_name}!{' ' * side_border_width}"+ Fore.YELLOW + Style.NORMAL + " |\n",
+        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+        Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
+        Fore.YELLOW + Style.NORMAL + "                                                             \n",
+        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+    )
     input("Press Enter\n\n")
-    
-    hometown_description = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You hale from a town called {home_town}.",
-    Fore.YELLOW + Style.NORMAL +"                                  \n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"You have spent the past few months under the mentorship",Fore.YELLOW + Style.NORMAL +"               |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"of a Master {character} and have been sensing",
-    Fore.YELLOW + Style.NORMAL +"                              \n", 
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"that it is time for you to go out into the world",
-    Fore.YELLOW + Style.NORMAL +"                      |\n", 
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"and test your new skills.",
-    Fore.YELLOW + Style.NORMAL +"                                             |\n", 
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter\n\n")  
-    return fate, hometown_description 
+
+
+
+
+
+    hometown_description = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}You hale from a town called .",
+                                Fore.YELLOW + Style.NORMAL + "                                  \n",
+                                Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + "You have spent the past few months under the mentorship",
+                                Fore.YELLOW + Style.NORMAL + "               |\n",
+                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}of a Master {hero_class} and have been sensing",
+                                Fore.YELLOW + Style.NORMAL + "                              \n",
+                                Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + "that it is time for you to go out into the world",
+                                Fore.YELLOW + Style.NORMAL + "                      |\n",
+                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}and test your new skills.",
+                                Fore.YELLOW + Style.NORMAL + "                                             |\n",
+                                Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+    input("Press Enter\n\n")
+    return fate, hometown_description
+
 
 def faerun_hero(character, home_town, worlds, exit_message):
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]

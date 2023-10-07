@@ -1,59 +1,46 @@
 import random
 
-class Attributes:
-    def __init__(self, character=None, creatures=None, armor_class=None, hit_points=None, strength=None, dexterity=None, constitution=None, intelligence=None, wisdom=None, charisma=None, saving_throws=None, roll_modifiers=None, bab=None, melee_mod=None):
-        self.character = character
-        self.creatures = creatures
-        self.armor_class = armor_class
-        self.hit_points = hit_points
-        self.strength = strength
-        self.dexterity = dexterity
-        self.constitution = constitution
-        self.intelligence = intelligence
-        self.wisdom = wisdom
-        self.charisma = charisma
-        self.saving_throws = saving_throws
-        self.roll_modifiers = roll_modifiers
-        self.bab = bab
-        self.melee_mod = melee_mod
+class Character:
+    def __init__(self, name, char_class, character_classes):
+        self.name = name
+        self.char_class = char_class
+        self.character_classes = character_classes
+        self.ability_scores = self.generate_ability_scores(character_classes[char_class])
+        self.hp = self.set_hp()
 
-class Object_Characters(Attributes):
-    def __init__(self, character=None, creatures=None, armor_class=None, hit_points=None, strength=None, dexterity=None, constitution=None, intelligence=None, wisdom=None, charisma=None, saving_throws=None, roll_modifiers=None, bab=None, melee_mod=None):
-        super().__init__(character, creatures, armor_class, hit_points, strength, dexterity, constitution, intelligence, wisdom, charisma, saving_throws, roll_modifiers, bab, melee_mod)
-        self.hero = None
-        self.world = None
-        self.character = None
-        self.creatures = None
+    def roll_4d6_drop_lowest(self):
+        rolls = [random.randint(1, 6) for _ in range(4)]
+        rolls.remove(min(rolls))  # Drop the lowest roll
+        return sum(rolls)
 
-    def set_hero(self, hero):
-        self.hero = hero
+    def generate_ability_scores(self, class_attributes):
+        ability_scores = {}
+        for attribute, value in class_attributes.items():
+            if attribute == "HP":
+                # Use the set value from the dictionary
+                ability_scores[attribute] = self.character_classes[self.char_class].get(attribute, 1)
+            elif value == "set":
+                # Use the set value from the dictionary
+                ability_scores[attribute] = self.character_classes[self.char_class][attribute]
+            else:
+                # Roll 4d6 and drop the lowest for random values
+                ability_scores[attribute] = self.roll_4d6_drop_lowest() + value
+        return ability_scores
 
-    def set_creatures(self, creatures):
-        self.creatures = creatures
+    def set_hp(self):
+        if "HP" in self.character_classes.get(self.char_class, {}):
+            return self.character_classes[self.char_class]["HP"]
+        else:
+            return random.randint(1, 10)  # Set a default random HP if "HP" key is not in the dictionary
 
-    def actual_object_character(self, hero, creatures):
-        if hero == "Fighter" or hero == "1":
-            hero = Dice_Rolls(character="Fighter", armor_class=16, hit_points=9, strength=18, dexterity=10, constitution=14, intelligence=10, wisdom=10, charisma=10)
-            print(hero)
-        elif hero == "Rogue" or hero == "2":
-            hero = Dice_Rolls(character="Rogue", armor_class=16, hit_points=9, strength=18, dexterity=10, constitution=14, intelligence=10, wisdom=10, charisma=10)
-            print(hero)
-        elif hero == "Sorcerer" or hero == "3":
-            hero = Dice_Rolls(character="Sorcerer", armor_class=16, hit_points=9, strength=18, dexterity=10, constitution=14, intelligence=10, wisdom=10, charisma=10)
-            print(hero) 
-        elif hero == "Wizard" or hero == "4":
-            hero = Dice_Rolls(character="Wizard", armor_class=16, hit_points=9, strength=18, dexterity=10, constitution=14, intelligence=10, wisdom=10, charisma=10)
-            print(hero) 
-        if creatures == "Skeleton":
-            creatures = Dice_Rolls(creatures="Skeleton", armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws=0, roll_modifiers=0, bab=0, melee_mod=1)
-            print(creatures)
-        elif creatures == "Goblin":
-            creatures = Dice_Rolls(creatures="Goblin", armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws=0, roll_modifiers=0, bab=0, melee_mod=1)
-            print(creatures)
-        elif creatures == "Dire Rat":
-            creatures = Dice_Rolls(creatures="Dire Rat", armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws=0, roll_modifiers=0, bab=0, melee_mod=1)
-            print(creatures)
+    def __str__(self):
+        return f"{self.name} ({self.char_class}) with HP: {self.hp} and Ability Scores: {self.ability_scores}"
 
+
+
+
+
+"""
 class Dice_Rolls(Attributes):
     #define the range of values for dice
     d20 = [x + 1 for x in range(20)]
@@ -127,7 +114,7 @@ class Dice_Rolls(Attributes):
                 print(creature)
 
     
-"""
+
 def __repr__(self):
         return f"Character: {self.character}, HP: {self.hit_points}, AC: {self.armor_class}"
 
