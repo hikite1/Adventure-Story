@@ -1,42 +1,94 @@
 import random
 
-class Character:
-    def __init__(self, name, char_class, character_classes):
-        self.name = name
-        self.char_class = char_class
-        self.character_classes = character_classes
-        self.ability_scores = self.generate_ability_scores(character_classes[char_class])
-        self.hp = self.set_hp()
+class Abilities:
+    def __init__(self, Strength=0, Dexterity=0, Constitution=0, Intelligence=0, Wisdom=0, Charisma=0):
+        self.Strength = Strength
+        self.Dexterity = Dexterity
+        self.Constitution = Constitution
+        self.Intelligence = Intelligence
+        self.Wisdom = Wisdom
+        self.Charisma = Charisma
 
-    def roll_4d6_drop_lowest(self):
-        rolls = [random.randint(1, 6) for _ in range(4)]
-        rolls.remove(min(rolls))  # Drop the lowest roll
-        return sum(rolls)
+    @classmethod
+    def generate_random(cls, priority):
+        rolls = [[random.randint(1, 6) for _ in range(4)] for _ in range(6)]
+        rolls = [sum(sorted(roll)[1:]) for roll in rolls]
+        rolls.sort(reverse=True)
 
-    def generate_ability_scores(self, class_attributes):
-        ability_scores = {}
-        for attribute, value in class_attributes.items():
-            if attribute == "HP":
-                # Use the set value from the dictionary
-                ability_scores[attribute] = self.character_classes[self.char_class].get(attribute, 1)
-            elif value == "set":
-                # Use the set value from the dictionary
-                ability_scores[attribute] = self.character_classes[self.char_class][attribute]
-            else:
-                # Roll 4d6 and drop the lowest for random values
-                ability_scores[attribute] = self.roll_4d6_drop_lowest() + value
-        return ability_scores
+        abilities_dict = {}
+        for ability, value in zip(priority, rolls):
+            abilities_dict[ability] = int(value)  # Convert value to integer
 
-    def set_hp(self):
-        if "HP" in self.character_classes.get(self.char_class, {}):
-            return self.character_classes[self.char_class]["HP"]
-        else:
-            return random.randint(1, 10)  # Set a default random HP if "HP" key is not in the dictionary
+        return cls(**abilities_dict)
+
+    def calculate_modifier(self, ability_name):
+        ability_score = getattr(self, ability_name.capitalize(), None)
+        if ability_score is not None:
+            # Convert ability_score to integer
+            ability_score = int(ability_score)
+            modifier = (ability_score - 10) // 2
+            return max(-5, modifier)  # Ensure the modifier doesn't go below -5
+        return None  # Return None for unknown attributes
+
+    @property
+    def ConstitutionModifier(self):
+        return self.calculate_modifier(self.Constitution)
 
     def __str__(self):
-        return f"{self.name} ({self.char_class}) with HP: {self.hp} and Ability Scores: {self.ability_scores}"
+        return f"Abilities: Str={self.Strength}, Dex={self.Dexterity}, Con={self.Constitution}, " \
+               f"Int={self.Intelligence}, Wis={self.Wisdom}, Cha={self.Charisma}"
 
+class Character:
+    def __init__(self, char_class, character_classes):
+        self.char_class = char_class
+        self.character_classes = character_classes
+        self.priority = self.get_priority()
+        self.abilities = Abilities.generate_random(self.priority)
+        self.level = 1  # Default level is 1
 
+        # Calculate HP based on Constitution modifier and character class hit die
+        self.hp = self.calculate_max_hp()
+
+    def get_priority(self):
+        priority_list = self.character_classes.get(self.char_class, [])
+        return [ability.capitalize() for ability in priority_list]
+
+    def __str__(self):
+        return f"{self.char_class} - {self.abilities} - Level {self.level} - HP: {self.hp}"
+
+    def generate_ability_scores(self, priority):
+        self.abilities = Abilities.generate_random(priority)
+        # Recalculate HP after generating new ability scores
+        self.hp = self.calculate_max_hp()
+
+    def calculate_max_hp(self):
+        # Assuming hit_die is a dictionary mapping character classes to hit dice
+        hit_die = {
+            "Fighter": 10,
+            "Rogue": 6,
+            "Sorcerer": 4,
+            "Wizard": 4,
+            # Add more classes and their respective hit dice
+        }
+        max_hit_die = hit_die.get(self.char_class, 8)
+        constitution_modifier = self.abilities.calculate_modifier('Constitution')
+        max_hp = max_hit_die + constitution_modifier
+        return max_hp
+
+    def level_up(self):
+        # Increase level and roll a random hit points gain based on character class hit die
+        self.level += 1
+        hit_die = {
+            "Fighter": 10,
+            "Rogue": 6,
+            "Sorcerer": 4,
+            "Wizard": 4,
+            # Add more classes and their respective hit dice
+        }
+
+        # Roll a random number between 1 and the character class hit die
+        hp_gain = random.randint(1, hit_die.get(self.char_class, 8)) + self.abilities.calculate_modifier('Constitution')
+        self.hp += hp_gain
 
 
 
@@ -45,8 +97,8 @@ class Dice_Rolls(Attributes):
     #define the range of values for dice
     d20 = [x + 1 for x in range(20)]
         
-    def __init__(self, character=None, creatures=None, armor_class=None, hit_points=None, strength=None, dexterity=None, constitution=None, intelligence=None, wisdom=None, charisma=None, saving_throws=None, roll_modifiers=None, bab=None, melee_mod=None):
-        super().__init__(character, creatures, armor_class, hit_points, strength, dexterity, constitution, intelligence, wisdom, charisma, saving_throws, roll_modifiers, bab, melee_mod)
+    def __init__(self, character=None, creatures=None, armor_class=None, hit_points=None, Strength=None, Dexterity=None, Constitution=None, Intelligence=None, Wisdom=None, Charisma=None, saving_throws=None, roll_modifiers=None, bab=None, melee_mod=None):
+        super().__init__(character, creatures, armor_class, hit_points, Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma, saving_throws, roll_modifiers, bab, melee_mod)
 
     def attack(self, atk_roll=1, bab=0, advantage=False, disadvantage=False, melee_mod=0, armor_class=0):
         #current total for attack roll
@@ -118,8 +170,8 @@ class Dice_Rolls(Attributes):
 def __repr__(self):
         return f"Character: {self.character}, HP: {self.hit_points}, AC: {self.armor_class}"
 
-hero1= Dice_Rolls(character="", armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws={}, roll_modifiers={}, bab=0, melee_mod=1)
-skeleton1 = Dice_Rolls(character="skeleton", armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws={}, roll_modifiers={}, bab=0, melee_mod=1)
+hero1= Dice_Rolls(character="", armor_class=15, hit_points=6, Strength=13, Dexterity=13, Constitution=0, Intelligence=0, Wisdom=10, Charisma=1, saving_throws={}, roll_modifiers={}, bab=0, melee_mod=1)
+skeleton1 = Dice_Rolls(character="skeleton", armor_class=15, hit_points=6, Strength=13, Dexterity=13, Constitution=0, Intelligence=0, Wisdom=10, Charisma=1, saving_throws={}, roll_modifiers={}, bab=0, melee_mod=1)
 
 skeleton1.roll_modifiers = {"str" : 1, "dex" : 1, "con" : 0, "int" : 0, "wis" : 0, "cha": -4}
 print("Skeleton's Modifiers: ", skeleton1.roll_modifiers)

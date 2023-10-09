@@ -3,7 +3,7 @@ import random
 
 # Imports custom modules
 from adventure_pkg.story_functions import generate_strings,faerun_story, non_faerun_story, greeting, leave_game, faerun_hero, nonfaerun_hero, baldurs_gate, invalid, win_game
-from adventure_pkg.battle_functions import Character
+from adventure_pkg.character_functions import Character
 
 #print("Imports successful.")
 
@@ -37,14 +37,14 @@ my_hp = ""
 my_damage = ""
 home_town = ""
 
-# Define character classes in the main file
 character_classes = {
-    "Fighter": {"Strength": 0, "Dexterity": 0, "Constitution": 0, "Intelligence": 0, "Wisdom": 0, "Charisma": 0, "HP": 8},
-    "Rogue": {"Strength": 0, "Dexterity": 0, "Constitution": 0, "Intelligence": 0, "Wisdom": 0, "Charisma": 0, "HP": 6},
-    "Sorcerer": {"Strength": 0, "Dexterity": 0, "Constitution": 0, "Intelligence": 0, "Wisdom": 0, "Charisma": 0, "HP": 4},
-    "Wizard": {"Strength": 0, "Dexterity": 0, "Constitution": 0, "Intelligence": 0, "Wisdom": 0, "Charisma": 0, "HP": 4},
-    # Add more character classes as needed
+    "Fighter": ["Strength", "Dexterity", "Constitution", "Wisdom", "Intelligence", "Charisma"],
+    "Rogue": ["Dexterity", "Intelligence", "Wisdom", "Strength", "Charisma", "Constitution"],
+    "Sorcerer": ["Charisma", "Constitution", "Dexterity", "Intelligence", "Wisdom", "Strength"],
+    "Wizard": ["Intelligence", "Constitution", "Dexterity", "Wisdom", "Strength", "Charisma"],
 }
+    # Add more character classes as needed
+
 
 
 # Main while loop shell containing nested while loops
@@ -112,11 +112,11 @@ while True:
             continue
 
         # Create character and generate ability scores
-        player_character = Character(name="Hero", char_class=hero, character_classes=character_classes)
-        player_character.generate_ability_scores(character_classes[hero])
+        player_character = Character(char_class=hero, character_classes=character_classes)
 
         # Print ability scores
-        generate_strings(hero, player_character.ability_scores)
+        generate_strings(hero, player_character.abilities, player_character.hp)
+
 
         if worlds == "Ghelspad":
             begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(worlds, character, home_town, exit_message)

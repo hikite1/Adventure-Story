@@ -31,7 +31,7 @@ def faerun_story():
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input("Press Enter")
-    return faerun_origin
+    return ""
 
 def non_faerun_story():
     non_faerun_origin = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -48,12 +48,15 @@ def non_faerun_story():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")   
-    return non_faerun_origin
+    input("Press Enter")  
+    return ""
 
-def generate_strings(hero_class, ability_scores):
-    # Display the ability scores
-    ability_scores_description = [f"{attribute}: {value}" for attribute, value in ability_scores.items()]
+def generate_strings(hero_class, ability_scores, hp):
+    # Display the ability scores with modifiers
+    ability_scores_description = [
+        f"{attribute}: {value} ({ability_scores.calculate_modifier(attribute.lower())})"
+        for attribute, value in vars(ability_scores).items()
+    ]
     ability_scores_string = '\n'.join(ability_scores_description)
 
     # Set the hero name
@@ -84,13 +87,14 @@ def generate_strings(hero_class, ability_scores):
         Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {hero_name}!{' ' * side_border_width}"+ Fore.YELLOW + Style.NORMAL + " |\n",
         Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
         Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
-        Fore.YELLOW + Style.NORMAL + "                                                             \n",
-        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     )
     input("Press Enter\n\n")
+
+
 
 
 
