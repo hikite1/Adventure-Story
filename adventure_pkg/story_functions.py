@@ -2,7 +2,6 @@ import random
 #print("story_functions is being imported.")
 from colorama import init, Fore, Style
 init(autoreset=True)
-#from adventure_pkg.battle_functions import Dice_Rolls
 
 def greeting():
     greeting_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -30,7 +29,7 @@ def faerun_story():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
     return ""
 
 def non_faerun_story():
@@ -48,10 +47,10 @@ def non_faerun_story():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")  
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
     return ""
 
-def generate_strings(hero_class, ability_scores, hp):
+def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, total_to_hit):
     # Display the ability scores with modifiers
     ability_scores_description = [
         f"{attribute}: {value} ({ability_scores.calculate_modifier(attribute.lower())})"
@@ -61,6 +60,9 @@ def generate_strings(hero_class, ability_scores, hp):
 
     # Set the hero name
     hero_name = f"{Fore.WHITE + Style.BRIGHT}{hero_class}"
+
+    # Set the race name
+    race_name = f"{Fore.WHITE + Style.BRIGHT}{chosen_race}"
 
     # Calculate the remaining space for the side border
     total_width = 46
@@ -78,33 +80,36 @@ def generate_strings(hero_class, ability_scores, hp):
         for i, line in enumerate(ability_scores_string.split('\n'))
     ]
 
+    character_name = input(f"{Fore.CYAN + Style.NORMAL}Type in the name of your character: ")
+
     # Print the Fate section
     fate = print(
         Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {hero_name}!{' ' * side_border_width}"+ Fore.YELLOW + Style.NORMAL + " |\n",
-        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
+        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Racial Traits: {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
+        Fore.YELLOW + Style.NORMAL + "         |                                                                             |",
+        Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     Name: {character_name.ljust(10)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
+        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}"+ Fore.YELLOW + Style.NORMAL + "                    |\n",
         Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
         Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
+        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     AC: {str(armor_modifier).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
+        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Attack: {str(total_to_hit).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
+        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
     )
-    input("Press Enter\n\n")
-
-
-
-
-
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
 
 
     hometown_description = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                                 Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                                 Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                                 Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}You hale from a town called .",
+                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}You hale from a town called {home_town}.",
                                 Fore.YELLOW + Style.NORMAL + "                                  \n",
                                 Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + "You have spent the past few months under the mentorship",
                                 Fore.YELLOW + Style.NORMAL + "               |\n",
@@ -118,9 +123,8 @@ def generate_strings(hero_class, ability_scores, hp):
                                 Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                                 Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                                 Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter\n\n")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n")
     return fate, hometown_description
-
 
 def faerun_hero(character, home_town, worlds, exit_message):
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -149,7 +153,7 @@ def faerun_hero(character, home_town, worlds, exit_message):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
     faerun_battle = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -175,7 +179,7 @@ def faerun_hero(character, home_town, worlds, exit_message):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")           
     if battle == "1":
@@ -235,7 +239,7 @@ def faerun_hero(character, home_town, worlds, exit_message):
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
     return begin_faerun_hero, faerun_battle, battle, faerun_after_battle
     
 def nonfaerun_hero(worlds, character, home_town, exit_message):
@@ -277,7 +281,7 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
     non_faerun_battle = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -296,7 +300,7 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")           
     if battle == "1":
@@ -356,7 +360,7 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter") 
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
     return begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle
 
@@ -383,7 +387,7 @@ def baldurs_gate():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
     elminsters_challenge = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -420,7 +424,7 @@ def baldurs_gate():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter")
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
     return see_city, elminsters_challenge
     
 def leave_game(npc_1, creatures, home_town, worlds):
@@ -456,7 +460,7 @@ def invalid():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input("Press Enter\n\n") 
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
     return invalid_entry
 
 
