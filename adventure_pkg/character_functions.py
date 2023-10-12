@@ -61,9 +61,10 @@ class Character:
             'potions': [],
             'spells': [],
             'scrolls': [],
+            'bab': 'average'
         }
 
-        # Initialize modifiers for armor, weapon, and potion
+        # Initialize modifiers
         self.armor_modifier = 0
         self.weapon_modifier = 0
         self.potion_modifier = 0
@@ -83,6 +84,7 @@ class Character:
             'potions': [],
             'spells': [],
             'scrolls': [],
+            'bab': 'average'
         }
 
         # Get equipment for the character's class
@@ -130,9 +132,27 @@ class Character:
         total_damage = base_damage + strength_mod
 
         # Print statement to check the calculated damage
-        print(f"Weapon: {weapon}, Base Damage: {base_damage}, Strength Modifier: {strength_mod}, Total Damage: {total_damage}")
+        #print(f"Weapon: {weapon}, Base Damage: {base_damage}, Strength Modifier: {strength_mod}, Total Damage: {total_damage}")
 
         return max(1, total_damage)  # Ensure the damage is not negative
+    
+    def calculate_tohit(self, attack):
+        base_tohit = 0
+        strength_mod = self.abilities.calculate_modifier('Strength')
+        
+        if attack == 'poor':
+            base_tohit = 0
+        elif attack == 'average':
+            base_tohit = 0
+        elif attack == 'good':
+            base_tohit = 1
+
+        total_tohit = base_tohit + strength_mod
+
+        # Print statement to check the calculated to hit total
+        #print(f"Attack: {attack}, BaB: {base_tohit}, Strength Modifier: {strength_mod}, To Hit Total: {total_tohit}")
+
+        return total_tohit 
         
     def calculate_heal_modifier(self, cure):
         if cure == 'Cure Light Wounds':
@@ -156,12 +176,18 @@ class Character:
     def calculate_armor_bonus(self, armor, shield_bonus):
         dexterity_mod = self.abilities.calculate_modifier('Dexterity')
         return 10 + self.calculate_armor_modifier(armor) + shield_bonus + dexterity_mod
+    
+    def calculate_init_bonus(self):
+        dexterity_mod = self.abilities.calculate_modifier('Dexterity')
+        return dexterity_mod
 
     def calculate_class_specific_modifiers(self, item_type):
         if self.char_class == "Cleric":
             # Add cleric-specific logic
             if item_type == 'armor':
                 self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
+            elif item_type == 'bab':
+                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
             elif item_type == 'potions':
                 self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
             elif item_type == 'shield':
@@ -171,9 +197,11 @@ class Character:
             elif item_type == 'weapon':
                 self.weapon_modifier += self.calculate_weapon_modifier(self.equipment['weapon'])
         elif self.char_class == "Fighter":
-            # Add fighter-specific logic
+            # Add fighter-specific logic            
             if item_type == 'armor':
                 self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
+            elif item_type == 'bab':
+                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
             elif item_type == 'potions':
                 self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
             elif item_type == 'shield':
@@ -184,6 +212,8 @@ class Character:
             # Add rogue-specific logic
             if item_type == 'armor':
                 self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
+            elif item_type == 'bab':
+                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
             elif item_type == 'potions':
                 self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
             elif item_type == 'weapon':
@@ -192,6 +222,8 @@ class Character:
             # Add sorcerer-specific logic
             if item_type == 'armor':
                 self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
+            elif item_type == 'bab':
+                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
             elif item_type == 'potions':
                 self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
             elif item_type == 'arcane_spell':
@@ -202,6 +234,8 @@ class Character:
             # Add wizard-specific logic
             if item_type == 'armor':
                 self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
+            elif item_type == 'bab':
+                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
             elif item_type == 'potions':
                 self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
             elif item_type == 'arcane_spell':
@@ -220,33 +254,47 @@ class Character:
                 'weapon': 'Light Mace',
                 'potions': ['Potion - Cure Light Wounds'],
                 'scrolls': [],
-                'divine_spells': [],
+                'arcane_spells': [None],
+                'divine_spells': ['Cure Light Wounds'],
+                'bab': 'averaqge'
             },
             'Fighter': {
                 'armor': 'Chainmail',
                 'shield': 'Wooden Shield',
                 'weapon': 'Longsword',
                 'potions': ['Potion - Cure Light Wounds'],
+                'scrolls': [None],
+                'arcane_spells': [None],
+                'divine_spells': [None],
+                'bab': 'good'
             },
             'Rogue': {
                 'armor': 'Leather',
+                'shield': None,
                 'weapon': 'Throwing Dagger',
                 'potions': ['Potion - Cure Light Wounds'],
                 'scrolls': [],
+                'arcane_spells': [None],
+                'divine_spells': [None],
+                'bab': 'averaqge'
             },
             'Sorcerer': {
                 'armor': 'Robe',
                 'weapon': 'Sling',
                 'potions': ['Potion - Cure Light Wounds'],
                 'scrolls': [],
-                'arcane_spells': [],
+                'arcane_spells': ['Magic Missile'],
+                'divine_spells': [None],
+                'bab': 'poor'
             },
             'Wizard': {
                 'armor': 'Robe',
                 'weapon': 'Sling',
                 'potions': ['Potion - Cure Light Wounds'],
                 'scrolls': [],
-                'arcane_spells': [],
+                'arcane_spells': ['Magic Missile'],
+                'divine_spells': [None],
+                'bab': 'poor'
             },
             # Add more classes and their respective equipment
         }
@@ -318,80 +366,6 @@ class Character:
 
 
 """
-class Dice_Rolls(Attributes):
-    #define the range of values for dice
-    d20 = [x + 1 for x in range(20)]
-        
-    def __init__(self, character=None, creatures=None, armor_class=None, hit_points=None, Strength=None, Dexterity=None, Constitution=None, Intelligence=None, Wisdom=None, Charisma=None, saving_throws=None, roll_modifiers=None, bab=None, melee_mod=None):
-        super().__init__(character, creatures, armor_class, hit_points, Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma, saving_throws, roll_modifiers, bab, melee_mod)
-
-    def attack(self, atk_roll=1, bab=0, advantage=False, disadvantage=False, melee_mod=0, armor_class=0):
-        #current total for attack roll
-        total = 0
-        #list of outcomes for advantage/disadvantage
-        totals = []               
-        #roll d20
-        atk_roll = random.randint(1, 20)      
-        #add ability modifiers to a roll
-        attack = atk_roll + melee_mod + bab
-        #update roll total
-        total += attack
-        #update list of totals
-        totals.append(attack)
-        if advantage == True:
-            print(totals)
-            print(f"\n{self.character} rolls a {atk_roll} for a total of {max(totals)} to hit")
-        elif disadvantage == True:
-            print(totals)
-            print(f"{self.character} rolls a {atk_roll} for a total of {min(totals)} to hit")
-        else:
-            print(f"{self.character} rolls a {atk_roll} for a total of {totals} to hit")
-        if atk_roll == 20:
-                print("Nat 20")
-            #modified 20 on a roll
-        elif (attack == 20) and (melee_mod != 0):
-                print("Modified 20") 
-        elif atk_roll == 1:
-                print("You rolled a bullet! No further actions.") 
-                return  
-        if total < int(armor_class):
-            print("You missed!")
-            return False
-        else:
-            print("You hit!")
-            return True  
-
-    def damage(self, dmg_roll=1, melee_mod=0):
-        #current total for damage roll
-        total = 0
-        #list of outcomes for damage
-        totals = []               
-        #roll d6
-        dmg_roll = random.randint(1, 6)
-        damage = dmg_roll + melee_mod
-        #update roll total
-        total += damage
-        #update list of totals
-        totals.append(damage)
-        print(f"{self.character} rolls a {dmg_roll} for a total of {totals} for damage")
-        if dmg_roll == 6:
-            print("You hit for maximum damage!")
-        elif dmg_roll == 1:
-            print("My Yorkie hits harder than that!")
-
-    def show_enemies(self, creatures):
-        print(f"\n\nThe {self.creatures} see you and attack")
-        
-        #checks to see if the variable enemies is an empty list
-        if creatures == []:
-            print("Currently there are no enemies.")
-        else:
-            #creates a creatures variable to be used with the variable enemies
-            for creature in creatures:
-                print(creature)
-
-    
-
 def __repr__(self):
         return f"Character: {self.character}, HP: {self.hit_points}, AC: {self.armor_class}"
 

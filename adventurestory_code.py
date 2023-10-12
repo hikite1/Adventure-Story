@@ -37,7 +37,6 @@ my_damage = ""
 home_town = ""
 chosen_race = ""
 racial_modifiers = ""
-total_to_hit = ""
 bab = ""
 strength_mod = ""
 
@@ -153,23 +152,21 @@ while True:
         player_character.apply_racial_modifiers()
 
         # Print equipment and modifiers
-        print("\nEquipment and Modifiers:")
-        print(f"Armor: {player_character.equipment['armor']}")
-        print(f"Weapon: {player_character.equipment['weapon']}")
+        print(f"\n{Fore.GREEN + Style.NORMAL}Equipment and Spells:")
+        print(f"{Fore.GREEN + Style.NORMAL}Items: (Armor) {player_character.equipment['armor']} (Weapon) {player_character.equipment['weapon']} (Shield) {player_character.equipment['shield']}")
+        print(f"{Fore.GREEN + Style.NORMAL}Potions: {player_character.equipment['potions']}")
+        print(f"{Fore.GREEN + Style.NORMAL}Scrolls: {player_character.equipment['scrolls']}")
+        print(f"{Fore.GREEN + Style.NORMAL}Spells: (Arcane) {player_character.equipment['arcane_spells']} (Divine) {player_character.equipment['divine_spells']}\n")
         armor_modifier = player_character.calculate_armor_bonus(player_character.equipment['armor'], player_character.shield_modifier)
-        weapon_modifier = player_character.weapon_modifier
-        print(f"Armor Modifier: {armor_modifier}")
-        print(f"Weapon Modifier: {weapon_modifier}")
-        # Call the method to calculate total_to_hit
-        #total_to_hit = player_character.calculate_to_hit()
-        #print(f"Total To-Hit Bonus outside method: {total_to_hit}")
-        
-        # Print ability scores
-        print(f"\nAbility Scores:")
-        print(player_character.abilities)
+        weapon_modifier = player_character.calculate_tohit(player_character.equipment['bab'])
+        initiative_modifier = player_character.calculate_init_bonus()
+
+        #print tests
+        #print(f"Armor Modifier: {armor_modifier}")
+        #print(f"Weapon Modifier: {weapon_modifier}")
 
         # Print ability scores
-        fate, hometown_description = character_creation(hero, player_character.abilities, player_character.hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, total_to_hit)
+        fate, hometown_description = character_creation(hero, player_character.abilities, player_character.hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier)
 
         if worlds == "Ghelspad":
             begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(worlds, character, home_town, exit_message)

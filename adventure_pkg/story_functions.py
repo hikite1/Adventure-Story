@@ -1,7 +1,10 @@
 import random
-#print("story_functions is being imported.")
+from  adventure_pkg.battle_functions import Dice_Rolls
 from colorama import init, Fore, Style
 init(autoreset=True)
+
+#import tests
+#print("story_functions is being imported.")
 
 def greeting():
     greeting_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -50,7 +53,7 @@ def non_faerun_story():
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
     return ""
 
-def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, total_to_hit):
+def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier):
     # Display the ability scores with modifiers
     ability_scores_description = [
         f"{attribute}: {value} ({ability_scores.calculate_modifier(attribute.lower())})"
@@ -81,6 +84,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
     ]
 
     character_name = input(f"{Fore.CYAN + Style.NORMAL}Type in the name of your character: ")
+    print('')
 
     # Print the Fate section
     fate = print(
@@ -96,7 +100,8 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
         Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
         Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
         Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     AC: {str(armor_modifier).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
-        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Attack: {str(total_to_hit).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
+        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Attack: +{str(weapon_modifier).ljust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + " |\n",
+        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Initiative: +{str(initiative_modifier).ljust(3)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
         Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
@@ -111,14 +116,14 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
                                 Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                                 Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}You hale from a town called {home_town}.",
                                 Fore.YELLOW + Style.NORMAL + "                                  \n",
-                                Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + "You have spent the past few months under the mentorship",
-                                Fore.YELLOW + Style.NORMAL + "               |\n",
+                                Fore.YELLOW + Style.NORMAL + "         |    ", Fore.WHITE + Style.BRIGHT + "You have spent the past few months under the mentorship",
+                                Fore.YELLOW + Style.NORMAL + "                |\n",
                                 Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}of a Master {hero_class} and have been sensing",
                                 Fore.YELLOW + Style.NORMAL + "                              \n",
-                                Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + "that it is time for you to go out into the world",
-                                Fore.YELLOW + Style.NORMAL + "                      |\n",
+                                Fore.YELLOW + Style.NORMAL + "         |    ", Fore.WHITE + Style.BRIGHT + "that it is time for you to go out into the world",
+                                Fore.YELLOW + Style.NORMAL + "                       |\n",
                                 Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}and test your new skills.",
-                                Fore.YELLOW + Style.NORMAL + "                                             |\n",
+                                Fore.YELLOW + Style.NORMAL + "                                              |\n",
                                 Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                                 Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                                 Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
@@ -126,7 +131,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n")
     return fate, hometown_description
 
-def faerun_hero(character, home_town, worlds, exit_message):
+def faerun_hero(hero_class, home_town, worlds, exit_message):
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_1 = random.choice(npc1)
     npc2 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -134,20 +139,20 @@ def faerun_hero(character, home_town, worlds, exit_message):
     npc3 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_3 = random.choice(npc3)
     enemies = ["Dire Rats", "Goblins", "Skeletons"]
-    creatures = random.choice(enemies) 
+    creatures = random.choice(enemies)
 
     begin_faerun_hero = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You decide to leave your {character} mentor in {home_town}",
+    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You decide to leave your {hero_class} mentor in {home_town}",
     Fore.YELLOW + Style.NORMAL +"                                  \n",
     Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"and travel to Baldur's Gate. There are plenty of",Fore.YELLOW + Style.NORMAL +"                      |\n",
     Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"caravans headed to the event. You are able to find employment",
     Fore.YELLOW + Style.NORMAL +"         |\n", 
     Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"easily enough and it is up to you if you think anyone",
     Fore.YELLOW + Style.NORMAL +"                 |\n", 
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"needs to know of your {character} abilities or not.",
+    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"needs to know of your {hero_class} abilities or not.",
     Fore.YELLOW + Style.NORMAL +"                                             \n", 
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -159,7 +164,7 @@ def faerun_hero(character, home_town, worlds, exit_message):
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"{character} of {worlds} you have been tasked to defend the caravan",
+    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"{hero_class} of {worlds} you have been tasked to defend the caravan",
     Fore.YELLOW + Style.NORMAL +"         \n",
     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"if necessary in return for room and board on the voyage to Baldur's",
     Fore.YELLOW + Style.NORMAL +"       |\n",
@@ -181,17 +186,24 @@ def faerun_hero(character, home_town, worlds, exit_message):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
-    battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")           
+    battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
+    
     if battle == "1":
         actions = input(f"\nTwo of the {creatures} engage you in battle.\nDo you attack? (yes/no)\n\n").lower()
         if actions == "y" or actions == "yes": 
-            object_hero = Dice_Rolls(character, armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws=0, roll_modifiers=0, bab=0, melee_mod=1)  
-            object_creatures = Dice_Rolls(creatures, armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws=0, roll_modifiers=0, bab=0, melee_mod=1)         
+            # Assuming you have ability scores for the hero
+            hero_abilities = Abilities(Strength=13, Dexterity=13, Constitution=0, Intelligence=0, Wisdom=10, Charisma=1)
+            object_hero = Dice_Rolls(character=hero_class, armor_class=15, hit_points=6, abilities=hero_abilities)
+            
+            # Assuming you have ability scores for the creatures
+            creature_abilities = Abilities(Strength=13, Dexterity=13, Constitution=0, Intelligence=0, Wisdom=10, Charisma=1)
+            object_creatures = Dice_Rolls(character=creatures, armor_class=15, hit_points=6, abilities=creature_abilities)
+            
         elif actions == "n" or actions == "no":
             runaway = input("Do you want to run away? (yes/no)").lower()
             if runaway == "n" or runaway == "no":
                 actions = input(f"\nTwo of the {creatures} engage you in battle.\nDo you attack? (yes/no)").lower() 
-            elif runaway == "y" or "yes":
+            elif runaway == "y" or runaway == "yes":  # Corrected this line
                 print(exit_message)
             else:                   
                 invalid_entry = invalid()
@@ -200,12 +212,14 @@ def faerun_hero(character, home_town, worlds, exit_message):
             invalid_entry = invalid()
             print(invalid_entry)
             actions = input(f"Two of the {creatures} engage you in battle.\nDo you attack? (yes/no)").lower()
-        if object_hero.attack(character):
+        
+        if object_hero.attack(hero_class):
             object_hero.damage()
             input("Press Enter\n")
-        if object_creatures.attack(creatures):
+        if object_creatures.attack():
             object_creatures.damage()
             input("Press Enter")
+            
     elif battle == "2":
         exit_message, npc1, npc_1, enemies, creatures = leave_game(npc_1, creatures, home_town, worlds)
         print(exit_message)
@@ -213,13 +227,13 @@ def faerun_hero(character, home_town, worlds, exit_message):
     else:
         invalid_entry = invalid()
         print(invalid_entry)
-        battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")  
+        battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 
     faerun_after_battle = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your {character} abilities are amazing! Your group is fascinated by ",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
         Fore.YELLOW + Style.NORMAL +"         \n",
         Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"the display of your skills. With only one of the {creatures} left, it runs",Fore.YELLOW + Style.NORMAL +"     \n",
         Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"away terrified at your decimation of its group. The rest of the journey",
@@ -242,7 +256,7 @@ def faerun_hero(character, home_town, worlds, exit_message):
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
     return begin_faerun_hero, faerun_battle, battle, faerun_after_battle
     
-def nonfaerun_hero(worlds, character, home_town, exit_message):
+def nonfaerun_hero(worlds, hero_class, home_town, exit_message):
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_1 = random.choice(npc1)
     npc2 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -250,7 +264,7 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     npc3 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_3 = random.choice(npc3)
     enemies = ["Dire Rats", "Goblins", "Skeletons"]
-    creatures = random.choice(enemies) 
+    creatures = random.choice(enemies)
 
     begin_nonfaerun_hero = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -258,7 +272,7 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
     Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Hero of {worlds} you have joined the ranks and have been used for ",
     Fore.YELLOW + Style.NORMAL +"                                  \n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"your {character} skill set. This day you are preparing for battle on a city",Fore.YELLOW + Style.NORMAL +"                      \n",
+    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"your {hero_class} skill set. This day you are preparing for battle on a city",Fore.YELLOW + Style.NORMAL +"                      \n",
     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"in {worlds} that is one of good people. The thought of waging war on this",
     Fore.YELLOW + Style.NORMAL +"         \n", 
     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"symbol of truth and justice is just incomprehensible. Then suddenly you",
@@ -287,7 +301,7 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"{character} of {worlds} you have been tasked to police the army camp. ",
+    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"{hero_class} of {worlds} you have been tasked to police the army camp. ",
     Fore.YELLOW + Style.NORMAL +"         \n",
     Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"The resistance is trying to fight back against Orcus's occupation of",Fore.YELLOW + Style.NORMAL +"  |\n",
     Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"{home_town}. Your unit today is a {npc_1}, a {npc_2}, and a {npc_3}.",
@@ -302,17 +316,24 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
-    battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")           
+    battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
+    
     if battle == "1":
         actions = input(f"\nTwo of the {creatures} engage you in battle.\nDo you attack? (yes/no)\n\n").lower()
         if actions == "y" or actions == "yes": 
-            object_hero = Dice_Rolls(character, armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws=0, roll_modifiers=0, bab=0, melee_mod=1)  
-            object_creatures = Dice_Rolls(creatures, armor_class=15, hit_points=6, strength=13, dexterity=13, constitution=0, intelligence=0, wisdom=10, charisma=1, saving_throws=0, roll_modifiers=0, bab=0, melee_mod=1)         
+            # Assuming you have ability scores for the hero
+            hero_abilities = Abilities(Strength=13, Dexterity=13, Constitution=0, Intelligence=0, Wisdom=10, Charisma=1)
+            object_hero = Dice_Rolls(character=hero_class, armor_class=15, hit_points=6, abilities=hero_abilities)
+            
+            # Assuming you have ability scores for the creatures
+            creature_abilities = Abilities(Strength=13, Dexterity=13, Constitution=0, Intelligence=0, Wisdom=10, Charisma=1)
+            object_creatures = Dice_Rolls(character=creatures, armor_class=15, hit_points=6, abilities=creature_abilities)
+            
         elif actions == "n" or actions == "no":
             runaway = input("Do you want to run away? (yes/no)").lower()
             if runaway == "n" or runaway == "no":
                 actions = input(f"\nTwo of the {creatures} engage you in battle.\nDo you attack? (yes/no)").lower() 
-            elif runaway == "y" or "yes":
+            elif runaway == "y" or runaway == "yes":  # Corrected this line
                 print(exit_message)
             else:                   
                 invalid_entry = invalid()
@@ -321,12 +342,14 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
             invalid_entry = invalid()
             print(invalid_entry)
             actions = input(f"Two of the {creatures} engage you in battle.\nDo you attack? (yes/no)").lower()
-        if object_hero.attack(character):
+        
+        if object_hero.attack(hero_class):
             object_hero.damage()
             input("Press Enter\n")
-        if object_creatures.attack(creatures):
+        if object_creatures.attack():
             object_creatures.damage()
             input("Press Enter")
+            
     elif battle == "2":
         exit_message, npc1, npc_1, enemies, creatures = leave_game(npc_1, creatures, home_town, worlds)
         print(exit_message)
@@ -340,7 +363,7 @@ def nonfaerun_hero(worlds, character, home_town, exit_message):
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your {character} abilities are amazing! Your group is fascinated by ",
+    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
     Fore.YELLOW + Style.NORMAL +"         \n",
     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"the display of your skills. With only one of the {creatures} left. A tear",Fore.YELLOW + Style.NORMAL +"     \n",
     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"in the fabrics of reality is not only in front of you, but a purplish",
