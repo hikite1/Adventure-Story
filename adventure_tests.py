@@ -1,5 +1,23 @@
 from adventurestory_code import *
 
+#worlds = ""
+#enemies = ""
+#self = ""
+#exit = "Exit"
+#play_again = ""
+#enter = ""
+#dice_result = ""
+#battle = ""
+#hero = ""
+#character = ""
+#my_hp = ""
+#my_damage = ""
+#home_town = ""
+#chosen_race = ""
+#racial_modifiers = ""
+#bab = ""
+#strength_mod = ""
+
 def run_tests():
     # Create a test character
     test_character = Character(char_class="Cleric", character_abilities={}, racial_traits={})

@@ -1,17 +1,16 @@
-# Imports random function from the Python library
+#Imports random function from the Python library
 import random
 from colorama import init, Fore, Style
 init(autoreset=True)
-# Imports custom modules
+
+#Imports custom modules
 from adventure_pkg.story_functions import character_creation, faerun_story, non_faerun_story, greeting, leave_game, faerun_hero, nonfaerun_hero, baldurs_gate, invalid, win_game
 from adventure_pkg.character_functions import Character
 
-# Initializing variables
+#Initializing variables
 toril = "Toril"
 krynn = "Krynn"
 ghelspad = "Ghelspad"
-worlds = ""
-
 cleric = "Cleric"
 wizard = "Wizard"
 sorcerer = "Sorcerer"
@@ -20,25 +19,8 @@ rogue = "Rogue"
 npc_1 = ""
 npc_2 = ""
 npc_3 = ""
-creatures = ""
-enemies = ""
-self = ""
-
-exit = "Exit"
-play_again = ""
-enter = ""
+monster_name = ""
 exit_message = ""
-dice_result = ""
-battle = ""
-hero = ""
-character = ""
-my_hp = ""
-my_damage = ""
-home_town = ""
-chosen_race = ""
-racial_modifiers = ""
-bab = ""
-strength_mod = ""
 
 character_abilities = {
     "Cleric": ["Wisdom", "Constitution", "Charisma", "Intelligence", "Strength", "Dexterity"],
@@ -46,9 +28,7 @@ character_abilities = {
     "Rogue": ["Dexterity", "Intelligence", "Wisdom", "Strength", "Charisma", "Constitution"],
     "Sorcerer": ["Charisma", "Constitution", "Dexterity", "Intelligence", "Wisdom", "Strength"],
     "Wizard": ["Intelligence", "Constitution", "Dexterity", "Wisdom", "Strength", "Charisma"],
-}
-
-# Add more character classes as needed
+} #Add more character classes as needed
 
 racial_traits = {
     "Dwarf": ["Constitution", 2, "Charisma", -2],
@@ -56,22 +36,22 @@ racial_traits = {
     "Human": [],
 }
 
-# Main while loop shell containing nested while loops
+#Main while loop shell containing nested while loops
 while True:
     greeting()
     valid_world = False
 
-    # Beginning of the game prompt function in a nested while loop
+    #Beginning of the game prompt
     world = input(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Ghelspad\n2) Krynn\n3) Toril\n\n")
 
-    # If statement to give the player a choice of starting world in a while loop to allow a reprompt from world input if incorrect input is given
+    #choice of starting world
     while not valid_world:
         if world == "Ghelspad" or world == "1":
             cities = ["Bard's Gate", "Hedrad", "Mithril"]
             home_town = random.choice(cities)
-            # Initializing worlds and a stored variable to be accessed as the story progresses if this is returned True
+            #Initializing worlds variable to be accessed as the story progresses if this is returned True
             worlds = ghelspad
-            # Initializing _origin to allow access to the origin_story function from an imported module
+            #Initializing _origin variable
             non_faerun_origin = non_faerun_story()
             print(non_faerun_origin)
             valid_world = True
@@ -105,7 +85,7 @@ while True:
 
         if hero_choice.lower() == "exit":
             # Handle exit
-            exit_message, npc1, npc_1, enemies, creatures = leave_game(npc_1, creatures, home_town, worlds)
+            exit_message, npc1, npc_1, enemies, monster_name = leave_game(npc_1, monster_name, home_town, worlds)
             print(exit_message)
             quit()
 
@@ -165,18 +145,73 @@ while True:
         #print(f"Armor Modifier: {armor_modifier}")
         #print(f"Weapon Modifier: {weapon_modifier}")
 
-        # Print ability scores
+        #calls function to print player character
         fate, hometown_description = character_creation(hero, player_character.abilities, player_character.hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier)
 
         if worlds == "Ghelspad":
-            begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(worlds, character, home_town, exit_message)
-            print(begin_nonfaerun_hero)
+            #monster dictionary
+            monster_details_list = [
+                {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
+                {'name': 'Skeleton', 'armor_class': 15, 'hit_points': 6, 'to_hit': 1, 'initiative': 5, 'damage': random.randint(1, 6)+1},
+                {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
+            ]
+
+            #Randomly choose a monster details dictionary
+            chosen_monster_details = random.choice(monster_details_list)
+
+            #information for object monster
+            monster_name = chosen_monster_details['name']
+            armor_class = chosen_monster_details['armor_class']
+            hit_points = chosen_monster_details['hit_points']
+            to_hit = chosen_monster_details['to_hit']
+            initiative = chosen_monster_details['initiative']
+            damage = chosen_monster_details['damage']
+
+            begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+
         elif worlds == "Krynn":
-            begin_nonfaerun_hero, non_faerun_battle, battle = nonfaerun_hero(worlds, character, home_town, exit_message)
-            print(begin_nonfaerun_hero)
+            #monster dictionary
+            monster_details_list = [
+                {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
+                {'name': 'Skeleton', 'armor_class': 15, 'hit_points': 6, 'to_hit': 1, 'initiative': 5, 'damage': random.randint(1, 6)+1},
+                {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
+            ]
+
+
+            #Randomly choose a monster details dictionary
+            chosen_monster_details = random.choice(monster_details_list)
+
+            #information for object monster
+            monster_name = chosen_monster_details['name']
+            armor_class = chosen_monster_details['armor_class']
+            hit_points = chosen_monster_details['hit_points']
+            to_hit = chosen_monster_details['to_hit']
+            initiative = chosen_monster_details['initiative']
+            damage = chosen_monster_details['damage']
+
+            begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+
         elif worlds == "Toril":
-            begin_faerun_hero, faerun_battle, battle = faerun_hero(character, home_town, worlds, exit_message)
-            print(begin_faerun_hero)
+            #monster dictionary
+            monster_details_list = [
+                {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
+                {'name': 'Skeleton', 'armor_class': 15, 'hit_points': 6, 'to_hit': 1, 'initiative': 5, 'damage': random.randint(1, 6)+1},
+                {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
+            ]
+
+            #Randomly choose a monster details dictionary
+            chosen_monster_details = random.choice(monster_details_list)
+
+            #information for object monster
+            monster_name = chosen_monster_details['name']
+            armor_class = chosen_monster_details['armor_class']
+            hit_points = chosen_monster_details['hit_points']
+            to_hit = chosen_monster_details['to_hit']
+            initiative = chosen_monster_details['initiative']
+            damage = chosen_monster_details['damage']
+
+            begin_faerun_hero, faerun_battle, battle, faerun_afterbattle = faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+
         break
 
     see_city, elminsters_challenge = baldurs_gate()
