@@ -1,3 +1,5 @@
+#character_functions.py
+
 import random
 
 class Abilities:
@@ -43,10 +45,10 @@ class Abilities:
                f"Int={self.Intelligence}, Wis={self.Wisdom}, Cha={self.Charisma}"
 
 class Character:
-    def __init__(self, char_class, character_abilities, racial_traits):
+    def __init__(self, char_class, character_abilities=None, racial_traits=None):
         self.char_class = char_class
-        self.character_abilities = character_abilities
-        self.racial_traits = racial_traits
+        self.character_abilities = character_abilities or {}
+        self.racial_traits = racial_traits or {}
         self.priority = self.get_priority()
         self.chosen_race = None  # Initialize chosen_race attribute
         self.abilities = Abilities.generate_random(self.priority)
@@ -61,7 +63,7 @@ class Character:
             'potions': [],
             'spells': [],
             'scrolls': [],
-            'bab': 'average'
+            'bab': 0
         }
 
         # Initialize modifiers
@@ -84,7 +86,7 @@ class Character:
             'potions': [],
             'spells': [],
             'scrolls': [],
-            'bab': 'average'
+            'bab': 0
         }
 
         # Get equipment for the character's class
@@ -94,7 +96,14 @@ class Character:
         self.equipment = general_equipment_dict
 
         for item_type, item in class_equipment.items():
-            self.equipment[item_type] = item  # Use square bracket notation to set the value
+            if item_type == 'shield' and isinstance(item, str):
+                # Extract shield bonus from the string and convert to an integer
+                digits = ''.join(filter(str.isdigit, item))
+                shield_bonus = int(digits) if digits else 0
+                self.equipment[item_type] = shield_bonus
+            else:
+                self.equipment[item_type] = item
+
             # Calculate class-specific modifiers
             self.calculate_class_specific_modifiers(item_type)
 
@@ -132,7 +141,7 @@ class Character:
         total_damage = base_damage + strength_mod
 
         # Print statement to check the calculated damage
-        #print(f"Weapon: {weapon}, Base Damage: {base_damage}, Strength Modifier: {strength_mod}, Total Damage: {total_damage}")
+        print(f"Weapon: {weapon}, Base Damage: {base_damage}, Strength Modifier: {strength_mod}, Total Damage: {total_damage}")
 
         return max(1, total_damage)  # Ensure the damage is not negative
     
@@ -175,75 +184,33 @@ class Character:
         
     def calculate_armor_bonus(self, armor, shield_bonus):
         dexterity_mod = self.abilities.calculate_modifier('Dexterity')
-        return 10 + self.calculate_armor_modifier(armor) + shield_bonus + dexterity_mod
+
+        armor_modifier = self.calculate_armor_modifier(armor) if armor else 0
+        shield_bonus = shield_bonus if shield_bonus else 0
+
+        return 10 + armor_modifier + shield_bonus + dexterity_mod
     
     def calculate_init_bonus(self):
         dexterity_mod = self.abilities.calculate_modifier('Dexterity')
         return dexterity_mod
-
+    
     def calculate_class_specific_modifiers(self, item_type):
-        if self.char_class == "Cleric":
-            # Add cleric-specific logic
-            if item_type == 'armor':
-                self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
-            elif item_type == 'bab':
-                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
-            elif item_type == 'potions':
-                self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
-            elif item_type == 'shield':
-                self.shield_modifier += self.calculate_shield_modifier(self.equipment['shield'])
-            elif item_type == 'divine_spell':
-                self.divine_spell_modifier += self.calculate_heal_modifier(self.equipment['divine_spells'])
-            elif item_type == 'weapon':
-                self.weapon_modifier += self.calculate_weapon_modifier(self.equipment['weapon'])
-        elif self.char_class == "Fighter":
-            # Add fighter-specific logic            
-            if item_type == 'armor':
-                self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
-            elif item_type == 'bab':
-                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
-            elif item_type == 'potions':
-                self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
-            elif item_type == 'shield':
-                self.shield_modifier += self.calculate_shield_modifier(self.equipment['shield'])
-            elif item_type == 'weapon':
-                self.weapon_modifier += self.calculate_weapon_modifier(self.equipment['weapon'])
-        elif self.char_class == "Rogue":
-            # Add rogue-specific logic
-            if item_type == 'armor':
-                self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
-            elif item_type == 'bab':
-                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
-            elif item_type == 'potions':
-                self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
-            elif item_type == 'weapon':
-                self.weapon_modifier += self.calculate_weapon_modifier(self.equipment['weapon'])
-        elif self.char_class == "Sorcerer":
-            # Add sorcerer-specific logic
-            if item_type == 'armor':
-                self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
-            elif item_type == 'bab':
-                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
-            elif item_type == 'potions':
-                self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
-            elif item_type == 'arcane_spell':
-                self.arcane_spell_modifier += self.calculate_arcane_spell_modifier(self.equipment['arcane_spells'])
-            elif item_type == 'weapon':
-                self.weapon_modifier += self.calculate_weapon_modifier(self.equipment['weapon'])
-        elif self.char_class == "Wizard":
-            # Add wizard-specific logic
-            if item_type == 'armor':
-                self.armor_modifier += self.calculate_armor_modifier(self.equipment['armor'])
-            elif item_type == 'bab':
-                self.armor_modifier += self.calculate_tohit(self.equipment['bab'])
-            elif item_type == 'potions':
-                self.potion_modifier += self.calculate_potion_modifier(self.equipment['potions'][0])
-            elif item_type == 'arcane_spell':
-                self.arcane_spell_modifier += self.calculate_arcane_spell_modifier(self.equipment['arcane_spells'])
-            elif item_type == 'weapon':
-                self.weapon_modifier += self.calculate_weapon_modifier(self.equipment['weapon'])
-            # Add similar logic for other item types
-        # Add more elif blocks for other classes
+        class_specific_logic = {
+            "Cleric": ['armor', 'tohit_modifier', 'potion', 'shield', 'divine_spell', 'weapon'],
+            "Fighter": ['armor', 'tohit_modifier', 'potion', 'shield', 'weapon'],
+            "Rogue": ['armor', 'tohit_modifier', 'potion', 'weapon'],
+            "Sorcerer": ['armor', 'tohit_modifier', 'potion', 'arcane_spell', 'weapon'],
+            "Wizard": ['armor', 'tohit_modifier', 'potion', 'arcane_spell', 'weapon']
+            # Add more classes and their specific logic
+        }
+
+        if self.char_class in class_specific_logic:
+            for specific_item_type in class_specific_logic[self.char_class]:
+                if item_type == specific_item_type:
+                    modifier_method = f"calculate_{item_type}_modifier"
+                    setattr(self, f"{item_type}_modifier", getattr(self, modifier_method)(self.equipment.get(item_type, 0)))
+                    break
+
 
     def get_class_equipment(self):
         # General equipment for all classes

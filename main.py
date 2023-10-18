@@ -1,3 +1,5 @@
+#main.py
+
 #Imports random function from the Python library
 import random
 from colorama import init, Fore, Style
@@ -177,17 +179,8 @@ while True:
                 {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
             ]
 
-
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
-
-            #information for object monster
-            monster_name = chosen_monster_details['name']
-            armor_class = chosen_monster_details['armor_class']
-            hit_points = chosen_monster_details['hit_points']
-            to_hit = chosen_monster_details['to_hit']
-            initiative = chosen_monster_details['initiative']
-            damage = chosen_monster_details['damage']
 
             begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
@@ -201,14 +194,6 @@ while True:
 
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
-
-            #information for object monster
-            monster_name = chosen_monster_details['name']
-            armor_class = chosen_monster_details['armor_class']
-            hit_points = chosen_monster_details['hit_points']
-            to_hit = chosen_monster_details['to_hit']
-            initiative = chosen_monster_details['initiative']
-            damage = chosen_monster_details['damage']
 
             begin_faerun_hero, faerun_battle, battle, faerun_afterbattle = faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 

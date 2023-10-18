@@ -1,9 +1,12 @@
+#story_functions.py
+
 import random
 from colorama import init, Fore, Style
 init(autoreset=True)
 
 from  adventure_pkg.battle_functions import Combat_Actions
 from adventure_pkg.character_functions import Abilities, Character
+from adventure_pkg.monster_battle_functions import Monster
 
 #print("story_functions is being imported.")
 
@@ -160,11 +163,14 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         abilities=hero_abilities
     )
 
-    # Create a Combat_Actions object for the creature
-    chosen_monster_object = Combat_Actions(
-        character=chosen_monster_details['name'],
-        armor_class=chosen_monster_details.get('armor_class', 0),
-        hit_points=chosen_monster_details.get('hit_points', 0),
+    # Create Monster object based on chosen_monster_details dictionary
+    chosen_monster_object = Monster(
+        name=chosen_monster_details['name'],
+        armor_class=chosen_monster_details['armor_class'],
+        hit_points=chosen_monster_details['hit_points'],
+        to_hit=chosen_monster_details['to_hit'],
+        initiative=chosen_monster_details['initiative'],
+        damage=chosen_monster_details['damage']
     )
 
     begin_faerun_hero = print(
@@ -222,31 +228,46 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     #print(f"Initiative: {initiative}")
     #print(f"Damage: {damage}")
 
+    # Debug print statements
+    print("DEBUG: Chosen Monster Details:", chosen_monster_details)
+    print("DEBUG: Chosen Monster Name:", monster_name)
+
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 
     if battle == "1":
         print(begin_faerun_hero)
-        actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)\n\n").lower()
-        if actions == "y" or actions == "yes":
-            #battle logic here
-            while hero_object.is_alive() and chosen_monster_object.is_alive():
-                print("==== Battle ====")
-                print(f"{hero_class} HP: {hero_object.hit_points}")
-                print(f"{monster_name} HP: {chosen_monster_object.hit_points}")
+        while hero_object.is_alive() and chosen_monster_object.is_alive():
+            print("==== Battle ====")
+            print(f"{hero_class} HP: {hero_object.hit_points}")
+            print(f"{monster_name} HP: {chosen_monster_object.hit_points}")
 
-                # Prompt the user for actions
-                actions = input("\nDo you...\n1) Attack\n2) Run away\n\n").lower()
+            # Prompt the user for actions
+            actions = input("\nDo you...\n1) Attack\n2) Run away\n\n").lower()
 
-                if actions == "1":
-                    # Hero attacks
-                    if hero_object.attack(hero_class):
-                        chosen_monster_object.damage()
-                        print(f"You dealt {hero_object.damage()} damage to {monster_name}!")
+            if actions == "1":
+                # Hero attacks
+                total_damage = hero_object.attack(chosen_monster_object)
+                weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
 
-                    # Creature attacks
-                    if chosen_monster_object.attack(hero_object):
-                        hero_object.damage()
-                        print(f"{monster_name} dealt {chosen_monster_object.damage()} damage to {hero_class}!")
+                if total_damage > 0:
+                    print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
+                    if chosen_monster_object.take_damage(total_damage):
+                        print(f"You dealt {total_damage} damage to {monster_name}!")
+                    else:
+                        print(f"You missed the attack on {monster_name}!")
+                else:
+                    print("Invalid target type. Expected a Character or Combat_Actions object.")
+
+                # Creature attacks
+                if chosen_monster_object.is_alive():
+                    monster_damage = chosen_monster_object.attack(hero_object)
+                    print(f"Debug: Monster Damage: {monster_damage}")
+
+                    if monster_damage > 0:
+                        hero_object.take_damage(monster_damage)
+                        print(f"{monster_name} dealt {monster_damage} damage to {hero_class}!")
+                    else:
+                        print(f"{monster_name} missed the attack on {hero_class}!")
 
                 elif actions == "2":
                     print(exit_message)
@@ -255,25 +276,25 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                 else:
                     print("Invalid option. Please choose again.")
 
-            # Print the result of the battle
-            if hero_object.is_alive():
-                print(f"{hero_class} won the battle!")
-            else:
-                print(f"{monster_name} defeated {hero_class}. Game over.")
+                # Print the result of the battle
+                if hero_object.is_alive():
+                    print(f"{hero_class} won the battle!")
+                else:
+                    print(f"{monster_name} defeated {hero_class}. Game over.")
 
-        elif actions == "n" or actions == "no":
-            runaway = input("Do you want to run away? (yes/no)").lower()
-            if runaway == "n" or runaway == "no":
-                actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
-            elif runaway == "y" or runaway == "yes":
-                print(exit_message)
+            elif actions == "n" or actions == "no":
+                runaway = input("Do you want to run away? (yes/no)").lower()
+                if runaway == "n" or runaway == "no":
+                    actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
+                elif runaway == "y" or runaway == "yes":
+                    print(exit_message)
+                else:
+                    invalid_entry = invalid()
+                    print(invalid_entry)
             else:
                 invalid_entry = invalid()
                 print(invalid_entry)
-        else:
-            invalid_entry = invalid()
-            print(invalid_entry)
-            actions = input(f"Two of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
+                actions = input(f"Two of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
 
     elif battle == "2":
         exit_message, npc1, npc_1, monster_name = leave_game(npc_1, monster_name, home_town, worlds)
@@ -342,11 +363,14 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         abilities=hero_abilities
     )
 
-    # Create a Combat_Actions object for the creature
-    chosen_monster_object = Combat_Actions(
-        character=chosen_monster_details['name'],
-        armor_class=chosen_monster_details.get('armor_class', 0),
-        hit_points=chosen_monster_details.get('hit_points', 0),
+    # Create Monster object based on chosen_monster_details dictionary
+    chosen_monster_object = Monster(
+        name=chosen_monster_details['name'],
+        armor_class=chosen_monster_details['armor_class'],
+        hit_points=chosen_monster_details['hit_points'],
+        to_hit=chosen_monster_details['to_hit'],
+        initiative=chosen_monster_details['initiative'],
+        damage=chosen_monster_details['damage']
     )
 
     begin_nonfaerun_hero = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -400,32 +424,47 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                               Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+    
+    # Debug print statements
+    print("DEBUG: Chosen Monster Details:", chosen_monster_details)
+    print("DEBUG: Chosen Monster Name:", monster_name)
 
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 
     if battle == "1":
         print(begin_nonfaerun_hero)
-        actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)\n\n").lower()
-        if actions == "y" or actions == "yes":
-            #battle logic here
-            while hero_object.is_alive() and chosen_monster_object.is_alive():
-                print("==== Battle ====")
-                print(f"{hero_class} HP: {hero_object.hit_points}")
-                print(f"{monster_name} HP: {chosen_monster_object.hit_points}")
+        while hero_object.is_alive() and chosen_monster_object.is_alive():
+            print("==== Battle ====")
+            print(f"{hero_class} HP: {hero_object.hit_points}")
+            print(f"{monster_name} HP: {chosen_monster_object.hit_points}")
 
-                # Prompt the user for actions
-                actions = input("\nDo you...\n1) Attack\n2) Run away\n\n").lower()
+            # Prompt the user for actions
+            actions = input("\nDo you...\n1) Attack\n2) Run away\n\n").lower()
 
-                if actions == "1":
-                    # Hero attacks
-                    if hero_object.attack(chosen_monster_object):
-                        chosen_monster_object.damage()
-                        print(f"You dealt {hero_object.damage()} damage to {monster_name}!")
+            if actions == "1":
+                # Hero attacks
+                total_damage = hero_object.attack(chosen_monster_object)
+                weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
 
-                    # Creature attacks
-                    if chosen_monster_object.attack(hero_object):
-                        hero_object.damage()
-                        print(f"{monster_name} dealt {chosen_monster_object.damage()} damage to {hero_class}!")
+                if total_damage > 0:
+                    print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
+                    if chosen_monster_object.take_damage(total_damage):
+                        print(f"You dealt {total_damage} damage to {monster_name}!")
+                    else:
+                        print(f"You missed the attack on {monster_name}!")
+                else:
+                    print("Invalid target type. Expected a Character or Combat_Actions object.")
+
+                # Creature attacks
+                if chosen_monster_object.is_alive():
+                    monster_damage = chosen_monster_object.attack(hero_object)
+                    print(f"Debug: Monster Damage: {monster_damage}")
+
+                    if monster_damage > 0:
+                        hero_object.take_damage(monster_damage)
+                        print(f"{monster_name} dealt {monster_damage} damage to {hero_class}!")
+                    else:
+                        print(f"{monster_name} missed the attack on {hero_class}!")
 
                 elif actions == "2":
                     print(exit_message)
@@ -434,25 +473,25 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                 else:
                     print("Invalid option. Please choose again.")
 
-            # Print the result of the battle
-            if hero_object.is_alive():
-                print(f"{hero_class} won the battle!")
-            else:
-                print(f"{monster_name} defeated {hero_class}. Game over.")
+                # Print the result of the battle
+                if hero_object.is_alive():
+                    print(f"{hero_class} won the battle!")
+                else:
+                    print(f"{monster_name} defeated {hero_class}. Game over.")
 
-        elif actions == "n" or actions == "no":
-            runaway = input("Do you want to run away? (yes/no)").lower()
-            if runaway == "n" or runaway == "no":
-                actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
-            elif runaway == "y" or runaway == "yes":
-                print(exit_message)
+            elif actions == "n" or actions == "no":
+                runaway = input("Do you want to run away? (yes/no)").lower()
+                if runaway == "n" or runaway == "no":
+                    actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
+                elif runaway == "y" or runaway == "yes":
+                    print(exit_message)
+                else:
+                    invalid_entry = invalid()
+                    print(invalid_entry)
             else:
                 invalid_entry = invalid()
                 print(invalid_entry)
-        else:
-            invalid_entry = invalid()
-            print(invalid_entry)
-            actions = input(f"Two of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
+                actions = input(f"Two of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
 
     elif battle == "2":
         exit_message, npc1, npc_1, monster_name = leave_game(npc_1, monster_name, home_town, worlds)

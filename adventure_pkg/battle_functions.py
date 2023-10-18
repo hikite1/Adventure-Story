@@ -1,36 +1,55 @@
+#battle_functons.py
+
 import random
+
+from adventure_pkg.character_functions import Character
+from adventure_pkg.monster_battle_functions import Monster
+
 
 class Combat_Actions:
     d20 = [x + 1 for x in range(20)]
 
-    def __init__(self, character=None, armor_class=None, hit_points=None, abilities=None, creatures=None):
+    def __init__(self, character, armor_class, hit_points, abilities):
         self.character = character
         self.armor_class = armor_class
         self.hit_points = hit_points
         self.abilities = abilities
-        self.creatures = creatures
 
     def attack(self, target):
         print(f"Debug: self.character = {self.character}")
         atk_roll = random.choice(self.d20)
-        melee_mod = self.character.calculate_tohit(self.character.equipment['bab'])
-        armor_class = target.armor_class  # Use the target's armor class
 
-        total_tohit = atk_roll + melee_mod
+        # Check if the target is a Character or Combat_Actions instance
+        if isinstance(target, Combat_Actions):
+            armor_class = target.character.calculate_armor_bonus(target.character.equipment['armor'], target.character.equipment['shield'])
+        elif isinstance(target, Character):
+            armor_class = target.calculate_armor_bonus(target.equipment['armor'], target.equipment['shield'])
+        else:
+            print("Invalid target type. Expected a Character or Combat_Actions object.")
+            return 0  # Return 0 to indicate a miss
+
+        total_tohit = atk_roll + self.character.calculate_tohit(self.character.equipment['bab'])
 
         print(f"{self.character.char_class} rolls a {atk_roll} for a total of {total_tohit} to hit")
 
-        if atk_roll == 20 or total_tohit >= armor_class:
-            print("You hit!")
-            return True
+        if total_tohit >= armor_class:
+            damage = self.character.calculate_weapon_modifier(self.character.equipment['weapon'])
+            print(f"You hit for {damage} damage!")
+            return damage
         else:
             print("You missed!")
-            return False
+            return 0  # Return 0 to indicate a miss
 
-    def damage(self):
+    def damage(self, target_details):
         dmg_roll = random.randint(1, 6)
-        print(f"Type of self.character: {type(self.character)}")
-        melee_mod = self.character.weapon_modifier  # Assuming weapon_modifier is the melee modifier
+
+        if isinstance(target_details, Monster):
+            melee_mod = target_details.damage
+        elif isinstance(target_details, dict) and 'damage' in target_details:
+            melee_mod = target_details['damage']
+        else:
+            melee_mod = 0  # Default value if target doesn't have damage attribute
+
         damage = dmg_roll + melee_mod
 
         print(f"{self.character.char_class} rolls a {dmg_roll} for a total of {damage} for damage")
@@ -40,17 +59,14 @@ class Combat_Actions:
         elif dmg_roll == 1:
             print("My Yorkie hits harder than that!")
 
+        print(f"You dealt {damage} damage to {target_details['name']}!")
+
         return damage
-
-    def show_enemies(self):
-        print(f"\n\nThe {self.creatures} see you and attack")
-
-        if not self.creatures:
-            print("Currently there are no enemies.")
-        else:
-            for creature in self.creatures:
-                print(creature)
-
+    
+    def take_damage(self, damage):
+        self.hit_points -= damage
+        if self.hit_points <= 0:
+            print(f"{self.character.char_class} has been defeated!")
 
     def is_alive(self):
         return self.hit_points > 0

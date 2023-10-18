@@ -2,19 +2,17 @@
 #Keith Jackson
 
 Alaundo's Prophecy
-This is set in the D&D 3.5 campaign setting. A player can choose between different home worlds, classes, and races. Based on player choices they will have differnet story lines. The story will conclude in Baldur's Gate. 
+This is set in the D&D 3.5 campaign setting. A player can choose between different home worlds, classes, and races. Based on player choices they will have differnet story lines. There is one battle for the adventurers accepting the challenge. The story concludes in Baldur's Gate. 
 
 Errors
-First Battle in story
+None known that crash the story. Battle functions need work. Player can run away and continue story to the end.
 
 In Development
-battle_functions.py class Dice_Rolls to be used in story_functions.py with functions faerun_hero and nonfaerun_hero
-in battle_functions.py the method attack needs to use OOP character created from character_function.py and check the class Dice_Rolls is being called correctly
+battle functions, specifically to allow hero to roll an attack against the monster. Right now the monster just attacks the hero and does damage to the hero. 
 
-create a monster_functions.py to create a dictionary of monsters and use similar logic as in character_functions.py
+Deploy the project so everyone can play it, HTML python terminal? web app?
 
-Get all variables to call correctly throughout story
-
-Deploy the project so everyone can play it
+Future Ideas
+add feats, skill, combat actions, spells, size modifiers, intiative rolls, and saving throws 
 
 #adventure_story
