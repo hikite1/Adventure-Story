@@ -1,4 +1,6 @@
 #main.py
+#import sys
+#print(sys.path)
 
 #Imports random function from the Python library
 import random
@@ -169,7 +171,7 @@ while True:
             initiative = chosen_monster_details['initiative']
             damage = chosen_monster_details['damage']
 
-            begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            begin_nonfaerun_hero, non_faerun_battle, battle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
         elif worlds == "Krynn":
             #monster dictionary
@@ -182,7 +184,7 @@ while True:
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
 
-            begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            begin_nonfaerun_hero, non_faerun_battle, battle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
         elif worlds == "Toril":
             #monster dictionary
@@ -195,12 +197,4 @@ while True:
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
 
-            begin_faerun_hero, faerun_battle, battle, faerun_afterbattle = faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
-
-        break
-
-    see_city, elminsters_challenge = baldurs_gate()
-    print(see_city)
-
-    congratulations, you_win = win_game(worlds, home_town)
-    print(congratulations)
+            begin_faerun_hero, faerun_battle, battle = faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)

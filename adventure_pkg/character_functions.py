@@ -141,7 +141,7 @@ class Character:
         total_damage = base_damage + strength_mod
 
         # Print statement to check the calculated damage
-        print(f"Weapon: {weapon}, Base Damage: {base_damage}, Strength Modifier: {strength_mod}, Total Damage: {total_damage}")
+        #print(f"Weapon: {weapon}, Base Damage: {base_damage}, Strength Modifier: {strength_mod}, Total Damage: {total_damage}")
 
         return max(1, total_damage)  # Ensure the damage is not negative
     
@@ -296,6 +296,7 @@ class Character:
             "Rogue": 6,
             "Sorcerer": 4,
             "Wizard": 4,
+            "Cleric": 8,
             # Add more classes and their respective hit dice
         }
         max_hit_die = hit_die.get(self.char_class, 8)
@@ -311,6 +312,7 @@ class Character:
             "Rogue": 6,
             "Sorcerer": 4,
             "Wizard": 4,
+            "Cleric": 8,
             # Add more classes and their respective hit dice
         }
 
@@ -325,6 +327,3 @@ class Character:
             hp_gain = max(hit_die_value, constitution_modifier)
         else:
             hp_gain = 0  # Negative or zero modifier, no additional hit points gained
-
-        # Subtract 1 at the end if the calculated hit points gain is still negative
-        self.hp += max(0, hp_gain - 1)

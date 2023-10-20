@@ -1,6 +1,8 @@
 #monster_battle_functions.py
 
 import random
+from colorama import init, Fore, Style
+init(autoreset=True)
 
 class Monster:
     d20 = [x + 1 for x in range(20)]
@@ -22,7 +24,7 @@ class Monster:
         if total_tohit >= target.armor_class:
             return self.calculate_damage()
         else:
-            print(f"{self.name} missed!")
+            #print(f"{self.name} missed!")
             return 0  # Return 0 to indicate a miss
 
     def calculate_damage(self):
@@ -34,4 +36,4 @@ class Monster:
     def take_damage(self, amount):
         self.hit_points -= amount
         if self.hit_points <= 0:
-            print(f"{self.name} has been defeated!")
+            print(f"{Fore.BLUE + Style.BRIGHT}{self.name} has been defeated!")

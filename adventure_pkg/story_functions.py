@@ -237,64 +237,103 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     if battle == "1":
         print(begin_faerun_hero)
         while hero_object.is_alive() and chosen_monster_object.is_alive():
-            print("==== Battle ====")
-            print(f"{hero_class} HP: {hero_object.hit_points}")
-            print(f"{monster_name} HP: {chosen_monster_object.hit_points}")
+            print(f"\n{Fore.GREEN + Style.BRIGHT}==== Battle ====")
+            print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
+            print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
             # Prompt the user for actions
-            actions = input("\nDo you...\n1) Attack\n2) Run away\n\n").lower()
+            actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away\n\n").lower()
+
+            #print(f'\nMonster: {chosen_monster_details}\n')
 
             if actions == "1":
                 # Hero attacks
                 total_damage = hero_object.attack(chosen_monster_object)
-                weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
+                #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
 
+                #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
                 if total_damage > 0:
-                    print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
-                    if chosen_monster_object.take_damage(total_damage):
-                        print(f"You dealt {total_damage} damage to {monster_name}!")
-                    else:
-                        print(f"You missed the attack on {monster_name}!")
+                    chosen_monster_object.take_damage(total_damage)
+                    print(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!")
                 else:
-                    print("Invalid target type. Expected a Character or Combat_Actions object.")
+                    print(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!")
 
                 # Creature attacks
                 if chosen_monster_object.is_alive():
                     monster_damage = chosen_monster_object.attack(hero_object)
-                    print(f"Debug: Monster Damage: {monster_damage}")
+                    #print(f"Debug: Monster Damage: {monster_damage}")
 
                     if monster_damage > 0:
                         hero_object.take_damage(monster_damage)
-                        print(f"{monster_name} dealt {monster_damage} damage to {hero_class}!")
+                        print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!")
                     else:
-                        print(f"{monster_name} missed the attack on {hero_class}!")
-
-                elif actions == "2":
-                    print(exit_message)
-                    break  # End the battle loop
-
-                else:
-                    print("Invalid option. Please choose again.")
+                        print(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!")
 
                 # Print the result of the battle
-                if hero_object.is_alive():
-                    print(f"{hero_class} won the battle!")
-                else:
-                    print(f"{monster_name} defeated {hero_class}. Game over.")
+                if hero_object.is_alive() and not chosen_monster_object.is_alive():
+                    print(f"{Fore.BLUE + Style.BRIGHT}{hero_class} won the battle!")
+                    print(
+                        Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                        Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
+                        Fore.YELLOW + Style.NORMAL + "         \n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"the display of your skills. With only one of the {monster_name} left, it runs", Fore.YELLOW + Style.NORMAL + "     \n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "away terrified at your decimation of its group. The rest of the journey",
+                        Fore.YELLOW + Style.NORMAL + "   |\n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "goes by rather easily. The legends of Faerun are no match for",
+                        Fore.YELLOW + Style.NORMAL + "             |\n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "seeing these wonders first hand. Whether you are seeing the Dalelands", Fore.YELLOW + Style.NORMAL + "      |\n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "or the Swordcoast and the villages or iconic places of legend. You",
+                        Fore.YELLOW + Style.NORMAL + "        |\n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"are even more sure that leaving {home_town} was the right choice.",
+                        Fore.YELLOW + Style.NORMAL + "     \n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "After you crest a hilltop you see your destination looms off",
+                        Fore.YELLOW + Style.NORMAL + "              |\n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "in the distance.",
+                        Fore.YELLOW + Style.NORMAL + "                                                          |\n",
+                        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+                    input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
-            elif actions == "n" or actions == "no":
-                runaway = input("Do you want to run away? (yes/no)").lower()
-                if runaway == "n" or runaway == "no":
-                    actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
-                elif runaway == "y" or runaway == "yes":
-                    print(exit_message)
-                else:
-                    invalid_entry = invalid()
-                    print(invalid_entry)
+                    see_city, elminsters_challenge = baldurs_gate()
+                    print(see_city)
+
+                    congratulations, you_win = win_game(worlds, home_town)
+                    print(congratulations)
+
+                elif not hero_object.is_alive() and chosen_monster_object.is_alive():
+                    print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.")  
+                    print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You now feel the rush of life leaving as the {monster_name}",
+                    Fore.YELLOW + Style.NORMAL +"  \n",
+                    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"injured you fatally and your storied tale of heroism",
+                    Fore.YELLOW + Style.NORMAL +"                  |\n",
+                    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"as a {hero_class} is over!",
+                    Fore.YELLOW + Style.NORMAL +"                           \n",
+                    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+                    # Ask the player if they want to restart or exit
+                    restart_option = input("Do you want to restart? (yes/no): ").lower()
+                    if restart_option == 'yes' or restart_option == 'y':
+                        greeting()
+                    elif restart_option == 'no' or restart_option == 'n':
+                        break  # Exit the loop if the player doesn't want to restart  
+
+            elif actions == "2":
+                print(exit_message)
+                break  # End the battle loop
+
             else:
-                invalid_entry = invalid()
-                print(invalid_entry)
-                actions = input(f"Two of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
+                print("Invalid option. Please choose again.")              
 
     elif battle == "2":
         exit_message, npc1, npc_1, monster_name = leave_game(npc_1, monster_name, home_town, worlds)
@@ -305,33 +344,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         print(invalid_entry)
         battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 
-    faerun_after_battle = print(
-        Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-        Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
-        Fore.YELLOW + Style.NORMAL + "         \n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"the display of your skills. With only one of the {monster_name} left, it runs", Fore.YELLOW + Style.NORMAL + "     \n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "away terrified at your decimation of its group. The rest of the journey",
-        Fore.YELLOW + Style.NORMAL + "   |\n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "goes by rather easily. The legends of Faerun are no match for",
-        Fore.YELLOW + Style.NORMAL + "             |\n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "seeing these wonders first hand. Whether you are seeing the Dalelands", Fore.YELLOW + Style.NORMAL + "      |\n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "or the Swordcoast and the villages or iconic places of legend. You",
-        Fore.YELLOW + Style.NORMAL + "        |\n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"are even more sure that leaving {home_town} was the right choice.",
-        Fore.YELLOW + Style.NORMAL + "     \n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "After you crest a hilltop you see your destination looms off",
-        Fore.YELLOW + Style.NORMAL + "              |\n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "in the distance.",
-        Fore.YELLOW + Style.NORMAL + "                                                          |\n",
-        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
-    return begin_faerun_hero, faerun_battle, battle, faerun_after_battle
+    return begin_faerun_hero, faerun_battle, battle
 
     
 def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
@@ -417,81 +430,114 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                               Fore.YELLOW + Style.NORMAL + "         \n",
                               Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                               Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Trying to sneak attack a sleeping regimen, you see a group of",
-                              Fore.YELLOW + Style.NORMAL + "        |\n",
+                              Fore.YELLOW + Style.NORMAL + "         |\n",
                               Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"eight {monster_name}s. Your group quickly engages the enemy!                                                                        \n",
                               Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                               Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
-    
-    # Debug print statements
-    print("DEBUG: Chosen Monster Details:", chosen_monster_details)
-    print("DEBUG: Chosen Monster Name:", monster_name)
 
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 
     if battle == "1":
         print(begin_nonfaerun_hero)
         while hero_object.is_alive() and chosen_monster_object.is_alive():
-            print("==== Battle ====")
-            print(f"{hero_class} HP: {hero_object.hit_points}")
-            print(f"{monster_name} HP: {chosen_monster_object.hit_points}")
+            print(f"\n{Fore.GREEN + Style.BRIGHT}==== Battle ====")
+            print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
+            print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
             # Prompt the user for actions
-            actions = input("\nDo you...\n1) Attack\n2) Run away\n\n").lower()
+            actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away\n\n").lower()
+
+            #print(f'\nMonster: {chosen_monster_details}\n')
 
             if actions == "1":
                 # Hero attacks
                 total_damage = hero_object.attack(chosen_monster_object)
-                weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
+                #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
 
+                #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
                 if total_damage > 0:
-                    print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
-                    if chosen_monster_object.take_damage(total_damage):
-                        print(f"You dealt {total_damage} damage to {monster_name}!")
-                    else:
-                        print(f"You missed the attack on {monster_name}!")
+                    chosen_monster_object.take_damage(total_damage)
+                    print(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!")
                 else:
-                    print("Invalid target type. Expected a Character or Combat_Actions object.")
+                    print(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!")
 
                 # Creature attacks
                 if chosen_monster_object.is_alive():
                     monster_damage = chosen_monster_object.attack(hero_object)
-                    print(f"Debug: Monster Damage: {monster_damage}")
+                    #print(f"Debug: Monster Damage: {monster_damage}")
 
                     if monster_damage > 0:
                         hero_object.take_damage(monster_damage)
-                        print(f"{monster_name} dealt {monster_damage} damage to {hero_class}!")
+                        print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!")
                     else:
-                        print(f"{monster_name} missed the attack on {hero_class}!")
-
-                elif actions == "2":
-                    print(exit_message)
-                    break  # End the battle loop
-
-                else:
-                    print("Invalid option. Please choose again.")
+                        print(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!")
 
                 # Print the result of the battle
-                if hero_object.is_alive():
-                    print(f"{hero_class} won the battle!")
-                else:
-                    print(f"{monster_name} defeated {hero_class}. Game over.")
+                if hero_object.is_alive() and not chosen_monster_object.is_alive():
+                    print(f"{Fore.BLUE + Style.BRIGHT}{hero_class} won the battle!")
+                    print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
+                    Fore.YELLOW + Style.NORMAL +"         \n",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"the display of your skills. With only one of the {monster_name} left. A tear",Fore.YELLOW + Style.NORMAL +"     \n",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"in the fabrics of reality is not only in front of you, but a purplish",
+                    Fore.YELLOW + Style.NORMAL +"     |\n",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"globe with green tendrils as fingers claws an area around you. Instantly",
+                    Fore.YELLOW + Style.NORMAL +"   \n", 
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"you are swallowed up and now being pulled through a wormhole of lights,",Fore.YELLOW + Style.NORMAL +"   |\n",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"stars, and worlds that are flying by you faster than what you can",
+                    Fore.YELLOW + Style.NORMAL +"         |\n",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"conceive. It seems as if it is billions of shooting stars flying by",
+                    Fore.YELLOW + Style.NORMAL +"       |\n", 
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"you faster than light. Then it suddenly stops and you now see a",
+                    Fore.YELLOW + Style.NORMAL +"           |\n",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"different world lying before you.",
+                    Fore.YELLOW + Style.NORMAL +"                                         |\n",     
+                    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+                    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+            
+                    see_city, elminsters_challenge = baldurs_gate()
+                    print(see_city)
+                    congratulations, you_win = win_game(worlds, home_town)
+                    print(congratulations)
 
-            elif actions == "n" or actions == "no":
-                runaway = input("Do you want to run away? (yes/no)").lower()
-                if runaway == "n" or runaway == "no":
-                    actions = input(f"\nTwo of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
-                elif runaway == "y" or runaway == "yes":
-                    print(exit_message)
-                else:
-                    invalid_entry = invalid()
-                    print(invalid_entry)
+                elif not hero_object.is_alive() and chosen_monster_object.is_alive():
+                    print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.")  
+                    print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You now feel the rush of life leaving as the {monster_name}",
+                    Fore.YELLOW + Style.NORMAL +"  \n",
+                    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"injured you fatally and your storied tale of heroism",
+                    Fore.YELLOW + Style.NORMAL +"                  |\n",
+                    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"as a {hero_class} is over!",
+                    Fore.YELLOW + Style.NORMAL +"                           \n",
+                    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+                    # Ask the player if they want to restart or exit
+                    restart_option = input("Do you want to restart? (yes/no): ").lower()
+                    if restart_option == 'yes' or restart_option == 'y':
+                        greeting()
+                    elif restart_option == 'no' or restart_option == 'n':
+                        break  # Exit the loop if the player doesn't want to restart  
+
+            elif actions == "2":
+                print(exit_message)
+                break  # End the battle loop
+
             else:
-                invalid_entry = invalid()
-                print(invalid_entry)
-                actions = input(f"Two of the {monster_name} engage you in battle.\nDo you attack? (yes/no)").lower()
+                print("Invalid option. Please choose again.")              
 
     elif battle == "2":
         exit_message, npc1, npc_1, monster_name = leave_game(npc_1, monster_name, home_town, worlds)
@@ -502,34 +548,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         print(invalid_entry)
         battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 
-
-    non_faerun_afterbattle = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
-    Fore.YELLOW + Style.NORMAL +"         \n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"the display of your skills. With only one of the {monster_name} left. A tear",Fore.YELLOW + Style.NORMAL +"     \n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"in the fabrics of reality is not only in front of you, but a purplish",
-    Fore.YELLOW + Style.NORMAL +"     |\n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"globe with green tendrils as fingers claws an area around you. Instantly",
-    Fore.YELLOW + Style.NORMAL +"   \n", 
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"you are swallowed up and now being pulled through a wormhole of lights,",Fore.YELLOW + Style.NORMAL +"   |\n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"stars, and worlds that are flying by you faster than what you can",
-    Fore.YELLOW + Style.NORMAL +"         |\n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"conceive. It seems as if it is billions of shooting stars flying by",
-    Fore.YELLOW + Style.NORMAL +"       |\n", 
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"you faster than light. Then it suddenly stops and you now see a",
-    Fore.YELLOW + Style.NORMAL +"           |\n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"different world lying before you.",
-    Fore.YELLOW + Style.NORMAL +"                                         |\n",     
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
-
-    return begin_nonfaerun_hero, non_faerun_battle, battle, non_faerun_afterbattle
+    return begin_nonfaerun_hero, non_faerun_battle, battle
 
 def baldurs_gate():
     see_city = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
