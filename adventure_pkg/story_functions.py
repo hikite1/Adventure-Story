@@ -228,10 +228,6 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     #print(f"Initiative: {initiative}")
     #print(f"Damage: {damage}")
 
-    # Debug print statements
-    print("DEBUG: Chosen Monster Details:", chosen_monster_details)
-    print("DEBUG: Chosen Monster Name:", monster_name)
-
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 
     if battle == "1":
@@ -437,6 +433,13 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                               Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+
+    #print(f"Chosen monster: {monster_name}")
+    #print(f"Armor Class: {armor_class}")
+    #print(f"Hit Points: {hit_points}")
+    #print(f"To Hit: {to_hit}")
+    #print(f"Initiative: {initiative}")
+    #print(f"Damage: {damage}")
 
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
 

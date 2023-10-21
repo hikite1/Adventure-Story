@@ -23,8 +23,13 @@ rogue = "Rogue"
 npc_1 = ""
 npc_2 = ""
 npc_3 = ""
-monster_name = ""
 exit_message = ""
+hit_points = ""
+damage = ""
+to_hit = ""
+initiative = ""
+armor_class = ""
+monster_name = ""
 
 character_abilities = {
     "Cleric": ["Wisdom", "Constitution", "Charisma", "Intelligence", "Strength", "Dexterity"],
@@ -184,6 +189,14 @@ while True:
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
 
+            #information for object monster
+            monster_name = chosen_monster_details['name']
+            armor_class = chosen_monster_details['armor_class']
+            hit_points = chosen_monster_details['hit_points']
+            to_hit = chosen_monster_details['to_hit']
+            initiative = chosen_monster_details['initiative']
+            damage = chosen_monster_details['damage']
+
             begin_nonfaerun_hero, non_faerun_battle, battle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
         elif worlds == "Toril":
@@ -197,4 +210,12 @@ while True:
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
 
-            begin_faerun_hero, faerun_battle, battle = faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            #information for object monster
+            monster_name = chosen_monster_details['name']
+            armor_class = chosen_monster_details['armor_class']
+            hit_points = chosen_monster_details['hit_points']
+            to_hit = chosen_monster_details['to_hit']
+            initiative = chosen_monster_details['initiative']
+            damage = chosen_monster_details['damage']
+
+            begin_faerun_hero, faerun_battle, battle = faerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
