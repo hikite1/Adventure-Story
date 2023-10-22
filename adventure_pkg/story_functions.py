@@ -205,11 +205,11 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         Fore.YELLOW + Style.NORMAL + "       |\n",
         Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "Gate. Each wagon has four mercenaries for it defense. Yours has you,",
         Fore.YELLOW + Style.NORMAL + "      |\n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"a {npc_1}, a {npc_2}, and a {npc_3}. A group of {monster_name} is seen using ",
+        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"a {npc_1}, a {npc_2}, and a {npc_3}. A group of {monster_name}s is seen using ",
         Fore.YELLOW + Style.NORMAL + "         \n",
         Fore.YELLOW + Style.NORMAL + "         |", Fore.WHITE + Style.BRIGHT, "the shadows from bushes clustered together ahead of your wagon. A ",
         Fore.YELLOW + Style.NORMAL + "        |\n",
-        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"{npc_1} sees these {monster_name} and alerts the wagon to veer off and group",
+        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"{npc_1} sees these {monster_name}s and alerts the wagon to veer off and group",
         Fore.YELLOW + Style.NORMAL + "       \n",
         Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "with another wagon. Your group has discussed strategy prior and everyone",
         Fore.YELLOW + Style.NORMAL + "  |\n",
@@ -332,7 +332,11 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                 print("Invalid option. Please choose again.")              
 
     elif battle == "2":
-        exit_message, npc1, npc_1, monster_name = leave_game(npc_1, monster_name, home_town, worlds)
+        npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
+        npc_1 = random.choice(npc1)
+        enemies = ["Dire Rats", "Goblins", "Skeletons"]
+        creatures = random.choice(enemies) 
+        exit_message, npc1, npc_1, enemies, creatures = leave_game(npc_1, creatures, home_town, worlds)
         print(exit_message)
         quit()
     else:
@@ -509,8 +513,9 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
             
                     see_city, elminsters_challenge = baldurs_gate()
                     print(see_city)
+
                     congratulations, you_win = win_game(worlds, home_town)
-                    print(congratulations)
+                    print(congratulations)                  
 
                 elif not hero_object.is_alive() and chosen_monster_object.is_alive():
                     print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.")  
@@ -533,7 +538,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     if restart_option == 'yes' or restart_option == 'y':
                         greeting()
                     elif restart_option == 'no' or restart_option == 'n':
-                        break  # Exit the loop if the player doesn't want to restart  
+                        quit()  # Exit the loop if the player doesn't want to restart  
 
             elif actions == "2":
                 print(exit_message)
@@ -543,7 +548,11 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                 print("Invalid option. Please choose again.")              
 
     elif battle == "2":
-        exit_message, npc1, npc_1, monster_name = leave_game(npc_1, monster_name, home_town, worlds)
+        npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
+        npc_1 = random.choice(npc1)
+        enemies = ["Dire Rats", "Goblins", "Skeletons"]
+        creatures = random.choice(enemies) 
+        exit_message, npc1, npc_1, enemies, creatures = leave_game(npc_1, creatures, home_town, worlds)
         print(exit_message)
         quit()
     else:
@@ -652,31 +661,53 @@ def invalid():
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
     return invalid_entry
 
-
-
 def win_game(worlds, home_town):
     congratulations = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"You now feel the rush of excitement as you can decide to be a famous",
-    Fore.YELLOW + Style.NORMAL +"  |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"adventurer from {home_town} in {worlds} and fight to slay Faerun's",
-    Fore.YELLOW + Style.NORMAL +"             \n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Evil! Or whatever dangers lie ahead of you.",
-    Fore.YELLOW + Style.NORMAL +"                           |\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"You now feel the rush of excitement as you can decide to be a famous",
+        Fore.YELLOW + Style.NORMAL +"  |\n",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"adventurer from {home_town} in {worlds} and fight to slay Faerun's",
+        Fore.YELLOW + Style.NORMAL +"             \n",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Evil! Or whatever dangers lie ahead of you.",
+        Fore.YELLOW + Style.NORMAL +"                           |\n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+    
     you_win = input("Do you accept Elminster's challenge?   (yes/no)\n\n").lower()
     #if player restarts the adventure will reprompt from the beginning game prompt
     if you_win != "yes" and you_win != "y":
-        quit()
+        npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
+        npc_1 = random.choice(npc1)
+        enemies = ["Dire Rats", "Goblins", "Skeletons"]
+        creatures = random.choice(enemies) 
+        print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"You decide that the matters of the world do not interest you and",
+        Fore.YELLOW + Style.NORMAL +"      |\n",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"don't enter the city. You leave your {npc_1} friend from {home_town} ",
+        Fore.YELLOW + Style.NORMAL +"             \n",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"in {worlds} and hope not to fight and slay any more {creatures}!",
+        Fore.YELLOW + Style.NORMAL +"             \n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+        # Ask the player if they want to restart or exit
+        restart_option = input("Do you want to restart? (yes/no): ").lower()
+        if restart_option == 'yes' or restart_option == 'y':
+            greeting()
+        elif restart_option == 'no' or restart_option == 'n':
+            quit  # Exit the loop if the player doesn't want to restart
     else:
         print(Fore.MAGENTA + Style.BRIGHT +"\nCongratulations! You have begun Alaundo's Prophecy campaign.",Fore.WHITE + Style.BRIGHT,"\nTake a screen shot and show your Dungeon Master.\nShe or he will give you:\n",
         Fore.YELLOW + Style.BRIGHT +"50 gold\n",
         Fore.CYAN + Style.BRIGHT +"500 experience\n\n"),
         input("Pressing enter will begin a new story")
+
     return congratulations, you_win
