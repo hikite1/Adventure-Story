@@ -6,9 +6,9 @@ This is set in the D&D 3.5 campaign setting. A player can choose between differe
 
 ERRORS - None known that crash the story. 
 
-BUGS - Hero hit points are 1 less than what total should be, If hero is defeated in battle the game restarts even if player chooses no
+BUGS - Player chooses option 'No' to end game does not end game just restarts
 
-IN DEVELOPMENT - Deploy the project so everyone can play it, HTML python terminal? web app?
+IN DEVELOPMENT - Fixing bugs and cleaning up code
 
 FUTURE IDEAS - add feats, skill, combat actions, spells, size modifiers, intiative rolls, and saving throws 
 
