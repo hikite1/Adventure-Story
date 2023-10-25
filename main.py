@@ -14,7 +14,7 @@ from adventure_pkg.character_functions import Character
 #Initializing variables
 toril = "Toril"
 krynn = "Krynn"
-ghelspad = "Ghelspad"
+scarn = "Scarn"
 cleric = "Cleric"
 wizard = "Wizard"
 sorcerer = "Sorcerer"
@@ -25,6 +25,7 @@ npc_2 = ""
 npc_3 = ""
 exit_message = ""
 monster_name = ""
+chosen_race = None
 
 character_abilities = {
     "Cleric": ["Wisdom", "Constitution", "Charisma", "Intelligence", "Strength", "Dexterity"],
@@ -46,15 +47,15 @@ while True:
     valid_world = False
 
     #Beginning of the game prompt
-    world = input(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Ghelspad\n2) Krynn\n3) Toril\n\n")
+    world = input(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Scarn\n2) Krynn\n3) Toril\n\n")
 
     #choice of starting world
     while not valid_world:
-        if world == "Ghelspad" or world == "1":
+        if world == "Scarn" or world == "1":
             cities = ["Bard's Gate", "Hedrad", "Mithril"]
             home_town = random.choice(cities)
             #Initializing worlds variable to be accessed as the story progresses if this is returned True
-            worlds = ghelspad
+            worlds = scarn
             #Initializing _origin variable
             non_faerun_origin = non_faerun_story()
             print(non_faerun_origin)
@@ -76,20 +77,20 @@ while True:
         else:
             invalid_entry = invalid()
             print(invalid_entry)
-            world = input("\nWhat home world would you like to be from?\nPlease choose a number:\n\n1) Ghelspad\n2) Krynn\n3) Toril\n\n")
+            world = input(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) scarn\n2) Krynn\n3) Toril\n\n")
             valid_world = False
-            continue
+            #continue
 
     while True:
         print(f"\n\n{Fore.CYAN + Style.NORMAL}Choose your Hero:")
         for i, hero_class in enumerate(character_abilities.keys(), 1):
             print(f"{Fore.CYAN + Style.NORMAL}{i}){Fore.CYAN + Style.NORMAL} {hero_class}")
 
-        hero_choice = input(f"\n{Fore.CYAN + Style.NORMAL}Please select a number (or type 'Exit' to exit): ")
+        hero_choice = input(f"\n{Fore.CYAN + Style.NORMAL}Please select a number (or type 'Exit' to leave story): ")
 
         if hero_choice.lower() == "exit":
             # Handle exit
-            exit_message, npc1, npc_1, enemies, monster_name = leave_game(npc_1, monster_name, home_town, worlds)
+            leave_game(npc_1, monster_name, home_town, worlds)
             print(exit_message)
             quit()
 
@@ -104,23 +105,26 @@ while True:
             print(invalid_entry)
             continue
 
-        # Now, let the user choose a race
-        print(f"\n\n{Fore.CYAN + Style.NORMAL}Choose your Race:")
-        for i, race in enumerate(racial_traits.keys(), 1):
-            print(f"{Fore.CYAN + Style.NORMAL}{i}){Fore.CYAN + Style.NORMAL} {race}")
+        while chosen_race is None:
+            # Now, let the user choose a race
+            print(f"\n\n{Fore.CYAN + Style.NORMAL}Choose your Race:")
+            for i, race in enumerate(racial_traits.keys(), 1):
+                print(f"{Fore.CYAN + Style.NORMAL}{i}){Fore.CYAN + Style.NORMAL} {race}")
 
-        race_choice = input(f"\n{Fore.CYAN + Style.NORMAL}Please select a number: ")
+            race_choice = input(f"\n{Fore.CYAN + Style.NORMAL}Please select a number: ")
 
-        try:
-            race_index = int(race_choice)
-            if 1 <= race_index <= len(racial_traits):
-                chosen_race = list(racial_traits.keys())[race_index - 1]
-            else:
-                raise ValueError
-        except ValueError:
-            invalid_entry = invalid()
-            print(invalid_entry)
-            continue
+            try:
+                race_index = int(race_choice)
+                if 1 <= race_index <= len(racial_traits):
+                    # Assign the value inside the try block
+                    chosen_race = list(racial_traits.keys())[race_index - 1]
+                else:
+                    raise ValueError
+            except ValueError:
+                invalid_entry = invalid()
+                print(invalid_entry)
+                # Continue to the next iteration of the loop
+                continue
 
         # Calculate racial modifiers
         chosen_race_traits = racial_traits.get(chosen_race, [])
@@ -150,9 +154,9 @@ while True:
         #print(f"Weapon Modifier: {weapon_modifier}")
 
         #calls function to print player character
-        fate, hometown_description = character_creation(hero, player_character.abilities, player_character.hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier)
+        character_creation(hero, player_character.abilities, player_character.hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier)
 
-        if worlds == "Ghelspad":
+        if worlds == "Scarn":
             #monster dictionary
             monster_details_list = [
                 {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
@@ -171,7 +175,7 @@ while True:
             initiative = chosen_monster_details['initiative']
             damage = chosen_monster_details['damage']
 
-            begin_nonfaerun_hero, non_faerun_battle, battle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
         elif worlds == "Krynn":
             #monster dictionary
@@ -192,7 +196,7 @@ while True:
             initiative = chosen_monster_details['initiative']
             damage = chosen_monster_details['damage']
 
-            begin_nonfaerun_hero, non_faerun_battle, battle = nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
         elif worlds == "Toril":
             #monster dictionary
@@ -213,4 +217,4 @@ while True:
             initiative = chosen_monster_details['initiative']
             damage = chosen_monster_details['damage']
 
-            begin_faerun_hero, faerun_battle, battle = faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)

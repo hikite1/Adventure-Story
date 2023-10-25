@@ -55,16 +55,6 @@ class Character:
         self.apply_racial_modifiers()
         self.level = 1
         self.hp = self.calculate_max_hp()
-        # Initialize equipment attribute
-        self.equipment = {
-            'armor': None,
-            'shield': None,
-            'weapon': None,
-            'potions': [],
-            'spells': [],
-            'scrolls': [],
-            'bab': 0
-        }
 
         # Initialize modifiers
         self.armor_modifier = 0
@@ -78,33 +68,40 @@ class Character:
         self.equip_items()
 
     def equip_items(self):
+        # Get equipment for the character's class
+        class_equipment = self.get_class_equipment()
+
         # General equipment dictionary with default values
-        general_equipment_dict = {
+        self.equipment = {
             'armor': None,
             'shield': None,
             'weapon': None,
             'potions': [],
-            'spells': [],
+            'arcane_spells': [],
+            'divine_spells': [],
             'scrolls': [],
             'bab': 0
         }
 
-        # Get equipment for the character's class
-        class_equipment = self.get_class_equipment()
+        # Handle the shield separately
+        shield_item = class_equipment.get('shield')
+        if isinstance(shield_item, str):
+            #print(f"Item Type: shield, Item: {shield_item}, Type: {type(shield_item)}")
+            shield_bonus = int(''.join(filter(str.isdigit, str(shield_item)))) if any(char.isdigit() for char in str(shield_item)) else 0
+            self.equipment['shield'] = shield_item
+            self.equipment['shield_bonus'] = self.calculate_shield_modifier(shield_item)
 
-        # Set default equipment
-        self.equipment = general_equipment_dict
-
+        # Set other equipment
         for item_type, item in class_equipment.items():
-            if item_type == 'shield' and isinstance(item, str):
-                # Extract shield bonus from the string and convert to an integer
-                digits = ''.join(filter(str.isdigit, item))
-                shield_bonus = int(digits) if digits else 0
-                self.equipment[item_type] = shield_bonus
-            else:
+            if item_type != 'shield':
                 self.equipment[item_type] = item
 
-            # Calculate class-specific modifiers
+        # Print equipped items
+        #for item_type, value in self.equipment.items():
+            #print(f"Equipped {item_type}: {value}")
+
+        # Calculate class-specific modifiers
+        for item_type in class_equipment:
             self.calculate_class_specific_modifiers(item_type)
 
 
@@ -113,15 +110,19 @@ class Character:
             return 5
         elif armor == 'Chain Shirt':
             return 4
+        elif armor == 'Leather':
+            return 2
         elif armor == 'Robe':
             return 0
         # Add similar logic for other armor types
         else:
             return 0
         
-    def calculate_shield_modifier(self, shield_bonus):        
-        if shield_bonus == 'Wooden Shield':
+    def calculate_shield_modifier(self, shield_item):        
+        if shield_item == 'Wooden Shield':
             return 1
+        else:
+            return 0
 
         
     def calculate_weapon_modifier(self, weapon):
@@ -186,7 +187,7 @@ class Character:
         dexterity_mod = self.abilities.calculate_modifier('Dexterity')
 
         armor_modifier = self.calculate_armor_modifier(armor) if armor else 0
-        shield_bonus = shield_bonus if shield_bonus else 0
+        shield_bonus = int(shield_bonus) if shield_bonus else 0  # Convert shield_bonus to an integer if it's a string
 
         return 10 + armor_modifier + shield_bonus + dexterity_mod
     
@@ -223,7 +224,7 @@ class Character:
                 'scrolls': [],
                 'arcane_spells': [None],
                 'divine_spells': ['Cure Light Wounds'],
-                'bab': 'averaqge'
+                'bab': 'average'
             },
             'Fighter': {
                 'armor': 'Chainmail',
@@ -243,7 +244,7 @@ class Character:
                 'scrolls': [],
                 'arcane_spells': [None],
                 'divine_spells': [None],
-                'bab': 'averaqge'
+                'bab': 'average'
             },
             'Sorcerer': {
                 'armor': 'Robe',
@@ -280,9 +281,16 @@ class Character:
         return [ability.capitalize() for ability in priority_list]
 
     def __str__(self):
-        equipment_str = f"Armor: {self.equipment['armor']}, Weapon: {self.equipment['weapon']}, " \
-                        f"Potions: {', '.join(self.equipment['potions'])}, Spells: {', '.join(self.equipment['spells'])}"
+        armor = self.equipment['armor'] if self.equipment['armor'] else 'None'
+        weapon = self.equipment['weapon'] if self.equipment['weapon'] else 'None'
+        
+        potions = ', '.join(filter(None, self.equipment['potions']))
+        arcane_spells = ', '.join(filter(None, self.equipment['arcane_spells']))
+        divine_spells = ', '.join(filter(None, self.equipment['divine_spells']))
+
+        equipment_str = f"Armor: {armor}, Weapon: {weapon}, Potions: {potions}, Arcane Spells: {arcane_spells}, Divine Spells: {divine_spells}"
         return f"{self.char_class} - {self.abilities} - Level {self.level} - HP: {self.hp}\n{equipment_str}"
+
     
     def generate_ability_scores(self, priority):
         self.abilities = Abilities.generate_random(priority)
@@ -290,17 +298,20 @@ class Character:
         self.hp = self.calculate_max_hp()
 
     def calculate_max_hp(self):
-        # Assuming hit_die is a dictionary mapping character classes to hit dice
         hit_die = {
-            "Fighter": 11, #represents a d10
-            "Rogue": 7,
-            "Sorcerer": 5,
-            "Wizard": 5,
-            "Cleric": 9,
+            "Fighter": 10,  # represents a d10
+            "Rogue": 6,
+            "Sorcerer": 4,
+            "Wizard": 4,
+            "Cleric": 8,
             # Add more classes and their respective hit dice
         }
         max_hit_die = hit_die.get(self.char_class, 8)
         constitution_modifier = self.abilities.calculate_modifier('Constitution')
+
+        #Ensure the minimum value of the modifier is 0
+        constitution_modifier = max(0, constitution_modifier)
+
         max_hp = max_hit_die + constitution_modifier
         return max_hp
 
@@ -309,10 +320,10 @@ class Character:
         self.level += 1
         hit_die = {
             "Fighter": 11, #represents a d10
-            "Rogue": 7,
-            "Sorcerer": 5,
-            "Wizard": 5,
-            "Cleric": 9,
+            "Rogue": 6,
+            "Sorcerer": 4,
+            "Wizard": 4,
+            "Cleric": 8,
             # Add more classes and their respective hit dice
         }
 

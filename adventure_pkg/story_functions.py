@@ -20,8 +20,10 @@ def greeting():
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")  
-    return greeting_message
+    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n") 
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "In the Beginning" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XjsnztqL1XEUXs5FCsQUyjtY45OKWhfB/view?usp=sharing\033[0m')
+
+    return ""
 
 def faerun_story():
     faerun_origin = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -37,6 +39,7 @@ def faerun_story():
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m')
     return ""
 
 def non_faerun_story():
@@ -55,6 +58,10 @@ def non_faerun_story():
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m')
+    print("")
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m')
+
     return ""
 
 def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier):
@@ -132,7 +139,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
                                 Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                                 Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
-    return fate, hometown_description
+    return ""
 
 def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -228,7 +235,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     #print(f"Initiative: {initiative}")
     #print(f"Damage: {damage}")
 
-    battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
+    battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
     if battle == "1":
         print(begin_faerun_hero)
@@ -238,7 +245,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
             print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
             # Prompt the user for actions
-            actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away\n\n").lower()
+            actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
 
             #print(f'\nMonster: {chosen_monster_details}\n')
 
@@ -295,10 +302,10 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
                     input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
-                    see_city, elminsters_challenge = baldurs_gate()
+                    see_city= baldurs_gate()
                     print(see_city)
 
-                    congratulations, you_win = win_game(worlds, home_town)
+                    congratulations = win_game(worlds, home_town)
                     print(congratulations)
 
                 elif not hero_object.is_alive() and chosen_monster_object.is_alive():
@@ -318,33 +325,36 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
                     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
                     # Ask the player if they want to restart or exit
-                    restart_option = input("Do you want to restart? (yes/no): ").lower()
+                    restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
                     if restart_option == 'yes' or restart_option == 'y':
                         greeting()
                     elif restart_option == 'no' or restart_option == 'n':
-                        break  # Exit the loop if the player doesn't want to restart  
+                        quit()  # Exit the loop if the player doesn't want to restart  
 
             elif actions == "2":
-                print(exit_message)
-                break  # End the battle loop
-
+                quit_option = input(f"{Fore.CYAN + Style.NORMAL}Are you sure you want to quit the game? (y/n)")
+                if quit_option == 'yes' or quit_option == 'y':
+                    print(exit_message)
+                    quit()  # Exit the loop if the player doesn't want to restart
+                elif quit_option == 'no' or quit_option == 'n':
+                    continue
             else:
-                print("Invalid option. Please choose again.")              
+                print(f"{Fore.CYAN + Style.NORMAL}Invalid option. Please choose again.")              
 
     elif battle == "2":
         npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
         npc_1 = random.choice(npc1)
         enemies = ["Dire Rats", "Goblins", "Skeletons"]
         creatures = random.choice(enemies) 
-        exit_message, npc1, npc_1, enemies, creatures = leave_game(npc_1, creatures, home_town, worlds)
+        leave_game(npc_1, creatures, home_town, worlds)
         print(exit_message)
         quit()
     else:
         invalid_entry = invalid()
         print(invalid_entry)
-        battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
+        battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
-    return begin_faerun_hero, faerun_battle, battle
+    return ""
 
     
 def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
@@ -445,7 +455,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
     #print(f"Initiative: {initiative}")
     #print(f"Damage: {damage}")
 
-    battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
+    battle = input("Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
     if battle == "1":
         print(begin_nonfaerun_hero)
@@ -455,7 +465,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
             print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
             # Prompt the user for actions
-            actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away\n\n").lower()
+            actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
 
             #print(f'\nMonster: {chosen_monster_details}\n')
 
@@ -511,10 +521,10 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
                     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
             
-                    see_city, elminsters_challenge = baldurs_gate()
+                    see_city = baldurs_gate()
                     print(see_city)
 
-                    congratulations, you_win = win_game(worlds, home_town)
+                    congratulations = win_game(worlds, home_town)
                     print(congratulations)                  
 
                 elif not hero_object.is_alive() and chosen_monster_object.is_alive():
@@ -534,33 +544,36 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
                     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
                     # Ask the player if they want to restart or exit
-                    restart_option = input("Do you want to restart? (yes/no): ").lower()
+                    restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
                     if restart_option == 'yes' or restart_option == 'y':
                         greeting()
                     elif restart_option == 'no' or restart_option == 'n':
                         quit()  # Exit the loop if the player doesn't want to restart  
 
             elif actions == "2":
-                print(exit_message)
-                break  # End the battle loop
-
+                quit_option = input(f"{Fore.CYAN + Style.NORMAL}Are you sure you want to quit the game? (y/n)")
+                if quit_option == 'yes' or quit_option == 'y':
+                    print(exit_message)
+                    quit()  # Exit the loop if the player doesn't want to restart
+                elif quit_option == 'no' or quit_option == 'n':
+                    continue
             else:
-                print("Invalid option. Please choose again.")              
+                print(f"{Fore.CYAN + Style.NORMAL}Invalid option. Please choose again.")                
 
     elif battle == "2":
         npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
         npc_1 = random.choice(npc1)
         enemies = ["Dire Rats", "Goblins", "Skeletons"]
         creatures = random.choice(enemies) 
-        exit_message, npc1, npc_1, enemies, creatures = leave_game(npc_1, creatures, home_town, worlds)
+        leave_game(npc_1, creatures, home_town, worlds)
         print(exit_message)
         quit()
     else:
         invalid_entry = invalid()
         print(invalid_entry)
-        battle = input("Do you...\n1) Follow orders\n2) Go AWOL\n\n")
+        battle = input("Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
-    return begin_nonfaerun_hero, non_faerun_battle, battle
+    return ""
 
 def baldurs_gate():
     see_city = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -623,7 +636,7 @@ def baldurs_gate():
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
-    return see_city, elminsters_challenge
+    return ""
     
 def leave_game(npc_1, creatures, home_town, worlds):
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -631,7 +644,7 @@ def leave_game(npc_1, creatures, home_town, worlds):
     enemies = ["Dire Rats", "Goblins", "Skeletons"]
     creatures = random.choice(enemies) 
 
-    exit_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+    exit_message = print(Fore.YELLOW + Style.NORMAL +"\n         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
@@ -645,10 +658,10 @@ def leave_game(npc_1, creatures, home_town, worlds):
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    return exit_message, npc1, npc_1, enemies, creatures
+    return ""
 
 def invalid():
-    invalid_entry = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+    invalid_entry = print(Fore.YELLOW + Style.NORMAL +"\n         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
@@ -659,7 +672,7 @@ def invalid():
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
-    return invalid_entry
+    return ""
 
 def win_game(worlds, home_town):
     congratulations = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -677,7 +690,7 @@ def win_game(worlds, home_town):
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     
-    you_win = input("Do you accept Elminster's challenge?   (yes/no)\n\n").lower()
+    you_win = input(f"{Fore.CYAN + Style.NORMAL}Do you accept Elminster's challenge?   (yes/no)\n\n").lower()
     #if player restarts the adventure will reprompt from the beginning game prompt
     if you_win != "yes" and you_win != "y":
         npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -699,15 +712,15 @@ def win_game(worlds, home_town):
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
         # Ask the player if they want to restart or exit
-        restart_option = input("Do you want to restart? (yes/no): ").lower()
+        restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
         if restart_option == 'yes' or restart_option == 'y':
             greeting()
         elif restart_option == 'no' or restart_option == 'n':
-            quit  # Exit the loop if the player doesn't want to restart
+            quit()  # Exit the loop if the player doesn't want to restart
     else:
         print(Fore.MAGENTA + Style.BRIGHT +"\nCongratulations! You have begun Alaundo's Prophecy campaign.",Fore.WHITE + Style.BRIGHT,"\nTake a screen shot and show your Dungeon Master.\nShe or he will give you:\n",
         Fore.YELLOW + Style.BRIGHT +"50 gold\n",
         Fore.CYAN + Style.BRIGHT +"500 experience\n\n"),
         input("Pressing enter will begin a new story")
 
-    return congratulations, you_win
+    return ""
