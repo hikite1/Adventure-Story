@@ -282,7 +282,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                         Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                         Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
                         Fore.YELLOW + Style.NORMAL + "         \n",
-                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"the display of your skills. With only one of the {monster_name} left, it runs", Fore.YELLOW + Style.NORMAL + "     \n",
+                        Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"the display of your skills. With only one {monster_name} left, it runs", Fore.YELLOW + Style.NORMAL + "     \n",
                         Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "away terrified at your decimation of its group. The rest of the journey",
                         Fore.YELLOW + Style.NORMAL + "   |\n",
                         Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "goes by rather easily. The legends of Faerun are no match for",
@@ -501,10 +501,10 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
                     Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
                     Fore.YELLOW + Style.NORMAL +"         \n",
-                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"the display of your skills. With only one of the {monster_name} left. A tear",Fore.YELLOW + Style.NORMAL +"     \n",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +f"the display of your skills. With only one {monster_name} left. A tear",Fore.YELLOW + Style.NORMAL +"     \n",
                     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"in the fabrics of reality is not only in front of you, but a purplish",
                     Fore.YELLOW + Style.NORMAL +"     |\n",
-                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"globe with green tendrils as fingers claws an area around you. Instantly",
+                    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"globe with green tendrils as fingers claw an area around you. Instantly",
                     Fore.YELLOW + Style.NORMAL +"   \n", 
                     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"you are swallowed up and now being pulled through a wormhole of lights,",Fore.YELLOW + Style.NORMAL +"   |\n",
                     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"stars, and worlds that are flying by you faster than what you can",
@@ -519,7 +519,8 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
                     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-                    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+                    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Spellplague Portal" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XV-WYUpx0wID5LsXzIHPNw7i7-cqRZ0j/view?usp=drive_link\033[0m')
+                    input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter") 
             
                     see_city = baldurs_gate()
                     print(see_city)
@@ -598,7 +599,14 @@ def baldurs_gate():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate" image: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1bxXd8CvLRBb7hs8NCwT2mK-6J8Ro_Vad/view?usp=drive_link\033[0m')
+    print("")
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Marketplace" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1tYdVlhKRlLEWwWQyStcH0c8fgeDn-rji/view?usp=drive_link\033[0m')
+    print("")
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Circus" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1j_WlZ04YNxkKOdjEKFAANpARBTDx2v88/view?usp=drive_link\033[0m')
+    print("")
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Parade" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1HXi6s55r8oeBqQ1T7PHrLq8gV5yU-C_x/view?usp=drive_link\033[0m')
+    input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter")
 
     elminsters_challenge = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -635,6 +643,9 @@ def baldurs_gate():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate City" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1OVfZ3j8dBAstR4Ti1VJmeF5G5WNGRGPh/view?usp=drive_link\033[0m')
+    print("")
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1p5cVv5bIbigQZta5fHrapF0xBCcJ9qBz/view?usp=drive_link\033[0m')
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
     return ""
     
