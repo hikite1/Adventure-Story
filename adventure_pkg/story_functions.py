@@ -11,6 +11,7 @@ from adventure_pkg.monster_battle_functions import Monster
 #print("story_functions is being imported.")
 
 def greeting():
+    #print statement
     greeting_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -26,6 +27,7 @@ def greeting():
     return ""
 
 def faerun_story():
+    #print statement 
     faerun_origin = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -43,6 +45,7 @@ def faerun_story():
     return ""
 
 def non_faerun_story():
+    #print statement
     non_faerun_origin = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -97,6 +100,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
     character_name = input(f"{Fore.CYAN + Style.NORMAL}Type in the name of your character: ")
     print('')
 
+    #print statement 
     fate = print(
         Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
@@ -119,7 +123,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
     )
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
 
-
+    #print statement
     hometown_description = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                                 Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                                 Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -142,6 +146,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
     return ""
 
 def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
+    #random npc selection
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_1 = random.choice(npc1)
     npc2 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -152,7 +157,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     armor_modifier = player_character.calculate_armor_bonus(player_character.equipment['armor'],
                                                             player_character.shield_modifier)
 
-    # Define hero abilities
+    #Define hero abilities
     hero_abilities = Abilities(
         Strength=player_character.abilities.Strength,
         Dexterity=player_character.abilities.Dexterity,
@@ -162,7 +167,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         Charisma=player_character.abilities.Charisma
     )
 
-    # Create a Combat_Actions object for the hero
+    #Create a Combat_Actions object for the hero
     hero_object = Combat_Actions(
         character=player_character,
         armor_class=armor_modifier,
@@ -170,7 +175,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         abilities=hero_abilities
     )
 
-    # Create Monster object based on chosen_monster_details dictionary
+    #Create Monster object based on chosen_monster_details dictionary
     chosen_monster_object = Monster(
         name=chosen_monster_details['name'],
         armor_class=chosen_monster_details['armor_class'],
@@ -180,6 +185,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         damage=chosen_monster_details['damage']
     )
 
+    #print statement
     begin_faerun_hero = print(
         Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
@@ -201,6 +207,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
+    #print statement
     faerun_battle = print(
         Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
@@ -235,6 +242,8 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     #print(f"Initiative: {initiative}")
     #print(f"Damage: {damage}")
 
+    #COMBAT BEGINS HERE
+
     battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
     if battle == "1":
@@ -244,26 +253,27 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
             print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
             print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
-            # Prompt the user for actions
             actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
 
             #print(f'\nMonster: {chosen_monster_details}\n')
 
             if actions == "1":
-                # Hero attacks
+                #Hero attacks
                 total_damage = hero_object.attack(chosen_monster_object)
-                #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
 
+                #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
                 #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
+
                 if total_damage > 0:
                     chosen_monster_object.take_damage(total_damage)
                     print(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!")
                 else:
                     print(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!")
 
-                # Creature attacks
+                #Creature attacks
                 if chosen_monster_object.is_alive():
                     monster_damage = chosen_monster_object.attack(hero_object)
+
                     #print(f"Debug: Monster Damage: {monster_damage}")
 
                     if monster_damage > 0:
@@ -272,8 +282,9 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                     else:
                         print(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!")
 
-                # Print the result of the battle
+                #Print the result of the battle
                 if hero_object.is_alive() and not chosen_monster_object.is_alive():
+                    #print statement
                     print(f"{Fore.BLUE + Style.BRIGHT}{hero_class} won the battle!")
                     print(
                         Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -309,6 +320,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                     print(congratulations)
 
                 elif not hero_object.is_alive() and chosen_monster_object.is_alive():
+                    #print statement
                     print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.")  
                     print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -335,7 +347,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                 quit_option = input(f"{Fore.CYAN + Style.NORMAL}Are you sure you want to quit the game? (y/n)")
                 if quit_option == 'yes' or quit_option == 'y':
                     print(exit_message)
-                    quit()  # Exit the loop if the player doesn't want to restart
+                    quit()  #Exit the loop if the player doesn't want to restart
                 elif quit_option == 'no' or quit_option == 'n':
                     continue
             else:
@@ -358,6 +370,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
 
     
 def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
+    #random NPC selection
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_1 = random.choice(npc1)
     npc2 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -368,7 +381,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
     armor_modifier = player_character.calculate_armor_bonus(player_character.equipment['armor'],
                                                             player_character.shield_modifier)
 
-    # Define hero abilities
+    #Define hero abilities
     hero_abilities = Abilities(
         Strength=player_character.abilities.Strength,
         Dexterity=player_character.abilities.Dexterity,
@@ -378,7 +391,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         Charisma=player_character.abilities.Charisma
     )
 
-    # Create a Combat_Actions object for the hero
+    #Create a Combat_Actions object for the hero
     hero_object = Combat_Actions(
         character=player_character,
         armor_class=armor_modifier,
@@ -386,7 +399,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         abilities=hero_abilities
     )
 
-    # Create Monster object based on chosen_monster_details dictionary
+    #Create Monster object based on chosen_monster_details dictionary
     chosen_monster_object = Monster(
         name=chosen_monster_details['name'],
         armor_class=chosen_monster_details['armor_class'],
@@ -396,6 +409,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         damage=chosen_monster_details['damage']
     )
 
+    #print statement
     begin_nonfaerun_hero = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                                  Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                                  Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -428,6 +442,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                                  Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
 
+    #print statement
     non_faerun_battle = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                               Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -441,8 +456,8 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                               Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                               Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Trying to sneak attack a sleeping regimen, you see a group of",
                               Fore.YELLOW + Style.NORMAL + "         |\n",
-                              Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"eight {monster_name}s. Your group quickly engages the enemy!                                                                        \n",
-                              Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                              Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"eight {monster_name}s. Your group quickly engages the enemy!                                                                        ",
+                             Fore.YELLOW + Style.NORMAL + " |                                                                             |\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                               Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
@@ -455,6 +470,8 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
     #print(f"Initiative: {initiative}")
     #print(f"Damage: {damage}")
 
+    #COMBAT BEGINS HERE
+
     battle = input("Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
     if battle == "1":
@@ -464,26 +481,27 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
             print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
             print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
-            # Prompt the user for actions
             actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
 
             #print(f'\nMonster: {chosen_monster_details}\n')
 
             if actions == "1":
-                # Hero attacks
+                #Hero attacks
                 total_damage = hero_object.attack(chosen_monster_object)
-                #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
 
+                #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
                 #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
+
                 if total_damage > 0:
                     chosen_monster_object.take_damage(total_damage)
                     print(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!")
                 else:
                     print(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!")
 
-                # Creature attacks
+                #Creature attacks
                 if chosen_monster_object.is_alive():
                     monster_damage = chosen_monster_object.attack(hero_object)
+
                     #print(f"Debug: Monster Damage: {monster_damage}")
 
                     if monster_damage > 0:
@@ -492,8 +510,9 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     else:
                         print(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!")
 
-                # Print the result of the battle
+                #Print the result of the battle
                 if hero_object.is_alive() and not chosen_monster_object.is_alive():
+                    #print statement
                     print(f"{Fore.BLUE + Style.BRIGHT}{hero_class} won the battle!")
                     print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -529,6 +548,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     print(congratulations)                  
 
                 elif not hero_object.is_alive() and chosen_monster_object.is_alive():
+                    #print statement
                     print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.")  
                     print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -544,18 +564,18 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
                     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-                    # Ask the player if they want to restart or exit
+                    #Ask the player if they want to restart or exit
                     restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
                     if restart_option == 'yes' or restart_option == 'y':
                         greeting()
                     elif restart_option == 'no' or restart_option == 'n':
-                        quit()  # Exit the loop if the player doesn't want to restart  
+                        quit()  #Exit the loop if the player doesn't want to restart  
 
             elif actions == "2":
                 quit_option = input(f"{Fore.CYAN + Style.NORMAL}Are you sure you want to quit the game? (y/n)")
                 if quit_option == 'yes' or quit_option == 'y':
                     print(exit_message)
-                    quit()  # Exit the loop if the player doesn't want to restart
+                    quit()  #Exit the loop if the player doesn't want to restart
                 elif quit_option == 'no' or quit_option == 'n':
                     continue
             else:
@@ -577,6 +597,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
     return ""
 
 def baldurs_gate():
+    #print statement
     see_city = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -608,6 +629,7 @@ def baldurs_gate():
     print(f'{Fore.WHITE + Style.BRIGHT}Link to "Parade" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1HXi6s55r8oeBqQ1T7PHrLq8gV5yU-C_x/view?usp=drive_link\033[0m')
     input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter")
 
+    #print statement
     elminsters_challenge = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -636,7 +658,6 @@ def baldurs_gate():
     Fore.YELLOW + Style.NORMAL +"         |\n",
     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"and defend, yours to make anew in winning your own crown. Go forth and",
     Fore.YELLOW + Style.NORMAL +"    |\n",
-
     Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"take up arms against the perils that beset us!\"",
     Fore.YELLOW + Style.NORMAL +"                           |\n",
     Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
@@ -655,6 +676,7 @@ def leave_game(npc_1, creatures, home_town, worlds):
     enemies = ["Dire Rats", "Goblins", "Skeletons"]
     creatures = random.choice(enemies) 
 
+    #print statement
     exit_message = print(Fore.YELLOW + Style.NORMAL +"\n         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -672,6 +694,7 @@ def leave_game(npc_1, creatures, home_town, worlds):
     return ""
 
 def invalid():
+    #print statement
     invalid_entry = print(Fore.YELLOW + Style.NORMAL +"\n         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -686,6 +709,7 @@ def invalid():
     return ""
 
 def win_game(worlds, home_town):
+    #print statement
     congratulations = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
@@ -708,6 +732,8 @@ def win_game(worlds, home_town):
         npc_1 = random.choice(npc1)
         enemies = ["Dire Rats", "Goblins", "Skeletons"]
         creatures = random.choice(enemies) 
+
+        #print statement
         print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",

@@ -6,9 +6,9 @@ This is set in the D&D 3.5 campaign setting. A player can choose between differe
 
 ERRORS - None Known. 
 
-BUGS - some heroes get 1 extra hp, after battle is chosen None is printed cant find what is causing this
+BUGS - some heroes get 1 extra hp, after battle is chosen None is printed cant find what is causing this, some bugs if you replay story after completion
 
-IN DEVELOPMENT - create a dynamic solution within your Python script to detect the screen size and adjust/remove the ASCII art accordingly. 
+IN DEVELOPMENT - create a dynamic solution within your Python script to detect the screen size and adjust/remove the ASCII art accordingly, rearrange methods to more appropriate files 
 
 FUTURE IDEAS - combat actions(spells, potions, scrolls) add feats, skills, size modifiers, intiative rolls, and saving throws 
 
