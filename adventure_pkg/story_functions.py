@@ -28,7 +28,7 @@ def greeting():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n") 
 
     # Check if screen size is smaller than a threshold
-    if columns < 80:
+    if columns < 40:
         # Adjusted ASCII art for smaller screens
         greeting_message = print(
             f'{Fore.YELLOW + Style.NORMAL}{"=" * columns}\n',
