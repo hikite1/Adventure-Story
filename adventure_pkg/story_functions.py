@@ -23,7 +23,7 @@ def greeting():
             f'{Fore.WHITE + Style.BRIGHT}Welcome to Alaundo\'s Last \nProphecy Heroes! An \nadventure for the ages \nawaits you...{Fore.YELLOW + Style.NORMAL}\n',
             f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns-1)}\n')
         
-    else:
+    elif columns >= 80:
         #print statement
         greeting_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
