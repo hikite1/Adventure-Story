@@ -20,10 +20,12 @@ def greeting():
     # Check if screen size is smaller than a threshold
     if columns < 80:
         # Adjusted ASCII art for smaller screens
-        greeting_message = print(
-            f'{Fore.YELLOW + Style.NORMAL}{"=" * columns}\n',
-            f'{Fore.WHITE + Style.BRIGHT}Welcome to Alaundo\'s Last \nProphecy Heroes! An \nadventure for the ages \nawaits you...{Fore.YELLOW + Style.NORMAL}\n',
-            f'{Fore.YELLOW + Style.NORMAL}{"=" * columns}\n')
+        print(Fore.YELLOW + Style.NORMAL + "=" * columns)
+        print(Fore.WHITE + Style.BRIGHT + "Welcome to Alaundo's Last")
+        print(Fore.WHITE + Style.BRIGHT + "Prophecy Heroes! An")
+        print(Fore.WHITE + Style.BRIGHT + "adventure for the ages")
+        print(Fore.WHITE + Style.BRIGHT + "awaits you..." + Fore.YELLOW + Style.NORMAL)
+        print(Fore.YELLOW + Style.NORMAL + "=" * columns)
         
     elif columns >= 80:
         #print statement
