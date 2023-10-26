@@ -16,12 +16,12 @@ def greeting():
     columns, _ = shutil.get_terminal_size() 
 
     # Check if screen size is smaller than a threshold
-    if columns < 40:
+    if columns < 80:
         # Adjusted ASCII art for smaller screens
         greeting_message = print(
             f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns)}\n',
             f'{Fore.WHITE + Style.BRIGHT}Welcome to Alaundo\'s Last \nProphecy Heroes! An \nadventure for the ages \nawaits you...{Fore.YELLOW + Style.NORMAL}\n',
-            f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns)}\n')
+            f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns-1)}\n')
         
     else:
         #print statement
