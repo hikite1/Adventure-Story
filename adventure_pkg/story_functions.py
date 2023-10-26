@@ -32,14 +32,9 @@ def greeting():
         # Adjusted ASCII art for smaller screens
         greeting_message = print(
             f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns - 10)}\n',
-            f'{Fore.YELLOW + Style.NORMAL}{" " * 5}=O){" " * (columns - 20)}(O=\n',
+            f'{Fore.YELLOW + Style.NORMAL}{" " * 5}{" " * (columns - 20)}\n',
             f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns - 10)}\n',
-            f'{Fore.YELLOW + Style.NORMAL}{" " * 5}|{" " * (columns - 20)}|\n',
-            f'{Fore.YELLOW + Style.NORMAL}{" " * 5}|{" " * (columns - 20)}|   {Fore.WHITE + Style.BRIGHT}Welcome to Alaundo\'s Last Prophecy Heroes! An adventure for{Fore.YELLOW + Style.NORMAL}|\n',
-            f'{Fore.YELLOW + Style.NORMAL}{" " * 5}|{" " * (columns - 20)}|   {Fore.WHITE + Style.BRIGHT}the ages awaits you...{Fore.YELLOW + Style.NORMAL}                                                  |\n',
-            f'{Fore.YELLOW + Style.NORMAL}{" " * 5}|{" " * (columns - 20)}|\n',
-            f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns - 10)}\n',
-            f'{Fore.YELLOW + Style.NORMAL}{" " * 5}=O){" " * (columns - 20)}(O=\n',
+            f'{Fore.WHITE + Style.BRIGHT}Welcome to Alaundo\'s Last Prophecy Heroes! An adventure for the ages awaits you...{Fore.YELLOW + Style.NORMAL}\n',
             f'{Fore.YELLOW + Style.NORMAL}{"=" * (columns - 10)}\n')
 
     print(f'{Fore.WHITE + Style.BRIGHT}Link to "In the Beginning" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XjsnztqL1XEUXs5FCsQUyjtY45OKWhfB/view?usp=sharing\033[0m')
