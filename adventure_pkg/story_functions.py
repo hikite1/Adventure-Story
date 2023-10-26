@@ -414,8 +414,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                                  Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                                  Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                                  Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-                                 Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Hero of {worlds} you have joined the ranks and have been used for ",
-                                 Fore.YELLOW + Style.NORMAL + "                                  \n",
+                                 Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Hero of {worlds} you have joined the ranks and have been used for \n",
                                  Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"your {hero_class} skill set. This day you are preparing for battle on a city",
                                  Fore.YELLOW + Style.NORMAL + "                      \n",
                                  Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"in {worlds} that is one of good people. The thought of waging war on this",
@@ -457,7 +456,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                               Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Trying to sneak attack a sleeping regimen, you see a group of",
                               Fore.YELLOW + Style.NORMAL + "         |\n",
                               Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"eight {monster_name}s. Your group quickly engages the enemy!                                                                        ",
-                             Fore.YELLOW + Style.NORMAL + " |                                                                             |\n",
+                             Fore.YELLOW + Style.NORMAL +" |                                                                             |\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                               Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
@@ -666,8 +665,8 @@ def baldurs_gate():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
     print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate City" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1OVfZ3j8dBAstR4Ti1VJmeF5G5WNGRGPh/view?usp=drive_link\033[0m')
     print("")
-    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1p5cVv5bIbigQZta5fHrapF0xBCcJ9qBz/view?usp=drive_link\033[0m')
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1p5cVv5bIbigQZta5fHrapF0xBCcJ9qBz/view?usp=drive_link\033[0m\n')
+    input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n") 
     return ""
     
 def leave_game(npc_1, creatures, home_town, worlds):
