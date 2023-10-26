@@ -15,6 +15,8 @@ def greeting():
     #get terminal size
     columns, _ = shutil.get_terminal_size() 
 
+    print("Columns:", columns)
+
     # Check if screen size is smaller than a threshold
     if columns < 80:
         # Adjusted ASCII art for smaller screens
