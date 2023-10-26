@@ -4,6 +4,7 @@ import random
 from colorama import init, Fore, Style
 init(autoreset=True)
 import shutil
+import textwrap
 
 from  adventure_pkg.battle_functions import Combat_Actions
 from adventure_pkg.character_functions import Abilities, Character
@@ -21,10 +22,9 @@ def greeting():
     if columns < 80:
         # Adjusted ASCII art for smaller screens
         print(Fore.YELLOW + Style.NORMAL + "=" * columns)
-        print(Fore.WHITE + Style.BRIGHT + "Welcome to Alaundo's Last")
-        print(Fore.WHITE + Style.BRIGHT + "Prophecy Heroes! An")
-        print(Fore.WHITE + Style.BRIGHT + "adventure for the ages")
-        print(Fore.WHITE + Style.BRIGHT + "awaits you..." + Fore.YELLOW + Style.NORMAL)
+        print(Fore.WHITE + Style.BRIGHT +
+        textwrap.fill("Welcome to Alaundo's Last Prophecy Heroes! An adventure for the ages awaits you...", width=columns) +
+        Fore.YELLOW + Style.NORMAL)
         print(Fore.YELLOW + Style.NORMAL + "=" * columns)
         
     elif columns >= 80:
