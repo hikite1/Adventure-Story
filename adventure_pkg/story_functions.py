@@ -455,8 +455,8 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                               Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                               Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Trying to sneak attack a sleeping regimen, you see a group of",
                               Fore.YELLOW + Style.NORMAL + "         |\n",
-                              Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"eight {monster_name}s. Your group quickly engages the enemy!                                                                        ",
-                             Fore.YELLOW + Style.NORMAL +" |                                                                             |\n",
+                              Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"eight {monster_name}s. Your group quickly engages the enemy!\n",
+                              Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
                               Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
                               Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
