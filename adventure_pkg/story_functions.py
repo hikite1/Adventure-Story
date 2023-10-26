@@ -3,6 +3,7 @@
 import random
 from colorama import init, Fore, Style
 init(autoreset=True)
+import shutil
 
 from  adventure_pkg.battle_functions import Combat_Actions
 from adventure_pkg.character_functions import Abilities, Character
@@ -11,6 +12,9 @@ from adventure_pkg.monster_battle_functions import Monster
 #print("story_functions is being imported.")
 
 def greeting():
+    #get terminal size
+    columns, _ = shutil.get_terminal_size() 
+
     #print statement
     greeting_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
@@ -22,6 +26,22 @@ def greeting():
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
     Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
     Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n") 
+
+    # Check if screen size is smaller than a threshold
+    if columns < 80:
+        # Adjusted ASCII art for smaller screens
+        greeting_message = print(
+            f'{Fore.YELLOW + Style.NORMAL}{"=" * columns}\n',
+            f'{Fore.YELLOW + Style.NORMAL}{" " * (columns // 3)}=O){" " * (columns // 3)}(O=\n',
+            f'{Fore.YELLOW + Style.NORMAL}{"=" * columns}\n',
+            f'{Fore.YELLOW + Style.NORMAL}{" " * (columns // 3)}|{" " * (columns // 3)}|\n',
+            f'{Fore.YELLOW + Style.NORMAL}{" " * (columns // 3)}|{" " * (columns // 3)}|   {Fore.WHITE + Style.BRIGHT}Welcome to Alaundo\'s Last Prophecy Heroes! An adventure for{Fore.YELLOW + Style.NORMAL}|\n',
+            f'{Fore.YELLOW + Style.NORMAL}{" " * (columns // 3)}|{" " * (columns // 3)}|   {Fore.WHITE + Style.BRIGHT}the ages awaits you...{Fore.YELLOW + Style.NORMAL}                                                  |\n',
+            f'{Fore.YELLOW + Style.NORMAL}{" " * (columns // 3)}|{" " * (columns // 3)}|\n',
+            f'{Fore.YELLOW + Style.NORMAL}{"=" * columns}\n',
+            f'{Fore.YELLOW + Style.NORMAL}{" " * (columns // 3)}=O){" " * (columns // 3)}(O=\n',
+            f'{Fore.YELLOW + Style.NORMAL}{"=" * columns}\n')
+
     print(f'{Fore.WHITE + Style.BRIGHT}Link to "In the Beginning" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XjsnztqL1XEUXs5FCsQUyjtY45OKWhfB/view?usp=sharing\033[0m')
 
     return ""
