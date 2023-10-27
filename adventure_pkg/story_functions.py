@@ -24,7 +24,8 @@ def greeting():
         zero = "0"
         formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(1)}"
         # Adjusted ASCII art for smaller screens
-        print(Fore.YELLOW + Style.NORMAL + "\n~" * columns)
+        print("")
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(Fore.WHITE + Style.BRIGHT +
