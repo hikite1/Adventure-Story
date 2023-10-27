@@ -424,69 +424,104 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
-    #print(f"Chosen monster: {monster_name}")
-    #print(f"Armor Class: {armor_class}")
-    #print(f"Hit Points: {hit_points}")
-    #print(f"To Hit: {to_hit}")
-    #print(f"Initiative: {initiative}")
-    #print(f"Damage: {damage}")
+        #print(f"Chosen monster: {monster_name}")
+        #print(f"Armor Class: {armor_class}")
+        #print(f"Hit Points: {hit_points}")
+        #print(f"To Hit: {to_hit}")
+        #print(f"Initiative: {initiative}")
+        #print(f"Damage: {damage}")
 
-    #COMBAT BEGINS HERE
+        #COMBAT BEGINS HERE
 
-    battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
+        battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
-    if battle == "1":
-        print(begin_faerun_hero)
-        while hero_object.is_alive() and chosen_monster_object.is_alive():
-            print(f"\n{Fore.GREEN + Style.BRIGHT}==== Battle ====")
-            print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
-            print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
+        if battle == "1":
+            print(begin_faerun_hero)
+            while hero_object.is_alive() and chosen_monster_object.is_alive():
+                print(f"\n{Fore.GREEN + Style.BRIGHT}==== Battle ====")
+                print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
+                print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
-            actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
+                actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
 
-            #print(f'\nMonster: {chosen_monster_details}\n')
+                #print(f'\nMonster: {chosen_monster_details}\n')
 
-            if actions == "1":
-                #Hero attacks
-                total_damage = hero_object.attack(chosen_monster_object)
+                if actions == "1":
+                    #Hero attacks
+                    total_damage = hero_object.attack(chosen_monster_object)
 
-                #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
-                #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
+                    #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
+                    #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
 
-                if total_damage > 0:
-                    chosen_monster_object.take_damage(total_damage)
-                    print(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!")
-                else:
-                    print(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!")
-
-                #Creature attacks
-                if chosen_monster_object.is_alive():
-                    monster_damage = chosen_monster_object.attack(hero_object)
-
-                    #print(f"Debug: Monster Damage: {monster_damage}")
-
-                    if monster_damage > 0:
-                        hero_object.take_damage(monster_damage)
-                        print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!")
+                    if total_damage > 0:
+                        chosen_monster_object.take_damage(total_damage)
+                        print(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!")
                     else:
-                        print(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!")
+                        print(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!")
 
-                #Print the result of the battle
-                if hero_object.is_alive() and not chosen_monster_object.is_alive():
-                    #print statement
-                    print(f"{Fore.BLUE + Style.BRIGHT}{hero_class} won the battle!")
-                    print("")
+                    #Creature attacks
+                    if chosen_monster_object.is_alive():
+                        monster_damage = chosen_monster_object.attack(hero_object)
 
-                    if columns < 80:
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(formatted_text)
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(Fore.WHITE + Style.BRIGHT + textwrap.fill(f"Your {hero_class} abilities are amazing! Your group is fascinated by the display of your skills. With only one {monster_name} left, it runs away terrified at your decimation of its group. The rest of the journey goes by rather easily. The legends of Faerun are no match for seeing these wonders first hand. Whether you are seeing the Dalelands or the Swordcoast and the villages or iconic places of legend. You are even more sure that leaving {home_town} was the right choice. After you crest a hilltop you see your destination looms off in the distance.", width=columns))
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(formatted_text)
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                        #print(f"Debug: Monster Damage: {monster_damage}")
+
+                        if monster_damage > 0:
+                            hero_object.take_damage(monster_damage)
+                            print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!")
+                        else:
+                            print(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!")
+
+                    #Print the result of the battle
+                    if hero_object.is_alive() and not chosen_monster_object.is_alive():
+                        #print statement
+                        print(f"{Fore.BLUE + Style.BRIGHT}{hero_class} won the battle!")
                         print("")
 
+                        if columns < 80:
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(formatted_text)
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(Fore.WHITE + Style.BRIGHT + textwrap.fill(f"Your {hero_class} abilities are amazing! Your group is fascinated by the display of your skills. With only one {monster_name} left, it runs away terrified at your decimation of its group. The rest of the journey goes by rather easily. The legends of Faerun are no match for seeing these wonders first hand. Whether you are seeing the Dalelands or the Swordcoast and the villages or iconic places of legend. You are even more sure that leaving {home_town} was the right choice. After you crest a hilltop you see your destination looms off in the distance.", width=columns))
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(formatted_text)
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print("")
+
+                            input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
+
+                            see_city= baldurs_gate()
+                            print(see_city)
+
+                            congratulations = win_game(worlds, home_town)
+                            print(congratulations)
+
+                        elif columns >= 80:
+                            print(
+                                Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                                Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
+                                Fore.YELLOW + Style.NORMAL + "         \n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"the display of your skills. With only one {monster_name} left, it runs", Fore.YELLOW + Style.NORMAL + "     \n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "away terrified at your decimation of its group. The rest of the journey",
+                                Fore.YELLOW + Style.NORMAL + "   |\n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "goes by rather easily. The legends of Faerun are no match for",
+                                Fore.YELLOW + Style.NORMAL + "             |\n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "seeing these wonders first hand. Whether you are seeing the Dalelands", Fore.YELLOW + Style.NORMAL + "      |\n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "or the Swordcoast and the villages or iconic places of legend. You",
+                                Fore.YELLOW + Style.NORMAL + "        |\n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"are even more sure that leaving {home_town} was the right choice.",
+                                Fore.YELLOW + Style.NORMAL + "     \n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "After you crest a hilltop you see your destination looms off",
+                                Fore.YELLOW + Style.NORMAL + "              |\n",
+                                Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "in the distance.",
+                                Fore.YELLOW + Style.NORMAL + "                                                          |\n",
+                                Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+                        
                         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
                         see_city= baldurs_gate()
@@ -495,110 +530,75 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                         congratulations = win_game(worlds, home_town)
                         print(congratulations)
 
-                    elif columns >= 80:
-                        print(
-                            Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                            Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-                            Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                            Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-                            Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Your {hero_class} abilities are amazing! Your group is fascinated by ",
-                            Fore.YELLOW + Style.NORMAL + "         \n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"the display of your skills. With only one {monster_name} left, it runs", Fore.YELLOW + Style.NORMAL + "     \n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "away terrified at your decimation of its group. The rest of the journey",
-                            Fore.YELLOW + Style.NORMAL + "   |\n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "goes by rather easily. The legends of Faerun are no match for",
-                            Fore.YELLOW + Style.NORMAL + "             |\n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "seeing these wonders first hand. Whether you are seeing the Dalelands", Fore.YELLOW + Style.NORMAL + "      |\n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "or the Swordcoast and the villages or iconic places of legend. You",
-                            Fore.YELLOW + Style.NORMAL + "        |\n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + f"are even more sure that leaving {home_town} was the right choice.",
-                            Fore.YELLOW + Style.NORMAL + "     \n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "After you crest a hilltop you see your destination looms off",
-                            Fore.YELLOW + Style.NORMAL + "              |\n",
-                            Fore.YELLOW + Style.NORMAL + "         | ", Fore.WHITE + Style.BRIGHT + "in the distance.",
-                            Fore.YELLOW + Style.NORMAL + "                                                          |\n",
-                            Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-                            Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                            Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-                            Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-                    
-                    input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
+                    elif not hero_object.is_alive() and chosen_monster_object.is_alive():
+                        #print statement
+                        print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.") 
 
-                    see_city= baldurs_gate()
-                    print(see_city)
+                        if columns < 80:
+                            print("")
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(formatted_text)
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(Fore.WHITE + Style.BRIGHT +
+                            textwrap.fill(f"You now feel the rush of life leaving as the {monster_name} injured you fatally and your storied tale of heroism as a {hero_class} is over", width=columns))
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(formatted_text)
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print("")
+                            # Ask the player if they want to restart or exit
+                            restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
+                            if restart_option == 'yes' or restart_option == 'y':
+                                greeting()
+                            elif restart_option == 'no' or restart_option == 'n':
+                                quit()  # Exit the loop if the player doesn't want to restart  
 
-                    congratulations = win_game(worlds, home_town)
-                    print(congratulations)
+                        elif columns >= 80: 
+                            print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                            Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                            Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                            Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                            Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You now feel the rush of life leaving as the {monster_name}",
+                            Fore.YELLOW + Style.NORMAL +"  \n",
+                            Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"injured you fatally and your storied tale of heroism",
+                            Fore.YELLOW + Style.NORMAL +"                  |\n",
+                            Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"as a {hero_class} is over!",
+                            Fore.YELLOW + Style.NORMAL +"                           \n",
+                            Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                            Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                            Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                            Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-                elif not hero_object.is_alive() and chosen_monster_object.is_alive():
-                    #print statement
-                    print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.") 
+                            # Ask the player if they want to restart or exit
+                            restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
+                            if restart_option == 'yes' or restart_option == 'y':
+                                greeting()
+                            elif restart_option == 'no' or restart_option == 'n':
+                                quit()  # Exit the loop if the player doesn't want to restart  
 
-                    if columns < 80:
-                        print("")
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(formatted_text)
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(Fore.WHITE + Style.BRIGHT +
-                        textwrap.fill(f"You now feel the rush of life leaving as the {monster_name} injured you fatally and your storied tale of heroism as a {hero_class} is over", width=columns))
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(formatted_text)
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print("")
-                        # Ask the player if they want to restart or exit
-                        restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
-                        if restart_option == 'yes' or restart_option == 'y':
-                            greeting()
-                        elif restart_option == 'no' or restart_option == 'n':
-                            quit()  # Exit the loop if the player doesn't want to restart  
+                elif actions == "2":
+                    quit_option = input(f"{Fore.CYAN + Style.NORMAL}Are you sure you want to quit the game? (y/n)")
+                    if quit_option == 'yes' or quit_option == 'y':
+                        print(exit_message)
+                        quit()  #Exit the loop if the player doesn't want to restart
+                    elif quit_option == 'no' or quit_option == 'n':
+                        continue
+                else:
+                    print(f"{Fore.CYAN + Style.NORMAL}Invalid option. Please choose again.")              
 
-                    elif columns >= 80: 
-                        print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-                        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-                        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You now feel the rush of life leaving as the {monster_name}",
-                        Fore.YELLOW + Style.NORMAL +"  \n",
-                        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"injured you fatally and your storied tale of heroism",
-                        Fore.YELLOW + Style.NORMAL +"                  |\n",
-                        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"as a {hero_class} is over!",
-                        Fore.YELLOW + Style.NORMAL +"                           \n",
-                        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-                        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-                        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+        elif battle == "2":
+            npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
+            npc_1 = random.choice(npc1)
+            enemies = ["Dire Rats", "Goblins", "Skeletons"]
+            creatures = random.choice(enemies) 
+            leave_game(npc_1, creatures, home_town, worlds)
+            print(exit_message)
+            quit()
+        else:
+            invalid_entry = invalid()
+            print(invalid_entry)
+            battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
 
-                        # Ask the player if they want to restart or exit
-                        restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
-                        if restart_option == 'yes' or restart_option == 'y':
-                            greeting()
-                        elif restart_option == 'no' or restart_option == 'n':
-                            quit()  # Exit the loop if the player doesn't want to restart  
-
-            elif actions == "2":
-                quit_option = input(f"{Fore.CYAN + Style.NORMAL}Are you sure you want to quit the game? (y/n)")
-                if quit_option == 'yes' or quit_option == 'y':
-                    print(exit_message)
-                    quit()  #Exit the loop if the player doesn't want to restart
-                elif quit_option == 'no' or quit_option == 'n':
-                    continue
-            else:
-                print(f"{Fore.CYAN + Style.NORMAL}Invalid option. Please choose again.")              
-
-    elif battle == "2":
-        npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
-        npc_1 = random.choice(npc1)
-        enemies = ["Dire Rats", "Goblins", "Skeletons"]
-        creatures = random.choice(enemies) 
-        leave_game(npc_1, creatures, home_town, worlds)
-        print(exit_message)
-        quit()
-    else:
-        invalid_entry = invalid()
-        print(invalid_entry)
-        battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")
-
-    return ""
+        return ""
 
     
 def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
@@ -838,60 +838,60 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
                         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-                    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Spellplague Portal" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XV-WYUpx0wID5LsXzIHPNw7i7-cqRZ0j/view?usp=drive_link\033[0m')
+                        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Spellplague Portal" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XV-WYUpx0wID5LsXzIHPNw7i7-cqRZ0j/view?usp=drive_link\033[0m')
 
-                    input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter") 
-            
-                    see_city = baldurs_gate()
-                    print(see_city)
+                        input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter") 
+                
+                        see_city = baldurs_gate()
+                        print(see_city)
 
-                    congratulations = win_game(worlds, home_town)
-                    print(congratulations)                  
+                        congratulations = win_game(worlds, home_town)
+                        print(congratulations)                  
 
-                elif not hero_object.is_alive() and chosen_monster_object.is_alive():
-                    #print statement
-                    print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.") 
+                    elif not hero_object.is_alive() and chosen_monster_object.is_alive():
+                        #print statement
+                        print(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} defeated {hero_class}. Game over.") 
 
-                    if columns < 80:
-                        print("")
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(formatted_text)
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(Fore.WHITE + Style.BRIGHT +
-                        textwrap.fill(f"You now feel the rush of life leaving as the {monster_name} injured you fatally and your storied tale of heroism as a {hero_class} is over", width=columns))
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print(formatted_text)
-                        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-                        print("")
-                        # Ask the player if they want to restart or exit
-                        restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
-                        if restart_option == 'yes' or restart_option == 'y':
-                            greeting()
-                        elif restart_option == 'no' or restart_option == 'n':
-                            quit()  # Exit the loop if the player doesn't want to restart  
+                        if columns < 80:
+                            print("")
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(formatted_text)
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(Fore.WHITE + Style.BRIGHT +
+                            textwrap.fill(f"You now feel the rush of life leaving as the {monster_name} injured you fatally and your storied tale of heroism as a {hero_class} is over", width=columns))
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print(formatted_text)
+                            print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+                            print("")
+                            # Ask the player if they want to restart or exit
+                            restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
+                            if restart_option == 'yes' or restart_option == 'y':
+                                greeting()
+                            elif restart_option == 'no' or restart_option == 'n':
+                                quit()  # Exit the loop if the player doesn't want to restart  
 
-                    elif columns >= 80: 
-                        print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-                        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-                        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You now feel the rush of life leaving as the {monster_name}",
-                        Fore.YELLOW + Style.NORMAL +"  \n",
-                        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"injured you fatally and your storied tale of heroism",
-                        Fore.YELLOW + Style.NORMAL +"                  |\n",
-                        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"as a {hero_class} is over!",
-                        Fore.YELLOW + Style.NORMAL +"                           \n",
-                        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-                        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-                        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+                        elif columns >= 80: 
+                            print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                            Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                            Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                            Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                            Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"You now feel the rush of life leaving as the {monster_name}",
+                            Fore.YELLOW + Style.NORMAL +"  \n",
+                            Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"injured you fatally and your storied tale of heroism",
+                            Fore.YELLOW + Style.NORMAL +"                  |\n",
+                            Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +f"as a {hero_class} is over!",
+                            Fore.YELLOW + Style.NORMAL +"                           \n",
+                            Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+                            Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                            Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+                            Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-                        # Ask the player if they want to restart or exit
-                        restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
-                        if restart_option == 'yes' or restart_option == 'y':
-                            greeting()
-                        elif restart_option == 'no' or restart_option == 'n':
-                            quit()  # Exit the loop if the player doesn't want to restart  t  
+                            # Ask the player if they want to restart or exit
+                            restart_option = input(f"{Fore.CYAN + Style.NORMAL}Do you want to restart? (yes/no): ").lower()
+                            if restart_option == 'yes' or restart_option == 'y':
+                                greeting()
+                            elif restart_option == 'no' or restart_option == 'n':
+                                quit()  # Exit the loop if the player doesn't want to restart   
 
             elif actions == "2":
                 quit_option = input(f"{Fore.CYAN + Style.NORMAL}Are you sure you want to quit the game? (y/n)")
