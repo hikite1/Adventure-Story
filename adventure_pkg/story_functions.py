@@ -22,7 +22,7 @@ def greeting():
     if columns < 80:
         #Adjusted ASCII art for smaller screens
         closing_parenthesis = ")"
-        zero = "O"
+        zero = "(O"
         offset = 1
         terminal_width = shutil.get_terminal_size().columns
         formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
@@ -64,7 +64,7 @@ def faerun_story():
     if columns < 80:
         # Adjusted ASCII art for smaller screens
         closing_parenthesis = ")"
-        zero = "O"
+        zero = "(O"
         offset = 1
         terminal_width = shutil.get_terminal_size().columns
         formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
@@ -80,6 +80,8 @@ def faerun_story():
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print("")
+
+        return ""
 
     elif columns >= 80:
         #print statement 
