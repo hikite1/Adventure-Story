@@ -369,8 +369,6 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
-        return ""
-
     elif columns >= 80:
         #print statement
         begin_faerun_hero = print(
@@ -677,8 +675,6 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         print("")
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
-
-        return ""
 
     if columns >= 80:
         #print statement
