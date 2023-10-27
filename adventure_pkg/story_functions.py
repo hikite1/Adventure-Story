@@ -339,7 +339,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         # Adjusted ASCII art for smaller screens
         closing_parenthesis = ")"
         zero = "(O"
-        offset = 2
+        offset = 1
         terminal_width = shutil.get_terminal_size().columns
         formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
