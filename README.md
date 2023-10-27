@@ -5,7 +5,7 @@ Alaundo's Prophecy
 This is set in the D&D 3.5 campaign setting. A player can choose between different home worlds, classes, and races. Based on player choices they will have differnet story lines. There is one battle for the adventurers accepting the challenge. The story concludes in Baldur's Gate. 
 
 Update 1.1v6 - fixed bugs, cleaned and improved code, added URL links for players
-Update 1.2v39 - dynamic solution within Python script to detect the screen size and adjust/remove the ASCII art 
+Update 1.2v40 - dynamic solution within Python script to detect the screen size and adjust/remove the ASCII art 
 
 ERRORS - None Known. 
 
