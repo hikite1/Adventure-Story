@@ -208,11 +208,12 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(Fore.WHITE + Style.BRIGHT + textwrap.fill(f"Your fate is intertwined with the {race_name} {hero_name}", width=columns))
+        print(Fore.WHITE + Style.BRIGHT + textwrap.fill(f"Your fate is intertwined with the:\n {race_name} {hero_name}", width=columns))
+        print("")
         print(f"{Fore.WHITE + Style.BRIGHT}Racial Traits:\n {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}")
         print("")
-        print(f"{Fore.WHITE + Style.BRIGHT}Name: {character_name.ljust(10)}\n")
-        print(f"{Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}\n")
+        print(f"{Fore.WHITE + Style.BRIGHT}Character Name: {character_name.ljust(10)}\n")
+        print(f"{Fore.WHITE + Style.BRIGHT}Location: \n   World - {worlds.ljust(10)} \n   Area - {home_town.ljust(15)}\n")
         print(Fore.WHITE + Style.BRIGHT + ability_scores_string)
         print(f"{Fore.WHITE + Style.BRIGHT}HP: {str(hp).rjust(3)}")
         print(f"{Fore.WHITE + Style.BRIGHT}AC: {str(armor_modifier).rjust(3)}")
@@ -251,7 +252,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
             Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
             Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Racial Traits: {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
             Fore.YELLOW + Style.NORMAL + "         |                                                                             |",
-            Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     Name: {character_name.ljust(10)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
+            Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     Character Name: {character_name.ljust(10)}{' ' * 46}"+ Fore.YELLOW + Style.NORMAL + "|\n",
             Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}"+ Fore.YELLOW + Style.NORMAL + "                    |\n",
             Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
             Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
