@@ -192,7 +192,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
         for i, line in enumerate(ability_scores_string.split('\n'))
     ]
 
-    character_name = input(f"{Fore.CYAN + Style.NORMAL}Type in the name of your character: ")
+    character_name = input(f"\n{Fore.CYAN + Style.NORMAL}Type in the name of your character: ")
     print('')
 
     # Check if screen size is smaller than a threshold
@@ -208,11 +208,11 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(Fore.WHITE + Style.BRIGHT + textwrap.fill("Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}", width=columns))
+        print(Fore.WHITE + Style.BRIGHT + textwrap.fill(f"Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}\n", width=columns))
         print(f"{Fore.WHITE + Style.BRIGHT}Racial Traits:\n {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}")
         print("")
-        print(f"{Fore.WHITE + Style.BRIGHT}Name: {character_name.ljust(10)}")
-        print(f"{Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}")
+        print(f"{Fore.WHITE + Style.BRIGHT}Name: {character_name.ljust(10)}\n")
+        print(f"{Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}\n")
         print(Fore.WHITE + Style.BRIGHT + ability_scores_string)
         print(f"{Fore.WHITE + Style.BRIGHT}HP: {str(hp).rjust(3)}")
         print(f"{Fore.WHITE + Style.BRIGHT}AC: {str(armor_modifier).rjust(3)}")

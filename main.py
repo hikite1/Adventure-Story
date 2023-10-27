@@ -6,6 +6,8 @@
 import random
 from colorama import init, Fore, Style
 init(autoreset=True)
+import textwrap
+import shutil
 
 #Imports custom modules
 from adventure_pkg.story_functions import character_creation, faerun_story, non_faerun_story, greeting, leave_game, faerun_hero, nonfaerun_hero, baldurs_gate, invalid, win_game
@@ -140,11 +142,12 @@ while True:
         player_character.apply_racial_modifiers()
 
         # Print equipment and modifiers
+        columns, _ = shutil.get_terminal_size() 
         print(f"\n{Fore.GREEN + Style.NORMAL}Equipment and Spells:")
-        print(f"{Fore.GREEN + Style.NORMAL}Items: (Armor) {player_character.equipment['armor']} (Weapon) {player_character.equipment['weapon']} (Shield) {player_character.equipment['shield']}")
-        print(f"{Fore.GREEN + Style.NORMAL}Potions: {player_character.equipment['potions']}")
-        print(f"{Fore.GREEN + Style.NORMAL}Scrolls: {player_character.equipment['scrolls']}")
-        print(f"{Fore.GREEN + Style.NORMAL}Spells: (Arcane) {player_character.equipment['arcane_spells']} (Divine) {player_character.equipment['divine_spells']}\n")
+        print(Fore.GREEN + Style.NORMAL + textwrap.fill(f"Items: (Armor) {player_character.equipment['armor']} (Weapon) {player_character.equipment['weapon']} (Shield) {player_character.equipment['shield']}", width=columns))
+        print(Fore.GREEN + Style.NORMAL + textwrap.fill(f"Potions: {player_character.equipment['potions']}", width=columns))
+        print(Fore.GREEN + Style.NORMAL + textwrap.fill(f"Scrolls: {player_character.equipment['scrolls']}", width=columns))
+        print(Fore.GREEN + Style.NORMAL+ textwrap.fill("Spells: (Arcane) {player_character.equipment['arcane_spells']} (Divine) {player_character.equipment['divine_spells']}\n", width=columns))
         armor_modifier = player_character.calculate_armor_bonus(player_character.equipment['armor'], player_character.shield_modifier)
         weapon_modifier = player_character.calculate_tohit(player_character.equipment['bab'])
         initiative_modifier = player_character.calculate_init_bonus()
