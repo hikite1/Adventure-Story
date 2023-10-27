@@ -20,10 +20,12 @@ def greeting():
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
+        #Adjusted ASCII art for smaller screens
         closing_parenthesis = ")"
-        zero = "0"
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(1)}"
-        # Adjusted ASCII art for smaller screens
+        zero = "O"
+        total_width = 10
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(total_width - 1)}"
+
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -31,7 +33,9 @@ def greeting():
         print(Fore.WHITE + Style.BRIGHT +
         textwrap.fill("Welcome to Alaundo's Last Prophecy Heroes! An adventure for the ages awaits you...", width=columns) +
         Fore.YELLOW + Style.NORMAL)
-        print(Fore.YELLOW + Style.NORMAL + "=\n" * columns)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~\n" * columns)
         
     elif columns >= 80:
         #print statement
