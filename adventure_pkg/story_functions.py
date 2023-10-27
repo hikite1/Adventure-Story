@@ -341,12 +341,12 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         zero = "(O"
         offset = 2
         terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(0)}{zero.rjust(terminal_width - offset)}"
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
         begin_faerun_hero = print( 
             f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}",
             f"{formatted_text}",
-            f"{Fore.YELLOW + Style.NORMAL}{'~' * (columns - 1)}",
+            f"{Fore.YELLOW + Style.NORMAL}{'~' * columns}",
             f"{Fore.WHITE + Style.BRIGHT}{textwrap.fill(f'You decide to leave your {hero_class} mentor in {home_town} and travel to Baldurs Gate. There are plenty of caravans headed to the event. You are able to find employment easily enough and it is up to you if you think anyone needs to know of your {hero_class} abilities or not.', width=columns)}",
             f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}",
             f"{formatted_text}",
