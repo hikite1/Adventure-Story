@@ -79,7 +79,7 @@ while True:
             print(invalid_entry)
             world = input(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Scarn\n2) Krynn\n3) Toril\n\n")
             valid_world = False
-            #continue
+            continue
 
     while True:
         print(f"\n{Fore.CYAN + Style.NORMAL}Choose your Hero:")
