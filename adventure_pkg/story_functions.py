@@ -163,6 +163,9 @@ def non_faerun_story():
         return ""
 
 def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier):
+    #get terminal size
+    columns, _ = shutil.get_terminal_size() 
+
     # Display the ability scores with modifiers
     ability_scores_description = [
         f"{attribute}: {value} ({ability_scores.calculate_modifier(attribute.lower())})"
@@ -195,50 +198,99 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
     character_name = input(f"{Fore.CYAN + Style.NORMAL}Type in the name of your character: ")
     print('')
 
-    #print statement 
-    fate = print(
-        Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
-        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Racial Traits: {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
-        Fore.YELLOW + Style.NORMAL + "         |                                                                             |",
-        Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     Name: {character_name.ljust(10)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
-        Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}"+ Fore.YELLOW + Style.NORMAL + "                    |\n",
-        Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
-        Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
-        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     AC: {str(armor_modifier).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
-        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Attack: +{str(weapon_modifier).ljust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + " |\n",
-        Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Initiative: +{str(initiative_modifier).ljust(3)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
-        Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-        Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-        Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
-    )
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
+    # Check if screen size is smaller than a threshold
+    if columns < 80:
+        # Adjusted ASCII art for smaller screens
+        closing_parenthesis = ")"
+        zero = "(O"
+        offset = 1
+        terminal_width = shutil.get_terminal_size().columns
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
-    #print statement
-    hometown_description = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                                Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                                Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}You hale from a town called {home_town}.",
-                                Fore.YELLOW + Style.NORMAL + "                                  \n",
-                                Fore.YELLOW + Style.NORMAL + "         |    ", Fore.WHITE + Style.BRIGHT + "You have spent the past few months under the mentorship",
-                                Fore.YELLOW + Style.NORMAL + "                |\n",
-                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}of a Master {hero_name} and have been sensing",
-                                Fore.YELLOW + Style.NORMAL + "                              \n",
-                                Fore.YELLOW + Style.NORMAL + "         |    ", Fore.WHITE + Style.BRIGHT + "that it is time for you to go out into the world",
-                                Fore.YELLOW + Style.NORMAL + "                       |\n",
-                                Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}and test your new skills.",
-                                Fore.YELLOW + Style.NORMAL + "                                              |\n",
-                                Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
-                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-                                Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
-                                Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
-    return ""
+        print("")
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(f"{Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}")
+        print(f"{Fore.WHITE + Style.BRIGHT}Racial Traits: {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}")
+        print("")
+        print(f"{Fore.WHITE + Style.BRIGHT}     Name: {character_name.ljust(10)}")
+        print(f"{Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}")
+        print(Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped))
+        print(f"{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}")
+        print(f"{Fore.WHITE + Style.BRIGHT}     AC: {str(armor_modifier).rjust(3)}")
+        print(f"{Fore.WHITE + Style.BRIGHT}     Attack: +{str(weapon_modifier).ljust(3)}")
+        print(f"{Fore.WHITE + Style.BRIGHT}     Initiative: +{str(initiative_modifier).ljust(3)}")
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print("")
+
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
+
+        print("")
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(Fore.WHITE + Style.BRIGHT + 
+              textwrap.fill(f"You hale from a town called {home_town}. You have spent the past few months under the mentorship of a Master {hero_name} and have been sensing that it is time for you to go out into the world and test your new skills.", width=columns) 
+              + Fore.YELLOW + Style.NORMAL)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print("")
+
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+
+        return ""
+
+    elif columns >= 80:
+        #print statement 
+        fate = print(
+            Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+            Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+            Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+            Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+            Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
+            Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Racial Traits: {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}"+ Fore.YELLOW + Style.NORMAL + "                             \n",
+            Fore.YELLOW + Style.NORMAL + "         |                                                                             |",
+            Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     Name: {character_name.ljust(10)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
+            Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}"+ Fore.YELLOW + Style.NORMAL + "                    |\n",
+            Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
+            Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
+            Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     AC: {str(armor_modifier).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
+            Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Attack: +{str(weapon_modifier).ljust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + " |\n",
+            Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Initiative: +{str(initiative_modifier).ljust(3)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
+            Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+            Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+            Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+            Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+        )
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
+
+        #print statement
+        hometown_description = print(Fore.YELLOW + Style.NORMAL + "         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                    Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                                    Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                    Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                                    Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}You hale from a town called {home_town}.",
+                                    Fore.YELLOW + Style.NORMAL + "                                  \n",
+                                    Fore.YELLOW + Style.NORMAL + "         |    ", Fore.WHITE + Style.BRIGHT + "You have spent the past few months under the mentorship",
+                                    Fore.YELLOW + Style.NORMAL + "                |\n",
+                                    Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}of a Master {hero_name} and have been sensing",
+                                    Fore.YELLOW + Style.NORMAL + "                              \n",
+                                    Fore.YELLOW + Style.NORMAL + "         |    ", Fore.WHITE + Style.BRIGHT + "that it is time for you to go out into the world",
+                                    Fore.YELLOW + Style.NORMAL + "                       |\n",
+                                    Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}and test your new skills.",
+                                    Fore.YELLOW + Style.NORMAL + "                                              |\n",
+                                    Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
+                                    Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+                                    Fore.YELLOW + Style.NORMAL + "       =O)                                                                            (O=\n",
+                                    Fore.YELLOW + Style.NORMAL + "        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n\n") 
+
+        return ""
 
 def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
     #random npc selection
