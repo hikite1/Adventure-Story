@@ -81,6 +81,9 @@ def faerun_story():
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print("")
 
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
+        print(f'\n{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m')
+
         return ""
 
     elif columns >= 80:
@@ -104,27 +107,60 @@ def faerun_story():
         return ""
 
 def non_faerun_story():
-    #print statement
-    non_faerun_origin = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"About ten years ago a force of undead started razing cities,",Fore.YELLOW + Style.NORMAL+"          |\n",
-    Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"assault, then it was demons and abyssal war machines. They would",Fore.YELLOW + Style.NORMAL+"         |\n", 
-    Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"slowly transform the city to be undead in their ranks. Over time you",Fore.YELLOW + Style.NORMAL+"     |\n", 
-    Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"fought your sister, your mother, friend, cousin. The list goes on.",Fore.YELLOW + Style.NORMAL+"       |\n", 
-    Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"They have dominated your world, and now you are old enough",Fore.YELLOW + Style.NORMAL+"               |\n",
-    Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"to join the resistance ranks.",Fore.YELLOW + Style.NORMAL+"                                            |\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n", 
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
-    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m')
-    print("")
-    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m')
+    #get terminal size
+    columns, _ = shutil.get_terminal_size() 
 
-    return ""
+    # Check if screen size is smaller than a threshold
+    if columns < 80:
+        # Adjusted ASCII art for smaller screens
+        closing_parenthesis = ")"
+        zero = "(O"
+        offset = 1
+        terminal_width = shutil.get_terminal_size().columns
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
+
+        print("")
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(Fore.WHITE + Style.BRIGHT + 
+              textwrap.fill("About ten years ago a force of undead started razing cities, assault, then it was demons and abyssal war machines. They would slowly transform the city to be undead in their ranks. Over time you fought your sister, your mother, friend, cousin. The list goes on. They have dominated your world, and now you are old enough to join the resistance ranks.", width=columns) 
+              + Fore.YELLOW + Style.NORMAL)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print("")
+
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m')
+        print("")
+        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m')
+
+        return ""
+
+    elif columns >= 80:
+        #print statement
+        non_faerun_origin = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL +"         |     ",Fore.WHITE + Style.BRIGHT +"About ten years ago a force of undead started razing cities,",Fore.YELLOW + Style.NORMAL+"          |\n",
+        Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"assault, then it was demons and abyssal war machines. They would",Fore.YELLOW + Style.NORMAL+"         |\n", 
+        Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"slowly transform the city to be undead in their ranks. Over time you",Fore.YELLOW + Style.NORMAL+"     |\n", 
+        Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"fought your sister, your mother, friend, cousin. The list goes on.",Fore.YELLOW + Style.NORMAL+"       |\n", 
+        Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"They have dominated your world, and now you are old enough",Fore.YELLOW + Style.NORMAL+"               |\n",
+        Fore.YELLOW + Style.NORMAL +"         |  ",Fore.WHITE + Style.BRIGHT +"to join the resistance ranks.",Fore.YELLOW + Style.NORMAL+"                                            |\n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n", 
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
+        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m')
+        print("")
+        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m')
+
+        return ""
 
 def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier):
     # Display the ability scores with modifiers
