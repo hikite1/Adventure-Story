@@ -24,8 +24,7 @@ def greeting():
         closing_parenthesis = ")"
         zero = "O"
         terminal_width = shutil.get_terminal_size().columns
-        offset = 2
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width)}"
 
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
@@ -63,11 +62,23 @@ def faerun_story():
     # Check if screen size is smaller than a threshold
     if columns < 80:
         # Adjusted ASCII art for smaller screens
+        closing_parenthesis = ")"
+        zero = "O"
+        terminal_width = shutil.get_terminal_size().columns
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width)}"
+
+        print("")
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(Fore.YELLOW + Style.NORMAL + "\n=" * columns)
         print(Fore.WHITE + Style.BRIGHT + 
               textwrap.fill("Over the past few years undead and demonic attacks have been destroying random civilizations. So far it has been in undomesticated areas, but fearexists that soon all will be at war. The feeling is that Demon Lords are stirring in the dark recesses  of the unknown corners of the world.", width=columns) 
               + Fore.YELLOW + Style.NORMAL)
-        print(Fore.YELLOW + Style.NORMAL + "=\n" * columns)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
+        print("")
 
     elif columns >= 80:
         #print statement 
