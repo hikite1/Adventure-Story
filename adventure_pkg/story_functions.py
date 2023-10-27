@@ -646,18 +646,18 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         # Adjusted ASCII art for smaller screens
         closing_parenthesis = ")"
         zero = "(O"
-        offset = 2
+        offset = 1
         terminal_width = shutil.get_terminal_size().columns
         formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
         begin_nonfaerun_hero = print(
-            f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}",
-            f"{formatted_text}",
-            f"{Fore.YELLOW + Style.NORMAL}{'~' * columns}",
-            f"{Fore.WHITE + Style.BRIGHT}{textwrap.fill(f'Hero of {worlds} you have joined the ranks and have been used for your {hero_class} skill set. This day you are preparing for battle on a city in {worlds} that is one of good people. The thought of waging war on this symbol of truth and justice is just incomprehensible. Then suddenly you see buildings that were untouched become burnt to the ground, and within minutes the area is covered in bloody pulsating cocoons. The city was once displaying their flags, but then suddenly were displaying flayed humans, elves, tieflings, and more on poles instead. Fine crafted roads instantly turned into a lava flow erupting from hell itself. Over the course of the day demonic figures are seen flaying, and digesting the locals in primal mannerisms', width=columns)}\n",
-            f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}",
-            f"{formatted_text}\n",
-            f"{Fore.YELLOW + Style.NORMAL}{'~' * columns}\n",
+            f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}"
+            f"{formatted_text}"
+            f"{Fore.YELLOW + Style.NORMAL}{'~' * columns}"
+            f"{Fore.WHITE + Style.BRIGHT}{textwrap.fill(f'Hero of {worlds} you have joined the ranks and have been used for your {hero_class} skill set. This day you are preparing for battle on a city in {worlds} that is one of good people. The thought of waging war on this symbol of truth and justice is just incomprehensible. Then suddenly you see buildings that were untouched become burnt to the ground, and within minutes the area is covered in bloody pulsating cocoons. The city was once displaying their flags, but then suddenly were displaying flayed humans, elves, tieflings, and more on poles instead. Fine crafted roads instantly turned into a lava flow erupting from hell itself. Over the course of the day demonic figures are seen flaying, and digesting the locals in primal mannerisms', width=columns)}\n"
+            f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}"
+            f"{formatted_text}\n"
+            f"{Fore.YELLOW + Style.NORMAL}{'~' * columns}\n"
             "\n"
         )
 
