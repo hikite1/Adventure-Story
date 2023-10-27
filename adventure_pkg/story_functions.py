@@ -23,8 +23,9 @@ def greeting():
         #Adjusted ASCII art for smaller screens
         closing_parenthesis = ")"
         zero = "O"
+        offset = 1
         terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width)}"
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
@@ -64,8 +65,9 @@ def faerun_story():
         # Adjusted ASCII art for smaller screens
         closing_parenthesis = ")"
         zero = "O"
+        offset = 1
         terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width)}"
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
