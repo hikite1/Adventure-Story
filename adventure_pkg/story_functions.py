@@ -208,7 +208,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(Fore.WHITE + Style.BRIGHT + textwrap.fill(f"Your fate is intertwined with the {race_name.ljust(10)} {hero_name.ljust(10)}\n", width=columns))
+        print(Fore.WHITE + Style.BRIGHT + textwrap.fill(f"Your fate is intertwined with the {race_name} {hero_name}", width=columns))
         print(f"{Fore.WHITE + Style.BRIGHT}Racial Traits:\n {', '.join([f'{trait} {modifier}' for trait, modifier in racial_modifiers.items()])}")
         print("")
         print(f"{Fore.WHITE + Style.BRIGHT}Name: {character_name.ljust(10)}\n")

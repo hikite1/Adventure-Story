@@ -147,7 +147,7 @@ while True:
         print(Fore.GREEN + Style.NORMAL + textwrap.fill(f"Items: (Armor) {player_character.equipment['armor']} (Weapon) {player_character.equipment['weapon']} (Shield) {player_character.equipment['shield']}", width=columns))
         print(Fore.GREEN + Style.NORMAL + textwrap.fill(f"Potions: {player_character.equipment['potions']}", width=columns))
         print(Fore.GREEN + Style.NORMAL + textwrap.fill(f"Scrolls: {player_character.equipment['scrolls']}", width=columns))
-        print(Fore.GREEN + Style.NORMAL+ textwrap.fill("Spells: (Arcane) {player_character.equipment['arcane_spells']} (Divine) {player_character.equipment['divine_spells']}\n", width=columns))
+        print(Fore.GREEN + Style.NORMAL+ textwrap.fill(f"Spells: (Arcane) {player_character.equipment['arcane_spells']} (Divine) {player_character.equipment['divine_spells']}\n", width=columns))
         armor_modifier = player_character.calculate_armor_bonus(player_character.equipment['armor'], player_character.shield_modifier)
         weapon_modifier = player_character.calculate_tohit(player_character.equipment['bab'])
         initiative_modifier = player_character.calculate_init_bonus()
