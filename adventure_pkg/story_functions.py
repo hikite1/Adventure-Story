@@ -343,16 +343,16 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         terminal_width = shutil.get_terminal_size().columns
         formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
-        print("")
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(formatted_text)
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(Fore.WHITE + Style.BRIGHT + 
-              textwrap.fill(f"You decide to leave your {hero_class} mentor in {home_town} and travel to Baldur's Gate. There are plenty of caravans headed to the event. You are able to find employment easily enough and it is up to you if you think anyone needs to know of your {hero_class} abilities or not.", width=columns))
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(formatted_text)
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print("")
+        begin_faerun_hero = print(
+            f"\n{'~' * columns}\n",
+            f"{formatted_text}\n",
+            f"{'~' * columns}\n",
+            f"{Fore.WHITE + Style.BRIGHT}{textwrap.fill(f'You decide to leave your {hero_class} mentor in {home_town} and travel to Baldurs Gate. There are plenty of caravans headed to the event. You are able to find employment easily enough and it is up to you if you think anyone needs to know of your {hero_class} abilities or not.', width=columns)}",
+            f"{'~' * columns}",
+            f"{formatted_text}",
+            f"{'~' * columns}",
+            "\n"
+        )
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
@@ -361,7 +361,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(Fore.WHITE + Style.BRIGHT + 
-              textwrap.fill(f"{hero_class} of {worlds} you have been tasked to defend the caravan if necessary in return for room and board on the voyage to Baldur's Gate. Each wagon has four mercenaries for it defense. Yours has you, a {npc_1}, a {npc_2}, and a {npc_3}. A group of {monster_name}s is seen using the shadows from bushes clustered together ahead of your wagon. A {npc_1} sees these {monster_name}s and alerts the wagon to veer off and group with another wagon. Your group has discussed strategy prior and everyone egins to move and execute the plan.", width=columns))
+            textwrap.fill(f"{hero_class} of {worlds} you have been tasked to defend the caravan if necessary in return for room and board on the voyage to Baldur's Gate. Each wagon has four mercenaries for it defense. Yours has you, a {npc_1}, a {npc_2}, and a {npc_3}. A group of {monster_name}s is seen using the shadows from bushes clustered together ahead of your wagon. A {npc_1} sees these {monster_name}s and alerts the wagon to veer off and group with another wagon. Your group has discussed strategy prior and everyone egins to move and execute the plan.", width=columns))
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
@@ -650,16 +650,16 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         terminal_width = shutil.get_terminal_size().columns
         formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
-        print("")
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(formatted_text)
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(Fore.WHITE + Style.BRIGHT + 
-              textwrap.fill(f"Hero of {worlds} you have joined the ranks and have been used for your {hero_class} skill set. This day you are preparing for battle on a city in {worlds} that is one of good people. The thought of waging war on this symbol of truth and justice is just incomprehensible. Then suddenly you see buildings that were untouched become burnt to the ground, and within minutes the area is covered in bloody pulsating cocoons. The city was once displaying their flags, but then suddenly were displaying flayed humans, elves, tieflings, and more on poles instead. Fine crafted roads instantly turned into a lava flow erupting from hell itself. Over the course of the day demonic figures are seen flaying, and digesting the locals in primal mannerisms", width=columns))
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print(formatted_text)
-        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
-        print("")
+        begin_nonfaerun_hero = print(
+            f"\n{'~' * columns}\n",
+            f"{formatted_text}\n",
+            f"{'~' * columns}\n",
+            f"{Fore.WHITE + Style.BRIGHT}{textwrap.fill(f'Hero of {worlds} you have joined the ranks and have been used for your {hero_class} skill set. This day you are preparing for battle on a city in {worlds} that is one of good people. The thought of waging war on this symbol of truth and justice is just incomprehensible. Then suddenly you see buildings that were untouched become burnt to the ground, and within minutes the area is covered in bloody pulsating cocoons. The city was once displaying their flags, but then suddenly were displaying flayed humans, elves, tieflings, and more on poles instead. Fine crafted roads instantly turned into a lava flow erupting from hell itself. Over the course of the day demonic figures are seen flaying, and digesting the locals in primal mannerisms', width=columns)}\n",
+            f"{'~' * columns}\n",
+            f"{formatted_text}\n",
+            f"{'~' * columns}\n",
+            "\n"
+        )
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
 
