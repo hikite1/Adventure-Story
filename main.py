@@ -82,7 +82,7 @@ while True:
             #continue
 
     while True:
-        print(f"\n\n{Fore.CYAN + Style.NORMAL}Choose your Hero:")
+        print(f"\n{Fore.CYAN + Style.NORMAL}Choose your Hero:")
         for i, hero_class in enumerate(character_abilities.keys(), 1):
             print(f"{Fore.CYAN + Style.NORMAL}{i}){Fore.CYAN + Style.NORMAL} {hero_class}")
 

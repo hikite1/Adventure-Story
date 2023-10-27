@@ -20,16 +20,21 @@ def greeting():
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
+        closing_parenthesis = ")"
+        zero = "0"
+        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(1)}"
         # Adjusted ASCII art for smaller screens
-        print(Fore.YELLOW + Style.NORMAL + "=" * columns)
+        print(Fore.YELLOW + Style.NORMAL + "\n~" * columns)
+        print(formatted_text)
+        print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(Fore.WHITE + Style.BRIGHT +
         textwrap.fill("Welcome to Alaundo's Last Prophecy Heroes! An adventure for the ages awaits you...", width=columns) +
         Fore.YELLOW + Style.NORMAL)
-        print(Fore.YELLOW + Style.NORMAL + "=" * columns)
+        print(Fore.YELLOW + Style.NORMAL + "=\n" * columns)
         
     elif columns >= 80:
         #print statement
-        greeting_message = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        greeting_message = print(Fore.YELLOW + Style.NORMAL +"\n         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
         Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
@@ -45,22 +50,37 @@ def greeting():
     return ""
 
 def faerun_story():
-    #print statement 
-    faerun_origin = print(Fore.YELLOW + Style.NORMAL +"         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"         |   ",Fore.WHITE + Style.BRIGHT +"Over the past few years undead and demonic attacks have been destroying",Fore.YELLOW + Style.NORMAL+" |\n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"random civilizations. So far it has been in undomesticated areas, but fear",Fore.YELLOW + Style.NORMAL+"|\n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"exists that soon all will be at war. The feeling is that Demon Lords are",Fore.YELLOW + Style.NORMAL+"  |\n",
-    Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"stirring in the dark recesses  of the unknown corners of the world.",Fore.YELLOW + Style.NORMAL+"       |\n",
-    Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
-    Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
-    Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
-    input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
-    print(f'{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m')
-    return ""
+    #get terminal size
+    columns, _ = shutil.get_terminal_size() 
+
+    # Check if screen size is smaller than a threshold
+    if columns < 80:
+        # Adjusted ASCII art for smaller screens
+        print(Fore.YELLOW + Style.NORMAL + "\n=" * columns)
+        print(Fore.WHITE + Style.BRIGHT + 
+              textwrap.fill("Over the past few years undead and demonic attacks have been destroying random civilizations. So far it has been in undomesticated areas, but fearexists that soon all will be at war. The feeling is that Demon Lords are stirring in the dark recesses  of the unknown corners of the world.", width=columns) 
+              + Fore.YELLOW + Style.NORMAL)
+        print(Fore.YELLOW + Style.NORMAL + "=\n" * columns)
+
+    elif columns >= 80:
+        #print statement 
+        faerun_origin = print(Fore.YELLOW + Style.NORMAL +"\n         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL +"         |   ",Fore.WHITE + Style.BRIGHT +"Over the past few years undead and demonic attacks have been destroying",Fore.YELLOW + Style.NORMAL+" |\n",
+        Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"random civilizations. So far it has been in undomesticated areas, but fear",Fore.YELLOW + Style.NORMAL+"|\n",
+        Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"exists that soon all will be at war. The feeling is that Demon Lords are",Fore.YELLOW + Style.NORMAL+"  |\n",
+        Fore.YELLOW + Style.NORMAL +"         | ",Fore.WHITE + Style.BRIGHT +"stirring in the dark recesses  of the unknown corners of the world.",Fore.YELLOW + Style.NORMAL+"       |\n",
+        Fore.YELLOW + Style.NORMAL +"         |                                                                             |\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",
+        Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
+        Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
+
+        input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
+        print(f'\n{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m')
+
+        return ""
 
 def non_faerun_story():
     #print statement
