@@ -1108,8 +1108,8 @@ def win_game(worlds, home_town):
             elif restart_option == 'no' or restart_option == 'n':
                 quit()  # Exit the loop if the player doesn't want to restart
         else:
-            print(Fore.MAGENTA + Style.BRIGHT + textwrap.fill("Congratulations! You have begun Alaundo's Prophecy campaign.", width=columns)
-            print(Fore.WHITE + Style.BRIGHT,"\nTake a screen shot and show your Dungeon Master. She or he will give you:\n", width=columns))
+            print(Fore.MAGENTA + Style.BRIGHT + textwrap.fill("Congratulations! You have begun Alaundo's Prophecy campaign.", width=columns))
+            print(Fore.WHITE + Style.BRIGHT + textwrap.fill("Take a screen shot and show your Dungeon Master. She or he will give you:\n", width=columns))
             print(Fore.YELLOW + Style.BRIGHT +"50 gold\n")
             print(Fore.CYAN + Style.BRIGHT +"500 experience\n\n")
             input("Pressing enter will begin a new story")
