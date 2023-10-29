@@ -12,21 +12,22 @@ from adventure_pkg.monster_battle_functions import Monster
 
 #print("story_functions is being imported.")
 
+#get terminal size
+columns, _ = shutil.get_terminal_size() 
+
+#Adjusted ASCII art for smaller screens
+closing_parenthesis = ")"
+zero = "(O"
+offset = 1
+terminal_width = shutil.get_terminal_size().columns
+formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
+
 def greeting():
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
 
     print("Columns:", columns)
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        #Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
-
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -73,7 +74,7 @@ def faerun_story():
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(Fore.WHITE + Style.BRIGHT + 
-              textwrap.fill("Over the past few years undead and demonic attacks have been destroying random civilizations. So far it has been in undomesticated areas, but fearexists that soon all will be at war. The feeling is that Demon Lords are stirring in the dark recesses  of the unknown corners of the world.", width=columns))
+              textwrap.fill("Over the past few years undead and demonic attacks have been destroying random civilizations. So far it has been in undomesticated areas, but fear exists that soon all will be at war. The feeling is that Demon Lords are stirring in the dark recesses of the unknown corners of the world.", width=columns))
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
@@ -721,7 +722,6 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                                 Fore.YELLOW + Style.NORMAL + "  |\n",
                                 Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"{home_town}. Your unit today is a {npc_1}, a {npc_2}, and a {npc_3}.",
                                 Fore.YELLOW + Style.NORMAL + "         \n",
-                                Fore.YELLOW + Style.NORMAL + "         |                                                                             |\n",
                                 Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"Trying to sneak attack a sleeping regimen, you see a group of",
                                 Fore.YELLOW + Style.NORMAL + "         |\n",
                                 Fore.YELLOW + Style.NORMAL + "         |     ", Fore.WHITE + Style.BRIGHT + f"eight {monster_name}s. Your group quickly engages the enemy!\n",

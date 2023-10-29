@@ -10,7 +10,7 @@ import textwrap
 import shutil
 
 #Imports custom modules
-from adventure_pkg.story_functions import character_creation, faerun_story, non_faerun_story, greeting, leave_game, faerun_hero, nonfaerun_hero, baldurs_gate, invalid, win_game
+from adventure_pkg.story_functions import character_creation, faerun_story, non_faerun_story, greeting, leave_game, faerun_hero, nonfaerun_hero, invalid
 from adventure_pkg.character_functions import Character
 
 #Initializing variables
@@ -28,6 +28,7 @@ npc_3 = ""
 exit_message = ""
 monster_name = ""
 chosen_race = None
+columns, _ = shutil.get_terminal_size() 
 
 character_abilities = {
     "Cleric": ["Wisdom", "Constitution", "Charisma", "Intelligence", "Strength", "Dexterity"],
@@ -42,6 +43,13 @@ racial_traits = {
     "Elf": ["Dexterity", 2, "Constitution", -2],
     "Human": [],
 }
+
+#monster dictionary
+monster_details_list = [
+    {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
+    {'name': 'Skeleton', 'armor_class': 15, 'hit_points': 6, 'to_hit': 1, 'initiative': 5, 'damage': random.randint(1, 6)+1},
+    {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
+]
 
 #Main while loop shell containing nested while loops
 while True:
@@ -142,7 +150,6 @@ while True:
         player_character.apply_racial_modifiers()
 
         # Print equipment and modifiers
-        columns, _ = shutil.get_terminal_size() 
         print(f"\n{Fore.GREEN + Style.NORMAL}Equipment and Spells:")
         print(Fore.GREEN + Style.NORMAL + textwrap.fill(f"Items: (Armor) {player_character.equipment['armor']} (Weapon) {player_character.equipment['weapon']} (Shield) {player_character.equipment['shield']}", width=columns))
         print("")
@@ -163,12 +170,6 @@ while True:
         character_creation(hero, player_character.abilities, player_character.hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier)
 
         if worlds == "Scarn":
-            #monster dictionary
-            monster_details_list = [
-                {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
-                {'name': 'Skeleton', 'armor_class': 15, 'hit_points': 6, 'to_hit': 1, 'initiative': 5, 'damage': random.randint(1, 6)+1},
-                {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
-            ]
 
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
@@ -184,12 +185,6 @@ while True:
             nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
         elif worlds == "Krynn":
-            #monster dictionary
-            monster_details_list = [
-                {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
-                {'name': 'Skeleton', 'armor_class': 15, 'hit_points': 6, 'to_hit': 1, 'initiative': 5, 'damage': random.randint(1, 6)+1},
-                {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
-            ]
 
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
@@ -205,12 +200,6 @@ while True:
             nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
 
         elif worlds == "Toril":
-            #monster dictionary
-            monster_details_list = [
-                {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},
-                {'name': 'Skeleton', 'armor_class': 15, 'hit_points': 6, 'to_hit': 1, 'initiative': 5, 'damage': random.randint(1, 6)+1},
-                {'name': 'Dire Rat', 'armor_class': 15, 'hit_points': 5, 'to_hit': 4, 'initiative': 3, 'damage': random.randint(1, 4)}
-            ]
 
             #Randomly choose a monster details dictionary
             chosen_monster_details = random.choice(monster_details_list)
