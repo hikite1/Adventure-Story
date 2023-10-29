@@ -52,7 +52,7 @@ def greeting():
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n") 
 
-    print(f'{Fore.WHITE + Style.BRIGHT}Link to "In the Beginning" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XjsnztqL1XEUXs5FCsQUyjtY45OKWhfB/view?usp=sharing\033[0m')
+    print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "In the Beginning" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XjsnztqL1XEUXs5FCsQUyjtY45OKWhfB/view?usp=sharing\033[0m', width=columns))
 
     return ""
 
@@ -72,7 +72,7 @@ def faerun_story():
         print("")
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
-        print(f'\n{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'\n{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m', width=columns))
 
         return ""
 
@@ -92,7 +92,7 @@ def faerun_story():
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter")
-        print(f'\n{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'\n{Fore.WHITE + Style.BRIGHT}Link to "Faerun Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1UcdWvvmPz3ijb94NlK7zLrZlPeAofuZQ/view?usp=drive_link\033[0m', width=columns))
 
         return ""
 
@@ -113,9 +113,9 @@ def non_faerun_story():
         print("")
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m', width=columns))
 
         return ""
 
@@ -137,9 +137,9 @@ def non_faerun_story():
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter") 
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Scarn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1StmNwHW-2OelQTpHJkfhUP_04fWWwLU8/view?usp=sharing\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Krynn Greeting" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1wijGJ6sYpPIxul_TsHkHusRMdLMVZXFi/view?usp=drive_link\033[0m', width=columns))
 
         return ""
 
@@ -752,7 +752,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
                         print("")
 
-                        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Spellplague Portal" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XV-WYUpx0wID5LsXzIHPNw7i7-cqRZ0j/view?usp=drive_link\033[0m')
+                        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Spellplague Portal" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XV-WYUpx0wID5LsXzIHPNw7i7-cqRZ0j/view?usp=drive_link\033[0m', width=columns))
 
                         input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter") 
                 
@@ -790,7 +790,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
                         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-                        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Spellplague Portal" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XV-WYUpx0wID5LsXzIHPNw7i7-cqRZ0j/view?usp=drive_link\033[0m')
+                        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Spellplague Portal" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XV-WYUpx0wID5LsXzIHPNw7i7-cqRZ0j/view?usp=drive_link\033[0m', width=columns))
 
                         input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter") 
                 
@@ -884,13 +884,13 @@ def baldurs_gate():
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate" image: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1bxXd8CvLRBb7hs8NCwT2mK-6J8Ro_Vad/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate" image: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1bxXd8CvLRBb7hs8NCwT2mK-6J8Ro_Vad/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Marketplace" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1tYdVlhKRlLEWwWQyStcH0c8fgeDn-rji/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Marketplace" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1tYdVlhKRlLEWwWQyStcH0c8fgeDn-rji/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Circus" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1j_WlZ04YNxkKOdjEKFAANpARBTDx2v88/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Circus" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1j_WlZ04YNxkKOdjEKFAANpARBTDx2v88/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Parade" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1HXi6s55r8oeBqQ1T7PHrLq8gV5yU-C_x/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Parade" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1HXi6s55r8oeBqQ1T7PHrLq8gV5yU-C_x/view?usp=drive_link\033[0m', width=columns))
 
         input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter")
 
@@ -904,11 +904,11 @@ def baldurs_gate():
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate City" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1OVfZ3j8dBAstR4Ti1VJmeF5G5WNGRGPh/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate City" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1OVfZ3j8dBAstR4Ti1VJmeF5G5WNGRGPh/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1p5cVv5bIbigQZta5fHrapF0xBCcJ9qBz/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1p5cVv5bIbigQZta5fHrapF0xBCcJ9qBz/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Candlekeep - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1YKTDXWeVWqWVSD4k9JhcdbRw1cvsK4eA/view?usp=drive_link\033[0m\n')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Candlekeep - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1YKTDXWeVWqWVSD4k9JhcdbRw1cvsK4eA/view?usp=drive_link\033[0m\n', width=columns))
         
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n") 
         
@@ -939,13 +939,13 @@ def baldurs_gate():
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate" image: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1bxXd8CvLRBb7hs8NCwT2mK-6J8Ro_Vad/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate" image: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1bxXd8CvLRBb7hs8NCwT2mK-6J8Ro_Vad/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Marketplace" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1tYdVlhKRlLEWwWQyStcH0c8fgeDn-rji/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Marketplace" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1tYdVlhKRlLEWwWQyStcH0c8fgeDn-rji/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Circus" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1j_WlZ04YNxkKOdjEKFAANpARBTDx2v88/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Circus" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1j_WlZ04YNxkKOdjEKFAANpARBTDx2v88/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Parade" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1HXi6s55r8oeBqQ1T7PHrLq8gV5yU-C_x/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Parade" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1HXi6s55r8oeBqQ1T7PHrLq8gV5yU-C_x/view?usp=drive_link\033[0m', width=columns))
 
         input(f"\n{Fore.CYAN + Style.NORMAL}Press Enter")
 
@@ -985,11 +985,11 @@ def baldurs_gate():
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
 
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate City" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1OVfZ3j8dBAstR4Ti1VJmeF5G5WNGRGPh/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate City" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1OVfZ3j8dBAstR4Ti1VJmeF5G5WNGRGPh/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1p5cVv5bIbigQZta5fHrapF0xBCcJ9qBz/view?usp=drive_link\033[0m')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Baldur\'s Gate - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1p5cVv5bIbigQZta5fHrapF0xBCcJ9qBz/view?usp=drive_link\033[0m', width=columns))
         print("")
-        print(f'{Fore.WHITE + Style.BRIGHT}Link to "Candlekeep - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1YKTDXWeVWqWVSD4k9JhcdbRw1cvsK4eA/view?usp=drive_link\033[0m\n')
+        print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "Candlekeep - Lore" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1YKTDXWeVWqWVSD4k9JhcdbRw1cvsK4eA/view?usp=drive_link\033[0m\n', width=columns))
 
         input(f"{Fore.CYAN + Style.NORMAL}Press Enter\n") 
         
@@ -1108,9 +1108,10 @@ def win_game(worlds, home_town):
             elif restart_option == 'no' or restart_option == 'n':
                 quit()  # Exit the loop if the player doesn't want to restart
         else:
-            print(Fore.MAGENTA + Style.BRIGHT +"\nCongratulations! You have begun Alaundo's Prophecy campaign.",Fore.WHITE + Style.BRIGHT,"\nTake a screen shot and show your Dungeon Master.\nShe or he will give you:\n",
-            Fore.YELLOW + Style.BRIGHT +"50 gold\n",
-            Fore.CYAN + Style.BRIGHT +"500 experience\n\n"),
+            print(Fore.MAGENTA + Style.BRIGHT + textwrap.fill("Congratulations! You have begun Alaundo's Prophecy campaign.", width=columns)
+            print(Fore.WHITE + Style.BRIGHT,"\nTake a screen shot and show your Dungeon Master. She or he will give you:\n", width=columns))
+            print(Fore.YELLOW + Style.BRIGHT +"50 gold\n")
+            print(Fore.CYAN + Style.BRIGHT +"500 experience\n\n")
             input("Pressing enter will begin a new story")
 
         return ""

@@ -21,7 +21,9 @@ class Combat_Actions:
         self.abilities = abilities
 
     def attack(self, target):
-        print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"\nHero: {self.character}\n", width=columns))
+        print("")
+        print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"Hero: {self.character}\n", width=columns))
+        print("")
         atk_roll = random.choice(self.d20)
         total_tohit = atk_roll + self.character.calculate_tohit(self.character.equipment['bab'])
         total_damage = self.character.calculate_weapon_modifier

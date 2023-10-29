@@ -56,7 +56,7 @@ while True:
     valid_world = False
 
     #Beginning of the game prompt
-    world = input(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Scarn\n2) Krynn\n3) Toril\n\n")
+    world = input(textwrap.fill(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Scarn\n2) Krynn\n3) Toril\n\n", width=columns))
 
     #choice of starting world
     while not valid_world:
@@ -86,7 +86,7 @@ while True:
         else:
             invalid_entry = invalid()
             print(invalid_entry)
-            world = input(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Scarn\n2) Krynn\n3) Toril\n\n")
+            world = input(textwrap.fill(f"\n{Fore.CYAN + Style.NORMAL}What home world would you like to be from?\nPlease choose a number:\n\n1) Scarn\n2) Krynn\n3) Toril\n\n", width=columns))
             valid_world = False
             #continue
 
@@ -95,7 +95,7 @@ while True:
         for i, hero_class in enumerate(character_abilities.keys(), 1):
             print(f"{Fore.CYAN + Style.NORMAL}{i}){Fore.CYAN + Style.NORMAL} {hero_class}")
 
-        hero_choice = input(f"\n{Fore.CYAN + Style.NORMAL}Please select a number (or type 'Exit' to leave story): ")
+        hero_choice = input(textwrap.fill(f"\n{Fore.CYAN + Style.NORMAL}Please select a number (or type 'Exit' to leave story): ", width=columns))
 
         if hero_choice.lower() == "exit":
             # Handle exit
