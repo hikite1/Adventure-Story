@@ -7,7 +7,7 @@ import shutil
 import textwrap
 
 from  adventure_pkg.battle_functions import Combat_Actions
-from adventure_pkg.character_functions import Abilities, Character
+from adventure_pkg.character_functions import Abilities
 from adventure_pkg.monster_battle_functions import Monster
 
 #print("story_functions is being imported.")
@@ -57,18 +57,9 @@ def greeting():
     return ""
 
 def faerun_story():
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        # Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
-
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -106,17 +97,9 @@ def faerun_story():
         return ""
 
 def non_faerun_story():
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        # Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
@@ -161,8 +144,6 @@ def non_faerun_story():
         return ""
 
 def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier):
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
 
     # Display the ability scores with modifiers
     ability_scores_description = [
@@ -198,13 +179,6 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        # Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
-
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -333,16 +307,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         damage=chosen_monster_details['damage']
     )
 
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
-
     if columns < 80:
-        # Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
         begin_faerun_hero = print(
             f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}"
@@ -640,16 +605,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         damage=chosen_monster_details['damage']
     )
 
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
-
     if columns < 80:
-        # Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
 
         begin_nonfaerun_hero = print(
             f"\n{Fore.YELLOW + Style.NORMAL}{'~' * columns}"
@@ -915,18 +871,9 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
     return ""
 
 def baldurs_gate():
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        #Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
-
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -1054,18 +1001,8 @@ def leave_game(npc_1, creatures, home_town, worlds):
     enemies = ["Dire Rats", "Goblins", "Skeletons"]
     creatures = random.choice(enemies) 
 
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
-
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        #Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
-
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -1099,18 +1036,9 @@ def leave_game(npc_1, creatures, home_town, worlds):
         return ""
 
 def invalid():
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        #Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
-
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -1143,18 +1071,9 @@ def invalid():
         return ""
 
 def win_game(worlds, home_town):
-    #get terminal size
-    columns, _ = shutil.get_terminal_size() 
 
     # Check if screen size is smaller than a threshold
     if columns < 80:
-        #Adjusted ASCII art for smaller screens
-        closing_parenthesis = ")"
-        zero = "(O"
-        offset = 1
-        terminal_width = shutil.get_terminal_size().columns
-        formatted_text = f"{Fore.YELLOW + Style.NORMAL + closing_parenthesis.ljust(1)}{zero.rjust(terminal_width - offset)}"
-
         print("")
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print(formatted_text)
@@ -1214,6 +1133,7 @@ def win_game(worlds, home_town):
             Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n")
         
         you_win = input(f"{Fore.CYAN + Style.NORMAL}Do you accept Elminster's challenge?   (yes/no)\n\n").lower()
+
         #if player restarts the adventure will reprompt from the beginning game prompt
         if you_win != "yes" and you_win != "y":
             npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]

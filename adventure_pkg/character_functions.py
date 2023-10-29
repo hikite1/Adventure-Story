@@ -299,11 +299,11 @@ class Character:
 
     def calculate_max_hp(self):
         hit_die = {
-            "Fighter": 11,  # represents a d10
+            "Fighter": 10,  # represents a d10
             "Rogue": 6,
-            "Sorcerer": 5,
-            "Wizard": 5,
-            "Cleric": 9,
+            "Sorcerer": 4,
+            "Wizard": 4,
+            "Cleric": 8,
             # Add more classes and their respective hit dice
         }
         max_hit_die = hit_die.get(self.char_class, 8)
@@ -319,7 +319,7 @@ class Character:
         # Increase level and roll a random hit points gain based on character class hit die
         self.level += 1
         hit_die = {
-            "Fighter": 11, #represents a d10
+            "Fighter": 10, #represents a d10
             "Rogue": 6,
             "Sorcerer": 4,
             "Wizard": 4,
