@@ -96,6 +96,7 @@ while True:
         for i, hero_class in enumerate(character_abilities.keys(), 1):
             print(f"{Fore.CYAN + Style.NORMAL}{i}){Fore.CYAN + Style.NORMAL} {hero_class}")
 
+        print("")
         hero_choice = input(textwrap.fill(f"\n{Fore.CYAN + Style.NORMAL}Please select a number (or type 'Exit' to leave story): ", width=columns))
 
         if hero_choice.lower() == "exit":
