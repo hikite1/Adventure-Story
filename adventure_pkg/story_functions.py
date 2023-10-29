@@ -52,6 +52,7 @@ def greeting():
         Fore.YELLOW + Style.NORMAL +"       =O)                                                                            (O=\n",
         Fore.YELLOW + Style.NORMAL +"        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n") 
 
+    print
     print(textwrap.fill(f'{Fore.WHITE + Style.BRIGHT}Link to "In the Beginning" video: {Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XjsnztqL1XEUXs5FCsQUyjtY45OKWhfB/view?usp=sharing\033[0m', width=columns))
 
     return ""
