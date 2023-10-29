@@ -56,7 +56,7 @@ while True:
     valid_world = False
 
     #Beginning of the game prompt
-    print(Fore.CYAN + Style.NORMAL+ ('\nWhat home world would you like to be from?'))
+    print(Fore.CYAN + Style.NORMAL+ textwrap.fill('\nWhat home world would you like to be from?', width=columns))
     world = input(f"{Fore.CYAN + Style.NORMAL}\nPlease choose a number:\n\n1) Scarn\n2) Krynn\n3) Toril\n\n")
 
     #choice of starting world
