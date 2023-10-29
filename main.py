@@ -43,7 +43,6 @@ racial_traits = {
     "Elf": ["Dexterity", 2, "Constitution", -2],
     "Human": [],
 }
-
 #monster dictionary
 monster_details_list = [
     {'name': 'Goblin', 'armor_class': 15, 'hit_points': 5, 'to_hit': 2, 'initiative': 1, 'damage': random.randint(1, 6)},

@@ -3,10 +3,13 @@
 import random
 from colorama import init, Fore, Style
 init(autoreset=True)
+import textwrap
+import shutil
 
 from adventure_pkg.character_functions import Character
 from adventure_pkg.monster_battle_functions import Monster
 
+columns, _ = shutil.get_terminal_size()
 
 class Combat_Actions:
     d20 = [x + 1 for x in range(20)]
@@ -18,11 +21,11 @@ class Combat_Actions:
         self.abilities = abilities
 
     def attack(self, target):
-        print(f"\n{Fore.GREEN + Style.BRIGHT}Hero: {self.character}\n")
+        print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"\nHero: {self.character}\n", width=columns))
         atk_roll = random.choice(self.d20)
         total_tohit = atk_roll + self.character.calculate_tohit(self.character.equipment['bab'])
         total_damage = self.character.calculate_weapon_modifier
-        print(f"{self.character.char_class} rolls a {atk_roll} for a total of {total_tohit} to hit")
+        print(textwrap.fill(f"{self.character.char_class} rolls a {atk_roll} for a total of {total_tohit} to hit", width=columns))
 
         # Check if the target is a Character or Combat_Actions instance
         if isinstance(target, Combat_Actions):
@@ -47,8 +50,8 @@ class Combat_Actions:
         melee_mod = 0
         dmg_roll = random.randint(1, 6)
         damage = dmg_roll + melee_mod
-        print(f"{self.character.char_class} rolls a {dmg_roll} for a total of {damage} for damage")
-        print(f"You dealt {damage} damage to {target_details['name']}!")
+        print(textwrap.fill(f"{self.character.char_class} rolls a {dmg_roll} for a total of {damage} for damage", width=columns))
+        print(textwrap.fill(f"You dealt {damage} damage to {target_details['name']}!", width=columns))
 
         if isinstance(target_details, Monster):
             melee_mod = target_details.damage

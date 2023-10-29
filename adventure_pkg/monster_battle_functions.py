@@ -3,6 +3,10 @@
 import random
 from colorama import init, Fore, Style
 init(autoreset=True)
+import textwrap
+import shutil
+
+columns, _ = shutil.get_terminal_size()
 
 class Monster:
     d20 = [x + 1 for x in range(20)]
@@ -19,7 +23,7 @@ class Monster:
         atk_roll = random.choice(self.d20)
         total_tohit = atk_roll + self.to_hit
 
-        print(f"{self.name} rolls a {atk_roll} for a total of {total_tohit} to hit")
+        print(textwrap.fill(f"{self.name} rolls a {atk_roll} for a total of {total_tohit} to hit", width=columns))
 
         if total_tohit >= target.armor_class:
             return self.calculate_damage()
