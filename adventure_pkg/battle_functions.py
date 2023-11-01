@@ -17,17 +17,25 @@ class Combat_Actions:
     def __init__(self, character, armor_class, hit_points, abilities):
         self.character = character
         self.armor_class = armor_class
-        self.hit_points = hit_points
+        self.total_hp = hit_points
         self.abilities = abilities
 
     def attack(self, target):
         print("")
-        print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"Hero: {self.character}\n", width=columns))
+        print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"Hero: {self.character.char_class}", width=columns))
+        print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"{self.character.abilities}", width=columns))
+        print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"HP: {self.character.total_hp}", width=columns))
         print("")
+
         atk_roll = random.choice(self.d20)
+        weapon_damage = self.character.calculate_weapon_modifier(self.character.equipment['weapon'])
         total_tohit = atk_roll + self.character.calculate_tohit(self.character.equipment['bab'])
-        total_damage = self.character.calculate_weapon_modifier
-        print(textwrap.fill(f"{self.character.char_class} rolls a {atk_roll} for a total of {total_tohit} to hit", width=columns))
+        damage_roll = self.character.calculate_weapon_modifier(self.character.equipment['weapon'])
+        strength_modifier = self.character.calculate_modifier(self.character.abilities.Strength)
+        total_damage = max(1, damage_roll) + strength_modifier  # Ensure total_damage is at least 1 plus strength modifier
+
+
+        print(textwrap.fill(f"{Fore.YELLOW + Style.BRIGHT}{self.character.char_class} attacks using a {self.character.equipment['weapon']} and rolls a {atk_roll} for a total of {total_tohit} to hit", width=columns))
 
         # Check if the target is a Character or Combat_Actions instance
         if isinstance(target, Combat_Actions):
@@ -40,12 +48,23 @@ class Combat_Actions:
             print("Invalid target type. Expected a Character, Combat_Actions, or Monster object.")
             return 0  # Return 0 to indicate a miss
 
-        if total_tohit >= armor_class:
-            damage = self.character.calculate_weapon_modifier(self.character.equipment['weapon'])
-            #print(f"You hit for {damage} damage!")
-            return damage
+        if total_tohit >= armor_class: 
+            print(f"{Fore.BLUE + Style.NORMAL}You hit {target.name} and roll weapon damage of {damage_roll}, for a total of {total_damage} damage")
+
+            if weapon_damage > 0:
+                damage_roll = max(1, min(damage_roll, 6))
+                strength_modifier = self.character.calculate_modifier(self.character.abilities.Strength)
+
+                if atk_roll == 20:
+                    print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"Wow! You Critically Hit the {target.name} for {total_damage * 2}!", width=columns))
+                    return total_damage * 2
+
+            return total_damage
+
         else:
-            #print("You missed!")
+            print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on the {target.name}!", width=columns))
+            if atk_roll == 1:
+                print(Fore.GREEN + Style.BRIGHT + textwrap.fill(f"A baby {target.name} is more threatening than that!!!!", width=columns))
             return 0  # Return 0 to indicate a miss
 
     def damage(self, target_details):
@@ -68,9 +87,10 @@ class Combat_Actions:
         return damage
     
     def take_damage(self, damage):
-        self.hit_points -= damage
-        if self.hit_points <= 0:
+        self.total_hp -= damage
+        if self.total_hp <= 0:
             print(f"{Fore.MAGENTA + Style.BRIGHT}{self.character.char_class} has been defeated!")
+        return self.damage
 
     def is_alive(self):
-        return self.hit_points > 0
+        return self.total_hp > 0

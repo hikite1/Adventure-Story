@@ -162,13 +162,14 @@ while True:
         armor_modifier = player_character.calculate_armor_bonus(player_character.equipment['armor'], player_character.shield_modifier)
         weapon_modifier = player_character.calculate_tohit(player_character.equipment['bab'])
         initiative_modifier = player_character.calculate_init_bonus()
+        total_hp = player_character.calculate_max_hp()
 
         #print tests
         #print(f"Armor Modifier: {armor_modifier}")
         #print(f"Weapon Modifier: {weapon_modifier}")
 
         #calls function to print player character
-        character_creation(hero, player_character.abilities, player_character.hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier)
+        character_creation(hero, player_character.abilities, player_character.total_hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier, total_hp)
 
         if worlds == "Scarn":
 
@@ -183,7 +184,7 @@ while True:
             initiative = chosen_monster_details['initiative']
             damage = chosen_monster_details['damage']
 
-            nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative, player_character.total_hp)
 
         elif worlds == "Krynn":
 
@@ -198,7 +199,7 @@ while True:
             initiative = chosen_monster_details['initiative']
             damage = chosen_monster_details['damage']
 
-            nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            nonfaerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative, player_character.total_hp)
 
         elif worlds == "Toril":
 
@@ -213,4 +214,4 @@ while True:
             initiative = chosen_monster_details['initiative']
             damage = chosen_monster_details['damage']
 
-            faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative)
+            faerun_hero(hero, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative, player_character.total_hp)

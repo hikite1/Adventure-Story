@@ -23,13 +23,21 @@ class Monster:
         atk_roll = random.choice(self.d20)
         total_tohit = atk_roll + self.to_hit
 
-        print(textwrap.fill(f"{self.name} rolls a {atk_roll} for a total of {total_tohit} to hit", width=columns))
+        print(textwrap.fill(f"{Fore.YELLOW + Style.BRIGHT}{self.name} rolls a {atk_roll} for a total of {total_tohit} to hit", width=columns))
 
         if total_tohit >= target.armor_class:
-            return self.calculate_damage()
+            self.calculate_damage()
+            print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}{self.name} does for a total of {self.damage} damage", width=columns))
+    
+            if atk_roll == 20:
+                print(f"{Fore.MAGENTA + Style.BRIGHT}{self.name} hits you extremely hard for {self.damage * 2} damage!")
+
+                return self.damage *2
         else:
-            #print(f"{self.name} missed!")
+            print(f"{Fore.BLUE + Style.BRIGHT}{self.name} missed!")
             return 0  # Return 0 to indicate a miss
+        
+        return self.damage
 
     def calculate_damage(self):
         return self.damage

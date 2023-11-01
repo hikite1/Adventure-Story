@@ -7,7 +7,7 @@ import shutil
 import textwrap
 
 from  adventure_pkg.battle_functions import Combat_Actions
-from adventure_pkg.character_functions import Abilities
+from adventure_pkg.character_functions import Abilities, Character
 from adventure_pkg.monster_battle_functions import Monster
 
 #print("story_functions is being imported.")
@@ -147,7 +147,7 @@ def non_faerun_story():
 
         return ""
 
-def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier):
+def character_creation(hero_class, ability_scores, hit_points, home_town, worlds, chosen_race, racial_modifiers, armor_modifier, weapon_modifier, initiative_modifier, total_hp):
 
     # Display the ability scores with modifiers
     ability_scores_description = [
@@ -196,7 +196,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
         print(f"{Fore.WHITE + Style.BRIGHT}Character Name: {character_name.ljust(10)}\n")
         print(f"{Fore.WHITE + Style.BRIGHT}Location: \nWorld - {worlds.ljust(10)} \nArea - {home_town.ljust(15)}\n")
         print(Fore.WHITE + Style.BRIGHT + ability_scores_string)
-        print(f"{Fore.WHITE + Style.BRIGHT}HP: {str(hp).rjust(3)}")
+        print(f"{Fore.WHITE + Style.BRIGHT}HP: {str(total_hp).rjust(3)}")
         print(f"{Fore.WHITE + Style.BRIGHT}AC: {str(armor_modifier).rjust(3)}")
         print(f"{Fore.WHITE + Style.BRIGHT}Attack: +{str(weapon_modifier).ljust(3)}")
         print(f"{Fore.WHITE + Style.BRIGHT}Initiative: +{str(initiative_modifier).ljust(3)}")
@@ -236,7 +236,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
             Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     Character Name: {character_name.ljust(10)}{' ' * 46}"+ Fore.YELLOW + Style.NORMAL + "|\n",
             Fore.YELLOW + Style.NORMAL + f"         |     {Fore.WHITE + Style.BRIGHT}Location: World - {worlds.ljust(10)}, Area - {home_town.ljust(15)}"+ Fore.YELLOW + Style.NORMAL + "                    |\n",
             Fore.WHITE + Style.BRIGHT + '\n'.join(indented_ability_scores_piped),
-            Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
+            Fore.YELLOW + Style.NORMAL + f"\n{' ' * 10}|{Fore.WHITE + Style.BRIGHT}     HP: {str(total_hp).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
             Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     AC: {str(armor_modifier).rjust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + "      |\n",
             Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Attack: +{str(weapon_modifier).ljust(3)}{' ' * 59}"+ Fore.YELLOW + Style.NORMAL + " |\n",
             Fore.YELLOW + Style.NORMAL + f"{' ' * 9}|{Fore.WHITE + Style.BRIGHT}     Initiative: +{str(initiative_modifier).ljust(3)}{' ' * 56}"+ Fore.YELLOW + Style.NORMAL + "|\n",
@@ -271,7 +271,7 @@ def character_creation(hero_class, ability_scores, hp, home_town, worlds, chosen
 
         return ""
 
-def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
+def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative, total_hp):
     #random npc selection
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_1 = random.choice(npc1)
@@ -297,7 +297,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     hero_object = Combat_Actions(
         character=player_character,
         armor_class=armor_modifier,
-        hit_points=player_character.hp,
+        hit_points=player_character.total_hp,
         abilities=hero_abilities
     )
 
@@ -407,7 +407,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
         print(begin_faerun_hero)
         while hero_object.is_alive() and chosen_monster_object.is_alive():
             print(f"\n{Fore.GREEN + Style.BRIGHT}==== Battle ====")
-            print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
+            print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.total_hp}")
             print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
             actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
@@ -421,23 +421,18 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                 #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
                 #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
 
-                if total_damage > 0:
+                if total_damage is not None and total_damage > 0:
                     chosen_monster_object.take_damage(total_damage)
-                    print(textwrap.fill(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!", width=columns))
-                else:
-                    print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!", width=columns))
-
+                    
                 #Creature attacks
                 if chosen_monster_object.is_alive():
                     monster_damage = chosen_monster_object.attack(hero_object)
 
                     #print(f"Debug: Monster Damage: {monster_damage}")
 
-                    if monster_damage > 0:
+                    if monster_damage is not None and monster_damage > 0:
                         hero_object.take_damage(monster_damage)
-                        print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!", width=columns))
-                    else:
-                        print(textwrap.fill(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!", width=columns))
+                        #print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!", width=columns))
 
                 #Print the result of the battle
                 if hero_object.is_alive() and not chosen_monster_object.is_alive():
@@ -551,7 +546,9 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
                 elif quit_option == 'no' or quit_option == 'n':
                     continue
             else:
-                print(f"{Fore.CYAN + Style.NORMAL}Invalid option. Please choose again.")              
+                invalid_entry = invalid()
+                print(invalid_entry)
+                battle = input(f"{Fore.CYAN + Style.NORMAL}Do you...\n1) Follow orders\n2) Go AWOL(Quit the story)\n\n")             
 
     elif battle == "2":
         npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
@@ -569,7 +566,7 @@ def faerun_hero(hero_class, home_town, worlds, exit_message, player_character, m
     return ""
 
     
-def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative):
+def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character, monster_name, chosen_monster_details, armor_class, hit_points, damage, to_hit, initiative, total_hp):
     #random NPC selection
     npc1 = ["Cleric", "Fighter", "Rogue", "Sorcerer", "Wizard"]
     npc_1 = random.choice(npc1)
@@ -595,7 +592,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
     hero_object = Combat_Actions(
         character=player_character,
         armor_class=armor_modifier,
-        hit_points=player_character.hp,
+        hit_points=player_character.total_hp,
         abilities=hero_abilities
     )
 
@@ -707,7 +704,7 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
         print(begin_nonfaerun_hero)
         while hero_object.is_alive() and chosen_monster_object.is_alive():
             print(f"\n{Fore.GREEN + Style.BRIGHT}==== Battle ====")
-            print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.hit_points}")
+            print(f"{Fore.GREEN + Style.BRIGHT}{hero_class} HP: {hero_object.total_hp}")
             print(f"{Fore.GREEN + Style.BRIGHT}{monster_name} HP: {chosen_monster_object.hit_points}")
 
             actions = input(f"\n{Fore.CYAN + Style.NORMAL}Do you...\n1) Attack\n2) Run away(Quit the story)\n\n").lower()
@@ -721,23 +718,18 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
                 #weapon_damage = hero_object.character.calculate_weapon_modifier(hero_object.character.equipment['weapon'])
                 #print(f"Debug: Total Damage: {total_damage} (Weapon Damage: {weapon_damage}).")
 
-                if total_damage > 0:
+                if total_damage is not None and total_damage > 0:
                     chosen_monster_object.take_damage(total_damage)
-                    print(textwrap.fill(f"{Fore.BLUE + Style.BRIGHT}You dealt {total_damage} damage to {monster_name}!", width=columns))
-                else:
-                    print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}You missed the attack on {monster_name}!", width=columns))
-
+                    
                 #Creature attacks
                 if chosen_monster_object.is_alive():
                     monster_damage = chosen_monster_object.attack(hero_object)
 
                     #print(f"Debug: Monster Damage: {monster_damage}")
 
-                    if monster_damage > 0:
+                    if monster_damage is not None and monster_damage > 0:
                         hero_object.take_damage(monster_damage)
-                        print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!", width=columns))
-                    else:
-                        print(textwrap.fill(f"{Fore.BLUE + Style.BRIGHT}{monster_name} missed the attack on {hero_class}!", width=columns))
+                        #print(textwrap.fill(f"{Fore.MAGENTA + Style.BRIGHT}{monster_name} dealt {monster_damage} damage to the {hero_class}!", width=columns))
 
                 #Print the result of the battle
                 if hero_object.is_alive() and not chosen_monster_object.is_alive():
@@ -765,7 +757,6 @@ def nonfaerun_hero(hero_class, home_town, worlds, exit_message, player_character
 
                         congratulations = win_game(worlds, home_town)
                         print(congratulations) 
-
 
                     elif columns >= 80:
                         #print statemtnt

@@ -67,6 +67,8 @@ class Character:
         # Equip items based on character class
         self.equip_items()
 
+        #print(char_class, character_abilities, racial_traits)
+
     def equip_items(self):
         # Get equipment for the character's class
         class_equipment = self.get_class_equipment()
@@ -270,11 +272,12 @@ class Character:
         # Get equipment for the character's class
         return equipment_dict.get(self.char_class, {})
 
-
     def apply_racial_modifiers(self):
         chosen_race_traits = self.racial_traits.get(self.chosen_race, [])
-        racial_modifiers = {chosen_race_traits[i]: chosen_race_traits[i + 1] for i in range(0, len(chosen_race_traits), 2)}
-        self.abilities.apply_racial_modifiers(racial_modifiers)
+        for i in range(0, len(chosen_race_traits), 2):
+            ability = chosen_race_traits[i]
+            modifier = chosen_race_traits[i + 1]
+            setattr(self, ability, getattr(self, ability, 0) + modifier)
 
     def get_priority(self):
         priority_list = self.character_abilities.get(self.char_class, [])
@@ -291,11 +294,16 @@ class Character:
         equipment_str = f"Armor: {armor}, Weapon: {weapon}, Potions: {potions}, Arcane Spells: {arcane_spells}, Divine Spells: {divine_spells}"
         return f"{self.char_class} - {self.abilities} - Level {self.level} - HP: {self.hp}\n{equipment_str}"
 
-    
     def generate_ability_scores(self, priority):
         self.abilities = Abilities.generate_random(priority)
         # Recalculate HP after generating new ability scores
         self.hp = self.calculate_max_hp()
+
+    def calculate_modifier(self, ability_score):
+        # Convert ability_score to integer
+        ability_score = int(ability_score)
+        modifier = (ability_score - 10) // 2
+        return max(-5, modifier)  # Ensure the modifier doesn't go below -5
 
     def calculate_max_hp(self):
         hit_die = {
@@ -307,13 +315,39 @@ class Character:
             # Add more classes and their respective hit dice
         }
         max_hit_die = hit_die.get(self.char_class, 8)
-        constitution_modifier = self.abilities.calculate_modifier('Constitution')
 
-        #Ensure the minimum value of the modifier is 0
-        constitution_modifier = max(0, constitution_modifier)
+        # Print abilities before applying racial traits
+        #print(f"Abilities before racial traits: {self.abilities.__dict__}")
 
-        max_hp = max_hit_die + constitution_modifier
-        return max_hp
+        # Apply racial traits to abilities
+        chosen_race_traits = self.racial_traits.get(self.chosen_race, [])
+        for i in range(0, len(chosen_race_traits), 2):
+            ability = chosen_race_traits[i]
+            bonus = chosen_race_traits[i + 1]
+            if hasattr(self.abilities, ability):
+                setattr(self.abilities, ability, getattr(self.abilities, ability) + bonus)
+
+        # Print abilities after applying racial traits
+        #print(f"Abilities after racial traits: {self.abilities.__dict__}")
+
+        # Save the original Constitution before applying racial modifiers
+        original_constitution = getattr(self.abilities, 'Constitution', 0)
+
+        # Update constitution_modifier after applying racial modifiers
+        constitution_modifier = self.calculate_modifier(original_constitution)
+
+        # Print relevant values used in the calculation
+        #print(f"Class: {self.char_class}")
+        #print(f"Max Hit Die: {max_hit_die}")
+        #print(f"Constitution before racial modifiers: {original_constitution}")
+        #print(f"Constitution Modifier: {constitution_modifier}")
+
+        # Calculate total HP after all modifications
+        total_hp = max_hit_die + max(0, constitution_modifier)  # Add other modifiers as needed
+        self.total_hp = total_hp
+        #print(f"TOTAL HP AFTER MODS IS {total_hp}")
+
+        return total_hp
 
     def level_up(self):
         # Increase level and roll a random hit points gain based on character class hit die
