@@ -6,13 +6,13 @@ This is set in the D&D 3.5 campaign setting. A player can choose between differe
 
 Update 1.1v6 - fixed bugs, cleaned and improved code, added URL links for players
 Update 1.2v42 - dynamic solution within Python script to detect the screen size and adjust/remove the ASCII art
-Update 1.3v10 - rearrange methods and code to be more appropriate and DRYer  
+Update 1.3v11 - rearrange methods and code to be more appropriate and DRYer  
 
-ERRORS - None Known. 
+ERRORS - None known 
 
-BUGS - after battle is chosen None is printed cant find what is causing this, some bugs if you replay story after completion(need to set flags up for later in story)
+BUGS - None known
 
-IN DEVELOPMENT - rearrange methods and code to be more appropriate and DRYer  
+IN DEVELOPMENT - rearrange methods and code to be more appropriate and DRYer, adding comments  
 
 FUTURE IDEAS - combat actions(spells, potions, scrolls) add feats, skills, size modifiers, intiative rolls, and saving throws 
 
