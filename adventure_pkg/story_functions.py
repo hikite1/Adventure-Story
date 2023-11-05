@@ -39,6 +39,9 @@ def greeting():
         print(formatted_text)
         print(Fore.YELLOW + Style.NORMAL + "~" * columns)
         print("")
+        print(f'{Fore.WHITE + Style.BRIGHT}Link to "In the Beginning" video:')
+        print('{Fore.BLUE + Style.BRIGHT}\033[4mhttps://drive.google.com/file/d/1XjsnztqL1XEUXs5FCsQUyjtY45OKWhfB/view?usp=sharing\033[0m')
+        print("")
         
     elif columns >= 80:
         #print statement
